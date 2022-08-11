@@ -1,7 +1,7 @@
 # fincen
-Fincen BSA E-Filing forms 
-
 Fincen (Financial crimes enforcment network) BSA data transmission methods for the the BSA E-Filing System
+
+A go library for reading and writting Fincen BSA forms. It is capable of generating, validating, and batching submissions. A future state will support a service to send submissions batched at to the Fincen SDTM endpoint.  
 
 [About the BSA E-Filing System](https://bsaefiling.fincen.treas.gov/AboutBsa.html)
 
