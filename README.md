@@ -7,12 +7,12 @@ Fincen (Financial crimes enforcment network) BSA data transmission methods for t
 
 ## Supported Forms 
 
-- [ ] (FinCEN Currency Transaction Report (FinCEN Report 112))
-- [ ] (FinCEN Designation of Exempt Person (FinCEN Report 110))
-- [ ] (FinCEN Suspicious Activity Report (FinCEN Report 111))
-- [ ] (FinCEN Registration of Money Services Business (FinCEN Report 107))
-- [ ] (Report of Foreign Bank and Financial Accounts (FinCEN Report 114))
-- [ ] (Report of Cash Payments Over $10,000 Received in a Trade or Business (FinCEN Form 8300))
+- [ ] FinCEN Currency Transaction Report (FinCEN Report 112)
+- [ ] FinCEN Designation of Exempt Person (FinCEN Report 110)
+- [ ] FinCEN Suspicious Activity Report (FinCEN Report 111)
+- [ ] FinCEN Registration of Money Services Business (FinCEN Report 107)
+- [ ] Report of Foreign Bank and Financial Accounts (FinCEN Report 114)
+- [ ] Report of Cash Payments Over $10,000 Received in a Trade or Business (FinCEN Form 8300)
 
 ## Filing information user guides 
 
