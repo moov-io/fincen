@@ -2,7 +2,7 @@
 // Use of this source code is governed by an Apache License
 // license that can be found in the LICENSE file.
 
-package doep
+package cash_payments
 
 import (
 	"reflect"
@@ -10,12 +10,26 @@ import (
 	"github.com/moov-io/fincen"
 )
 
-// May be one of 35, 37, 11, 45, 12, 3
+// May be one of 1
+type ValidateActivityNarrativeSequenceNumber int
+
+func (r ValidateActivityNarrativeSequenceNumber) Validate() error {
+	for _, vv := range []string{
+		"1",
+	} {
+		if reflect.DeepEqual(string(r), vv) {
+			return nil
+		}
+	}
+	return fincen.NewErrValueInvalid("ValidateActivityNarrativeSequenceNumber")
+}
+
+// May be one of 35, 37, 16, 23, 4, 8, 3
 type ValidateActivityPartyCodeType string
 
 func (r ValidateActivityPartyCodeType) Validate() error {
 	for _, vv := range []string{
-		"35", "37", "11", "45", "12", "3",
+		"35", "37", "16", "23", "4", "8", "3",
 	} {
 		if reflect.DeepEqual(string(r), vv) {
 			return nil
@@ -24,12 +38,12 @@ func (r ValidateActivityPartyCodeType) Validate() error {
 	return fincen.NewErrValueInvalid("ValidateActivityPartyCodeType")
 }
 
-// May be one of 1, 2, 14, 28
+// May be one of 1, 2, 5, 6, 7, 28, 999
 type ValidatePartyIdentificationCodeType string
 
 func (r ValidatePartyIdentificationCodeType) Validate() error {
 	for _, vv := range []string{
-		"1", "2", "14", "28",
+		"1", "2", "5", "6", "7", "28", "999",
 	} {
 		if reflect.DeepEqual(string(r), vv) {
 			return nil
@@ -50,18 +64,4 @@ func (r ValidatePartyNameCodeType) Validate() error {
 		}
 	}
 	return fincen.NewErrValueInvalid("ValidatePartyNameCodeType")
-}
-
-// May be one of 1, 2, 7, 3, 4
-type ValidateFederalRegulatorCodeType string
-
-func (r ValidateFederalRegulatorCodeType) Validate() error {
-	for _, vv := range []string{
-		"1", "2", "7", "3", "4",
-	} {
-		if reflect.DeepEqual(string(r), vv) {
-			return nil
-		}
-	}
-	return fincen.NewErrValueInvalid("ValidateFederalRegulatorCodeType")
 }

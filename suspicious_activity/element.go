@@ -2,7 +2,7 @@
 // Use of this source code is governed by an Apache License
 // license that can be found in the LICENSE file.
 
-package sar
+package suspicious_activity
 
 import (
 	"encoding/xml"

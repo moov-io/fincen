@@ -2,7 +2,7 @@
 // Use of this source code is governed by an Apache License
 // license that can be found in the LICENSE file.
 
-package sar
+package exempt_designation
 
 import (
 	"reflect"
@@ -10,26 +10,12 @@ import (
 	"github.com/moov-io/fincen"
 )
 
-// May be one of 1, 2, 3, 4, 5
-type ValidateActivityNarrativeSequenceNumber int
-
-func (r ValidateActivityNarrativeSequenceNumber) Validate() error {
-	for _, vv := range []string{
-		"1", "2", "3", "4", "5",
-	} {
-		if reflect.DeepEqual(string(r), vv) {
-			return nil
-		}
-	}
-	return fincen.NewErrValueInvalid("ValidateActivityNarrativeSequenceNumber")
-}
-
-// May be one of 35, 37, 30, 33, 34, 8, 46, 18, 19, 41
+// May be one of 35, 37, 11, 45, 12, 3
 type ValidateActivityPartyCodeType string
 
 func (r ValidateActivityPartyCodeType) Validate() error {
 	for _, vv := range []string{
-		"35", "37", "30", "33", "34", "8", "46", "18", "19", "41",
+		"35", "37", "11", "45", "12", "3",
 	} {
 		if reflect.DeepEqual(string(r), vv) {
 			return nil
@@ -38,12 +24,12 @@ func (r ValidateActivityPartyCodeType) Validate() error {
 	return fincen.NewErrValueInvalid("ValidateActivityPartyCodeType")
 }
 
-// May be one of 1, 2, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 28, 32, 33, 29, 999
+// May be one of 1, 2, 14, 28
 type ValidatePartyIdentificationCodeType string
 
 func (r ValidatePartyIdentificationCodeType) Validate() error {
 	for _, vv := range []string{
-		"1", "2", "4", "5", "6", "7", "9", "10", "11", "12", "13", "14", "28", "32", "33", "29", "999",
+		"1", "2", "14", "28",
 	} {
 		if reflect.DeepEqual(string(r), vv) {
 			return nil
@@ -52,12 +38,12 @@ func (r ValidatePartyIdentificationCodeType) Validate() error {
 	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCodeType")
 }
 
-// May be one of L, AKA, DBA
+// May be one of L, DBA
 type ValidatePartyNameCodeType string
 
 func (r ValidatePartyNameCodeType) Validate() error {
 	for _, vv := range []string{
-		"L", "AKA", "DBA",
+		"L", "DBA",
 	} {
 		if reflect.DeepEqual(string(r), vv) {
 			return nil
@@ -66,12 +52,12 @@ func (r ValidatePartyNameCodeType) Validate() error {
 	return fincen.NewErrValueInvalid("ValidatePartyNameCodeType")
 }
 
-// May be one of 9, 1, 2, 7, 3, 4, 6, 13, 99
+// May be one of 1, 2, 7, 3, 4
 type ValidateFederalRegulatorCodeType string
 
 func (r ValidateFederalRegulatorCodeType) Validate() error {
 	for _, vv := range []string{
-		"9", "1", "2", "7", "3", "4", "6", "13", "99",
+		"1", "2", "7", "3", "4",
 	} {
 		if reflect.DeepEqual(string(r), vv) {
 			return nil
