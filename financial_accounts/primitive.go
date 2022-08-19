@@ -10,6 +10,27 @@ import (
 	"github.com/moov-io/fincen"
 )
 
+// validating elements
+var (
+	_ fincen.Element = (*EFilingBatchXML)(nil)
+	_ fincen.Element = (*Account)(nil)
+	_ fincen.Element = (*AccountType)(nil)
+	_ fincen.Element = (*Activity)(nil)
+	_ fincen.Element = (*ActivityAssociationType)(nil)
+	_ fincen.Element = (*ActivityNarrativeInformation)(nil)
+	_ fincen.Element = (*ActivityNarrativeInformationType)(nil)
+	_ fincen.Element = (*ActivityType)(nil)
+	_ fincen.Element = (*AddressType)(nil)
+	_ fincen.Element = (*AccountParty)(nil)
+	_ fincen.Element = (*ForeignAccountActivity)(nil)
+	_ fincen.Element = (*ForeignAccountActivityType)(nil)
+	_ fincen.Element = (*Party)(nil)
+	_ fincen.Element = (*PartyIdentificationType)(nil)
+	_ fincen.Element = (*PartyNameType)(nil)
+	_ fincen.Element = (*PartyType)(nil)
+	_ fincen.Element = (*PhoneNumberType)(nil)
+)
+
 // May be one of 15, 35, 37, 41, 42, 43, 44, 56, 57
 type ValidateActivityPartyCodeType string
 

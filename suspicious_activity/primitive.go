@@ -10,6 +10,40 @@ import (
 	"github.com/moov-io/fincen"
 )
 
+// validating elements
+var (
+	_ fincen.Element = (*EFilingBatchXML)(nil)
+	_ fincen.Element = (*Account)(nil)
+	_ fincen.Element = (*AccountType)(nil)
+	_ fincen.Element = (*Activity)(nil)
+	_ fincen.Element = (*ActivityAssociationType)(nil)
+	_ fincen.Element = (*ActivityIPAddressType)(nil)
+	_ fincen.Element = (*ActivityNarrativeInformationType)(nil)
+	_ fincen.Element = (*ActivitySupportDocumentType)(nil)
+	_ fincen.Element = (*ActivityType)(nil)
+	_ fincen.Element = (*AddressType)(nil)
+	_ fincen.Element = (*AssociationParty)(nil)
+	_ fincen.Element = (*AccountAssociationParty)(nil)
+	_ fincen.Element = (*AssetsAttributeType)(nil)
+	_ fincen.Element = (*AssetsTableType)(nil)
+	_ fincen.Element = (*CyberEventIndicatorsType)(nil)
+	_ fincen.Element = (*ElectronicAddressType)(nil)
+	_ fincen.Element = (*OrganizationClassificationTypeSubtypeType)(nil)
+	_ fincen.Element = (*Party)(nil)
+	_ fincen.Element = (*PartyAccountAssociation)(nil)
+	_ fincen.Element = (*PartyAccountAssociationType)(nil)
+	_ fincen.Element = (*PartyAssociation)(nil)
+	_ fincen.Element = (*PartyAssociationType)(nil)
+	_ fincen.Element = (*PartyIdentificationType)(nil)
+	_ fincen.Element = (*PartyNameType)(nil)
+	_ fincen.Element = (*PartyOccupationBusinessType)(nil)
+	_ fincen.Element = (*PartyType)(nil)
+	_ fincen.Element = (*PhoneNumberType)(nil)
+	_ fincen.Element = (*SuspiciousActivity)(nil)
+	_ fincen.Element = (*SuspiciousActivityClassificationType)(nil)
+	_ fincen.Element = (*SuspiciousActivityType)(nil)
+)
+
 // May be one of 1, 2, 3, 4, 5
 type ValidateActivityNarrativeSequenceNumber int
 

@@ -24,16 +24,16 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 }
 
 type Activity struct {
-	EFilingPriorDocumentNumber                  int64                            `xml:"EFilingPriorDocumentNumber,omitempty"`
-	FilingDateText                              fincen.DateYYYYMMDDType          `xml:"FilingDateText"`
-	MultipleSubjectsIndicator                   fincen.ValidateIndicatorType     `xml:"MultipleSubjectsIndicator,omitempty"`
-	SuspiciousTransactionIndicator              fincen.ValidateIndicatorType     `xml:"SuspiciousTransactionIndicator,omitempty"`
-	TransactionOnBehalfMultiplePersonsIndicator fincen.ValidateIndicatorType     `xml:"TransactionOnBehalfMultiplePersonsIndicator,omitempty"`
-	ActivityAssociation                         ActivityAssociationType          `xml:"ActivityAssociation"`
-	Party                                       []string                         `xml:"Party"`
-	CurrencyTransactionActivity                 string                           `xml:"CurrencyTransactionActivity"`
-	ActivityNarrativeInformation                ActivityNarrativeInformationType `xml:"ActivityNarrativeInformation,omitempty"`
-	SeqNum                                      int64                            `xml:"SeqNum,attr"`
+	EFilingPriorDocumentNumber                  int64                             `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
+	FilingDateText                              fincen.DateYYYYMMDDType           `xml:"FilingDateText"`
+	MultipleSubjectsIndicator                   *fincen.ValidateIndicatorType     `xml:"MultipleSubjectsIndicator,omitempty" json:",omitempty"`
+	SuspiciousTransactionIndicator              *fincen.ValidateIndicatorType     `xml:"SuspiciousTransactionIndicator,omitempty" json:",omitempty"`
+	TransactionOnBehalfMultiplePersonsIndicator *fincen.ValidateIndicatorType     `xml:"TransactionOnBehalfMultiplePersonsIndicator,omitempty" json:",omitempty"`
+	ActivityAssociation                         *ActivityAssociationType          `xml:"ActivityAssociation"`
+	Party                                       []string                          `xml:"Party"`
+	CurrencyTransactionActivity                 string                            `xml:"CurrencyTransactionActivity"`
+	ActivityNarrativeInformation                *ActivityNarrativeInformationType `xml:"ActivityNarrativeInformation,omitempty" json:",omitempty"`
+	SeqNum                                      int64                             `xml:"SeqNum,attr"`
 }
 
 func (r Activity) Validate(args ...string) error {
@@ -41,9 +41,9 @@ func (r Activity) Validate(args ...string) error {
 }
 
 type ActivityAssociationType struct {
-	CorrectsAmendsPriorReportIndicator fincen.ValidateIndicatorType `xml:"CorrectsAmendsPriorReportIndicator,omitempty"`
-	InitialReportIndicator             fincen.ValidateIndicatorType `xml:"InitialReportIndicator,omitempty"`
-	SeqNum                             int64                        `xml:"SeqNum,attr"`
+	CorrectsAmendsPriorReportIndicator *fincen.ValidateIndicatorType `xml:"CorrectsAmendsPriorReportIndicator,omitempty" json:",omitempty"`
+	InitialReportIndicator             *fincen.ValidateIndicatorType `xml:"InitialReportIndicator,omitempty" json:",omitempty"`
+	SeqNum                             int64                         `xml:"SeqNum,attr"`
 }
 
 func (r ActivityAssociationType) Validate(args ...string) error {
@@ -61,12 +61,12 @@ func (r ActivityNarrativeInformationType) Validate(args ...string) error {
 }
 
 type ActivityType struct {
-	EFilingPriorDocumentNumber                  int64                        `xml:"EFilingPriorDocumentNumber,omitempty"`
-	FilingDateText                              fincen.DateYYYYMMDDType      `xml:"FilingDateText"`
-	MultipleSubjectsIndicator                   fincen.ValidateIndicatorType `xml:"MultipleSubjectsIndicator,omitempty"`
-	SuspiciousTransactionIndicator              fincen.ValidateIndicatorType `xml:"SuspiciousTransactionIndicator,omitempty"`
-	TransactionOnBehalfMultiplePersonsIndicator fincen.ValidateIndicatorType `xml:"TransactionOnBehalfMultiplePersonsIndicator,omitempty"`
-	SeqNum                                      int64                        `xml:"SeqNum,attr"`
+	EFilingPriorDocumentNumber                  int64                         `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
+	FilingDateText                              fincen.DateYYYYMMDDType       `xml:"FilingDateText"`
+	MultipleSubjectsIndicator                   *fincen.ValidateIndicatorType `xml:"MultipleSubjectsIndicator,omitempty" json:",omitempty"`
+	SuspiciousTransactionIndicator              *fincen.ValidateIndicatorType `xml:"SuspiciousTransactionIndicator,omitempty" json:",omitempty"`
+	TransactionOnBehalfMultiplePersonsIndicator *fincen.ValidateIndicatorType `xml:"TransactionOnBehalfMultiplePersonsIndicator,omitempty" json:",omitempty"`
+	SeqNum                                      int64                         `xml:"SeqNum,attr"`
 }
 
 func (r ActivityType) Validate(args ...string) error {
@@ -74,12 +74,12 @@ func (r ActivityType) Validate(args ...string) error {
 }
 
 type AddressType struct {
-	RawCityText           fincen.RestrictString50  `xml:"RawCityText,omitempty"`
-	RawCountryCodeText    fincen.RestrictString2   `xml:"RawCountryCodeText,omitempty"`
-	RawStateCodeText      fincen.RestrictString3   `xml:"RawStateCodeText,omitempty"`
-	RawStreetAddress1Text fincen.RestrictString100 `xml:"RawStreetAddress1Text,omitempty"`
-	RawZIPCode            fincen.RestrictString9   `xml:"RawZIPCode,omitempty"`
-	SeqNum                int64                    `xml:"SeqNum,attr"`
+	RawCityText           *fincen.RestrictString50  `xml:"RawCityText,omitempty" json:",omitempty"`
+	RawCountryCodeText    *fincen.RestrictString2   `xml:"RawCountryCodeText,omitempty" json:",omitempty"`
+	RawStateCodeText      *fincen.RestrictString3   `xml:"RawStateCodeText,omitempty" json:",omitempty"`
+	RawStreetAddress1Text *fincen.RestrictString100 `xml:"RawStreetAddress1Text,omitempty" json:",omitempty"`
+	RawZIPCode            *fincen.RestrictString9   `xml:"RawZIPCode,omitempty" json:",omitempty"`
+	SeqNum                int64                     `xml:"SeqNum,attr"`
 }
 
 func (r AddressType) Validate(args ...string) error {
@@ -87,10 +87,10 @@ func (r AddressType) Validate(args ...string) error {
 }
 
 type CurrencyTransactionActivity struct {
-	InstallmentPaymentOtherIndicator  fincen.ValidateIndicatorType            `xml:"InstallmentPaymentOtherIndicator,omitempty"`
-	Total100DollarBillInAmountText    string                                  `xml:"Total100DollarBillInAmountText,omitempty"`
+	InstallmentPaymentOtherIndicator  *fincen.ValidateIndicatorType           `xml:"InstallmentPaymentOtherIndicator,omitempty" json:",omitempty"`
+	Total100DollarBillInAmountText    string                                  `xml:"Total100DollarBillInAmountText,omitempty" json:",omitempty"`
 	TotalCashInReceiveAmountText      string                                  `xml:"TotalCashInReceiveAmountText"`
-	TotalPriceAmountText              string                                  `xml:"TotalPriceAmountText,omitempty"`
+	TotalPriceAmountText              string                                  `xml:"TotalPriceAmountText,omitempty" json:",omitempty"`
 	TransactionDateText               fincen.DateYYYYMMDDType                 `xml:"TransactionDateText"`
 	CurrencyTransactionActivityDetail []CurrencyTransactionActivityDetailType `xml:"CurrencyTransactionActivityDetail"`
 	SeqNum                            int64                                   `xml:"SeqNum,attr"`
@@ -101,13 +101,13 @@ func (r CurrencyTransactionActivity) Validate(args ...string) error {
 }
 
 type CurrencyTransactionActivityDetailType struct {
-	CurrencyTransactionActivityDetailTypeCode fincen.ValidateCurrencyTransactionActivityDetailCodeType `xml:"CurrencyTransactionActivityDetailTypeCode,omitempty"`
-	DetailTransactionAmountText               fincen.RestrictString15                                  `xml:"DetailTransactionAmountText,omitempty"`
-	DetailTransactionDescription              string                                                   `xml:"DetailTransactionDescription,omitempty"`
-	InstrumentProductServiceTypeCode          fincen.ValidateInstrumentProductServiceTypeCode          `xml:"InstrumentProductServiceTypeCode,omitempty"`
-	IssuerNameText                            string                                                   `xml:"IssuerNameText,omitempty"`
-	OtherForeignCurrencyCountryText           fincen.RestrictString2                                   `xml:"OtherForeignCurrencyCountryText,omitempty"`
-	SeqNum                                    int64                                                    `xml:"SeqNum,attr"`
+	CurrencyTransactionActivityDetailTypeCode *fincen.ValidateCurrencyTransactionActivityDetailCodeType `xml:"CurrencyTransactionActivityDetailTypeCode,omitempty" json:",omitempty"`
+	DetailTransactionAmountText               *fincen.RestrictString15                                  `xml:"DetailTransactionAmountText,omitempty" json:",omitempty"`
+	DetailTransactionDescription              string                                                    `xml:"DetailTransactionDescription,omitempty" json:",omitempty"`
+	InstrumentProductServiceTypeCode          *fincen.ValidateInstrumentProductServiceTypeCode          `xml:"InstrumentProductServiceTypeCode,omitempty" json:",omitempty"`
+	IssuerNameText                            string                                                    `xml:"IssuerNameText,omitempty" json:",omitempty"`
+	OtherForeignCurrencyCountryText           *fincen.RestrictString2                                   `xml:"OtherForeignCurrencyCountryText,omitempty" json:",omitempty"`
+	SeqNum                                    int64                                                     `xml:"SeqNum,attr"`
 }
 
 func (r CurrencyTransactionActivityDetailType) Validate(args ...string) error {
@@ -115,12 +115,12 @@ func (r CurrencyTransactionActivityDetailType) Validate(args ...string) error {
 }
 
 type CurrencyTransactionActivityType struct {
-	InstallmentPaymentOtherIndicator fincen.ValidateIndicatorType `xml:"InstallmentPaymentOtherIndicator,omitempty"`
-	Total100DollarBillInAmountText   string                       `xml:"Total100DollarBillInAmountText,omitempty"`
-	TotalCashInReceiveAmountText     string                       `xml:"TotalCashInReceiveAmountText"`
-	TotalPriceAmountText             string                       `xml:"TotalPriceAmountText,omitempty"`
-	TransactionDateText              fincen.DateYYYYMMDDType      `xml:"TransactionDateText"`
-	SeqNum                           int64                        `xml:"SeqNum,attr"`
+	InstallmentPaymentOtherIndicator *fincen.ValidateIndicatorType `xml:"InstallmentPaymentOtherIndicator,omitempty" json:",omitempty"`
+	Total100DollarBillInAmountText   string                        `xml:"Total100DollarBillInAmountText,omitempty" json:",omitempty"`
+	TotalCashInReceiveAmountText     string                        `xml:"TotalCashInReceiveAmountText"`
+	TotalPriceAmountText             string                        `xml:"TotalPriceAmountText,omitempty" json:",omitempty"`
+	TransactionDateText              fincen.DateYYYYMMDDType       `xml:"TransactionDateText"`
+	SeqNum                           int64                         `xml:"SeqNum,attr"`
 }
 
 func (r CurrencyTransactionActivityType) Validate(args ...string) error {
@@ -128,15 +128,15 @@ func (r CurrencyTransactionActivityType) Validate(args ...string) error {
 }
 
 type Party struct {
-	ActivityPartyTypeCode   ValidateActivityPartyCodeType  `xml:"ActivityPartyTypeCode"`
-	IndividualBirthDateText fincen.DateYYYYMMDDOrBlankType `xml:"IndividualBirthDateText,omitempty"`
-	PartyTypeCode           fincen.ValidatePartyTypeCode   `xml:"PartyTypeCode,omitempty"`
-	PartyName               []PartyNameType                `xml:"PartyName,omitempty"`
-	Address                 AddressType                    `xml:"Address,omitempty"`
-	PhoneNumber             PhoneNumberType                `xml:"PhoneNumber,omitempty"`
-	PartyIdentification     []PartyIdentificationType      `xml:"PartyIdentification,omitempty"`
-	PartyOccupationBusiness PartyOccupationBusinessType    `xml:"PartyOccupationBusiness,omitempty"`
-	SeqNum                  int64                          `xml:"SeqNum,attr"`
+	ActivityPartyTypeCode   ValidateActivityPartyCodeType   `xml:"ActivityPartyTypeCode"`
+	IndividualBirthDateText *fincen.DateYYYYMMDDOrBlankType `xml:"IndividualBirthDateText,omitempty" json:",omitempty"`
+	PartyTypeCode           *fincen.ValidatePartyTypeCode   `xml:"PartyTypeCode,omitempty" json:",omitempty"`
+	PartyName               []PartyNameType                 `xml:"PartyName,omitempty" json:",omitempty"`
+	Address                 *AddressType                    `xml:"Address,omitempty" json:",omitempty"`
+	PhoneNumber             *PhoneNumberType                `xml:"PhoneNumber,omitempty" json:",omitempty"`
+	PartyIdentification     []PartyIdentificationType       `xml:"PartyIdentification,omitempty" json:",omitempty"`
+	PartyOccupationBusiness *PartyOccupationBusinessType    `xml:"PartyOccupationBusiness,omitempty" json:",omitempty"`
+	SeqNum                  int64                           `xml:"SeqNum,attr"`
 }
 
 func (r Party) Validate(args ...string) error {
@@ -144,8 +144,8 @@ func (r Party) Validate(args ...string) error {
 }
 
 type PartyIdentificationType struct {
-	OtherIssuerStateText          fincen.RestrictString3              `xml:"OtherIssuerStateText,omitempty"`
-	PartyIdentificationNumberText fincen.RestrictString25             `xml:"PartyIdentificationNumberText,omitempty"`
+	OtherIssuerStateText          *fincen.RestrictString3             `xml:"OtherIssuerStateText,omitempty" json:",omitempty"`
+	PartyIdentificationNumberText *fincen.RestrictString25            `xml:"PartyIdentificationNumberText,omitempty" json:",omitempty"`
 	PartyIdentificationTypeCode   ValidatePartyIdentificationCodeType `xml:"PartyIdentificationTypeCode"`
 	SeqNum                        int64                               `xml:"SeqNum,attr"`
 }
@@ -155,13 +155,13 @@ func (r PartyIdentificationType) Validate(args ...string) error {
 }
 
 type PartyNameType struct {
-	PartyNameTypeCode           ValidatePartyNameCodeType `xml:"PartyNameTypeCode,omitempty"`
-	RawEntityIndividualLastName fincen.RestrictString150  `xml:"RawEntityIndividualLastName,omitempty"`
-	RawIndividualFirstName      fincen.RestrictString35   `xml:"RawIndividualFirstName,omitempty"`
-	RawIndividualMiddleName     fincen.RestrictString35   `xml:"RawIndividualMiddleName,omitempty"`
-	RawIndividualTitleText      fincen.RestrictString35   `xml:"RawIndividualTitleText,omitempty"`
-	RawPartyFullName            fincen.RestrictString150  `xml:"RawPartyFullName,omitempty"`
-	SeqNum                      int64                     `xml:"SeqNum,attr"`
+	PartyNameTypeCode           *ValidatePartyNameCodeType `xml:"PartyNameTypeCode,omitempty" json:",omitempty"`
+	RawEntityIndividualLastName *fincen.RestrictString150  `xml:"RawEntityIndividualLastName,omitempty" json:",omitempty"`
+	RawIndividualFirstName      *fincen.RestrictString35   `xml:"RawIndividualFirstName,omitempty" json:",omitempty"`
+	RawIndividualMiddleName     *fincen.RestrictString35   `xml:"RawIndividualMiddleName,omitempty" json:",omitempty"`
+	RawIndividualTitleText      *fincen.RestrictString35   `xml:"RawIndividualTitleText,omitempty" json:",omitempty"`
+	RawPartyFullName            *fincen.RestrictString150  `xml:"RawPartyFullName,omitempty" json:",omitempty"`
+	SeqNum                      int64                      `xml:"SeqNum,attr"`
 }
 
 func (r PartyNameType) Validate(args ...string) error {
@@ -178,10 +178,10 @@ func (r PartyOccupationBusinessType) Validate(args ...string) error {
 }
 
 type PartyType struct {
-	ActivityPartyTypeCode   ValidateActivityPartyCodeType  `xml:"ActivityPartyTypeCode"`
-	IndividualBirthDateText fincen.DateYYYYMMDDOrBlankType `xml:"IndividualBirthDateText,omitempty"`
-	PartyTypeCode           fincen.ValidatePartyTypeCode   `xml:"PartyTypeCode,omitempty"`
-	SeqNum                  int64                          `xml:"SeqNum,attr"`
+	ActivityPartyTypeCode   ValidateActivityPartyCodeType   `xml:"ActivityPartyTypeCode"`
+	IndividualBirthDateText *fincen.DateYYYYMMDDOrBlankType `xml:"IndividualBirthDateText,omitempty" json:",omitempty"`
+	PartyTypeCode           *fincen.ValidatePartyTypeCode   `xml:"PartyTypeCode,omitempty" json:",omitempty"`
+	SeqNum                  int64                           `xml:"SeqNum,attr"`
 }
 
 func (r PartyType) Validate(args ...string) error {
