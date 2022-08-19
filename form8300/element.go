@@ -19,6 +19,10 @@ type EFilingBatchXML struct {
 	ActivityCount int64    `xml:"ActivityCount,attr"`
 }
 
+func (r EFilingBatchXML) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
+}
+
 type Activity struct {
 	EFilingPriorDocumentNumber                  int64                            `xml:"EFilingPriorDocumentNumber,omitempty"`
 	FilingDateText                              fincen.DateYYYYMMDDType          `xml:"FilingDateText"`
@@ -32,16 +36,28 @@ type Activity struct {
 	SeqNum                                      int64                            `xml:"SeqNum,attr"`
 }
 
+func (r Activity) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
+}
+
 type ActivityAssociationType struct {
 	CorrectsAmendsPriorReportIndicator fincen.ValidateIndicatorType `xml:"CorrectsAmendsPriorReportIndicator,omitempty"`
 	InitialReportIndicator             fincen.ValidateIndicatorType `xml:"InitialReportIndicator,omitempty"`
 	SeqNum                             int64                        `xml:"SeqNum,attr"`
 }
 
+func (r ActivityAssociationType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
+}
+
 type ActivityNarrativeInformationType struct {
 	ActivityNarrativeSequenceNumber ValidateActivityNarrativeSequenceNumber `xml:"ActivityNarrativeSequenceNumber"`
 	ActivityNarrativeText           fincen.RestrictString750                `xml:"ActivityNarrativeText"`
 	SeqNum                          int64                                   `xml:"SeqNum,attr"`
+}
+
+func (r ActivityNarrativeInformationType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
 }
 
 type ActivityType struct {
@@ -53,6 +69,10 @@ type ActivityType struct {
 	SeqNum                                      int64                        `xml:"SeqNum,attr"`
 }
 
+func (r ActivityType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
+}
+
 type AddressType struct {
 	RawCityText           fincen.RestrictString50  `xml:"RawCityText,omitempty"`
 	RawCountryCodeText    fincen.RestrictString2   `xml:"RawCountryCodeText,omitempty"`
@@ -60,6 +80,10 @@ type AddressType struct {
 	RawStreetAddress1Text fincen.RestrictString100 `xml:"RawStreetAddress1Text,omitempty"`
 	RawZIPCode            fincen.RestrictString9   `xml:"RawZIPCode,omitempty"`
 	SeqNum                int64                    `xml:"SeqNum,attr"`
+}
+
+func (r AddressType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
 }
 
 type CurrencyTransactionActivity struct {
@@ -72,6 +96,10 @@ type CurrencyTransactionActivity struct {
 	SeqNum                            int64                                   `xml:"SeqNum,attr"`
 }
 
+func (r CurrencyTransactionActivity) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
+}
+
 type CurrencyTransactionActivityDetailType struct {
 	CurrencyTransactionActivityDetailTypeCode fincen.ValidateCurrencyTransactionActivityDetailCodeType `xml:"CurrencyTransactionActivityDetailTypeCode,omitempty"`
 	DetailTransactionAmountText               fincen.RestrictString15                                  `xml:"DetailTransactionAmountText,omitempty"`
@@ -82,6 +110,10 @@ type CurrencyTransactionActivityDetailType struct {
 	SeqNum                                    int64                                                    `xml:"SeqNum,attr"`
 }
 
+func (r CurrencyTransactionActivityDetailType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
+}
+
 type CurrencyTransactionActivityType struct {
 	InstallmentPaymentOtherIndicator fincen.ValidateIndicatorType `xml:"InstallmentPaymentOtherIndicator,omitempty"`
 	Total100DollarBillInAmountText   string                       `xml:"Total100DollarBillInAmountText,omitempty"`
@@ -89,6 +121,10 @@ type CurrencyTransactionActivityType struct {
 	TotalPriceAmountText             string                       `xml:"TotalPriceAmountText,omitempty"`
 	TransactionDateText              fincen.DateYYYYMMDDType      `xml:"TransactionDateText"`
 	SeqNum                           int64                        `xml:"SeqNum,attr"`
+}
+
+func (r CurrencyTransactionActivityType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
 }
 
 type Party struct {
@@ -103,11 +139,19 @@ type Party struct {
 	SeqNum                  int64                          `xml:"SeqNum,attr"`
 }
 
+func (r Party) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
+}
+
 type PartyIdentificationType struct {
 	OtherIssuerStateText          fincen.RestrictString3              `xml:"OtherIssuerStateText,omitempty"`
 	PartyIdentificationNumberText fincen.RestrictString25             `xml:"PartyIdentificationNumberText,omitempty"`
 	PartyIdentificationTypeCode   ValidatePartyIdentificationCodeType `xml:"PartyIdentificationTypeCode"`
 	SeqNum                        int64                               `xml:"SeqNum,attr"`
+}
+
+func (r PartyIdentificationType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
 }
 
 type PartyNameType struct {
@@ -120,9 +164,17 @@ type PartyNameType struct {
 	SeqNum                      int64                     `xml:"SeqNum,attr"`
 }
 
+func (r PartyNameType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
+}
+
 type PartyOccupationBusinessType struct {
 	OccupationBusinessText fincen.RestrictString30 `xml:"OccupationBusinessText"`
 	SeqNum                 int64                   `xml:"SeqNum,attr"`
+}
+
+func (r PartyOccupationBusinessType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
 }
 
 type PartyType struct {
@@ -132,7 +184,15 @@ type PartyType struct {
 	SeqNum                  int64                          `xml:"SeqNum,attr"`
 }
 
+func (r PartyType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
+}
+
 type PhoneNumberType struct {
 	PhoneNumberText fincen.RestrictString16 `xml:"PhoneNumberText"`
 	SeqNum          int64                   `xml:"SeqNum,attr"`
+}
+
+func (r PhoneNumberType) Validate(args ...string) error {
+	return fincen.Validate(&r, args...)
 }
