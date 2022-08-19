@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2017 (http://www.altova.com) by FinCEN (Department of the Treasury - Financial Crimes Enforcement Network) -->
+<!-- current version v1.2 (12/17/2021) -->
+<!-- Revision History:
+Version 1.2 (12/17/2021) -
+1. Changed the maximum character limit for the OccupationBusinessText element from 30 (RestrictString30) to 50 (RestrictString50); 
+2. Added a new retriction type for the IndividualBirthDatText element: DateYYYYMMDDOrBlankTypeDOB - which now allows "00" to be accepted for the month and/or day portion of a date of birth when the month and/or day of birth is unknown while the year is known.
+Version 1.1 (7/31/2018) - 
+1. Leading/trailing spaces, carriage returns (&#13;), line feeds (&#10;) and horizontal tabs (&#09;) must not be included in any value in the submitted XML batch file; as a result, FinCEN has added the pattern "\S+( +\S+)*|" to all type string restrictions. Some elements do not include this pattern (such as "sting" type elements with pre-defined enumerations and "long" type elements such as OrganizationTypeID and OrganizationSubtypeID); however, filers must not include the above unwanted characters/formatting for these elements as well; otherwise, the entire batch submission will be rejected.
+Version 1.0 (5/25/2017) - Initial version-->
+<xsd:schema xmlns="www.fincen.gov/base" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="www.fincen.gov/base" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+
+		<xsd:complexType name="ActivityType">
+					<xsd:sequence>
+						<xsd:element name="EFilingPriorDocumentNumber" type="xsd:long" minOccurs="0"/>
+						<xsd:element name="FilingDateText" type="DateYYYYMMDDType"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="ActivityAssociationType">
+					<xsd:sequence>
+						<xsd:element name="CorrectsAmendsPriorReportIndicator" type="ValidateIndicatorType"/>
+						<xsd:element name="FinCENDirectBackFileIndicator" type="ValidateIndicatorType"/>
+						<xsd:element name="InitialReportIndicator" type="ValidateIndicatorType"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="PartyOccupationBusinessType">
+					<xsd:sequence>
+						<xsd:element name="NAICSCode" type="RestrictString6" minOccurs="0"/>
+						<xsd:element name="OccupationBusinessText" type="RestrictString50" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="PartyNameType">
+					<xsd:sequence>
+						<xsd:element name="EntityLastNameUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="FirstNameUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="PartyNameTypeCode" type="ValidatePartyNameCodeType" minOccurs="0"/>
+						<xsd:element name="RawEntityIndividualLastName" type="RestrictString150" minOccurs="0"/>
+						<xsd:element name="RawIndividualFirstName" type="RestrictString35" minOccurs="0"/>
+						<xsd:element name="RawIndividualMiddleName" type="RestrictString35" minOccurs="0"/>
+						<xsd:element name="RawIndividualNameSuffixText" type="RestrictString35" minOccurs="0"/>
+						<xsd:element name="RawPartyFullName" type="RestrictString150" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="PartyIdentificationType">
+					<xsd:sequence>
+						<xsd:element name="IdentificationPresentUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="OtherIssuerCountryText" type="RestrictString2" minOccurs="0"/>
+						<xsd:element name="OtherIssuerStateText" type="RestrictString3" minOccurs="0"/>
+						<xsd:element name="OtherPartyIdentificationTypeText" type="RestrictString50" minOccurs="0"/>
+						<xsd:element name="PartyIdentificationNumberText" type="RestrictString25" minOccurs="0"/>
+						<xsd:element name="PartyIdentificationTypeCode" type="ValidatePartyIdentificationCodeType" minOccurs="0"/>
+						<xsd:element name="TINUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="PhoneNumberType">
+					<xsd:sequence>
+						<xsd:element name="PhoneNumberExtensionText" type="RestrictString6" minOccurs="0"/>
+						<xsd:element name="PhoneNumberText" type="RestrictString16" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="ElectronicAddressType">
+					<xsd:sequence>
+						<xsd:element name="ElectronicAddressText" type="RestrictString517" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="AccountType">
+					<xsd:sequence>
+						<xsd:element name="AccountNumberText" type="RestrictString40" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="PartyAccountAssociationType">
+					<xsd:sequence>
+						<xsd:element name="PartyAccountAssociationTypeCode" type="ValidatePartyAccountAssociationCodeType" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="PartyType">
+					<xsd:sequence>
+						<xsd:element name="ActivityPartyTypeCode" type="ValidateActivityPartyCodeType"/>
+						<xsd:element name="BirthDateUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="EFilingCoverageBeginningDateText" type="DateYYYYMMDDType" minOccurs="0"/>
+						<xsd:element name="EFilingCoverageEndDateText" type="DateYYYYMMDDType" minOccurs="0"/>
+						<xsd:element name="FemaleGenderIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="IndividualBirthDateText" type="DateYYYYMMDDOrBlankTypeDOB" minOccurs="0"/>
+						<xsd:element name="IndividualEntityCashInAmountText" type="RestrictString15" minOccurs="0"/>
+						<xsd:element name="IndividualEntityCashOutAmountText" type="RestrictString15" minOccurs="0"/>
+						<xsd:element name="MaleGenderIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="MultipleTransactionsPersonsIndividualsIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="PartyAsEntityOrganizationIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="PrimaryRegulatorTypeCode" type="ValidateFederalRegulatorCodeType" minOccurs="0"/>
+						<xsd:element name="UnknownGenderIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="OrganizationClassificationTypeSubtypeType">
+					<xsd:sequence>
+						<xsd:element name="OrganizationSubtypeID" type="ValidateOrganizationSubtypeCodeType" minOccurs="0"/>
+						<xsd:element name="OrganizationTypeID" type="ValidateOrganizationCodeType"/>
+						<xsd:element name="OtherOrganizationSubTypeText" type="RestrictString50" minOccurs="0"/>
+						<xsd:element name="OtherOrganizationTypeText" type="RestrictString50" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="AddressType">
+					<xsd:sequence>
+						<xsd:element name="CityUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="CountryCodeUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="RawCityText" type="RestrictString50" minOccurs="0"/>
+						<xsd:element name="RawCountryCodeText" type="RestrictString2" minOccurs="0"/>
+						<xsd:element name="RawStateCodeText" type="RestrictString3" minOccurs="0"/>
+						<xsd:element name="RawStreetAddress1Text" type="RestrictString100" minOccurs="0"/>
+						<xsd:element name="RawZIPCode" type="RestrictString9" minOccurs="0"/>
+						<xsd:element name="StateCodeUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="StreetAddressUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+						<xsd:element name="ZIPCodeUnknownIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="CurrencyTransactionActivityType">
+					<xsd:sequence>
+						<xsd:element name="AggregateTransactionIndicator" type="ValidateIndicatorType"/>
+						<xsd:element name="ArmoredCarServiceIndicator" type="ValidateIndicatorType"/>
+						<xsd:element name="ATMIndicator" type="ValidateIndicatorType"/>
+						<xsd:element name="MailDepositShipmentIndicator" type="ValidateIndicatorType"/>
+						<xsd:element name="NightDepositIndicator" type="ValidateIndicatorType"/>
+						<xsd:element name="SharedBranchingIndicator" type="ValidateIndicatorType"/>
+						<xsd:element name="TotalCashInReceiveAmountText" type="RestrictString15"/>
+						<xsd:element name="TotalCashOutAmountText" type="RestrictString15"/>
+						<xsd:element name="TransactionDateText" type="DateYYYYMMDDType"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:complexType name="CurrencyTransactionActivityDetailType">
+					<xsd:sequence>
+						<xsd:element name="CurrencyTransactionActivityDetailTypeCode" type="ValidateCurrencyTransactionActvityDetailCodeType"/>
+						<xsd:element name="DetailTransactionAmountText" type="RestrictString15"/>
+						<xsd:element name="OtherCurrencyTransactionActivityDetailText" type="RestrictString50"/>
+						<xsd:element name="OtherForeignCurrencyCountryText" type="RestrictString2"/>
+					</xsd:sequence>
+					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+		</xsd:complexType>
+	<!-- End of redefine -->
+
+	<xsd:element name="EFilingBatchXML">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="FormTypeCode" type="xsd:string" fixed="CTRX"/>
+				<xsd:element ref="Activity" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="TotalAmount" type="xsd:decimal" use="required"/>
+			<xsd:attribute name="PartyCount" type="xsd:long" use="required"/>
+			<xsd:attribute name="ActivityCount" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:unique name="Unique-SeqNum">
+			<xsd:selector xpath=".//*"/>
+			<xsd:field xpath="@SeqNum"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:element name="Activity">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="ActivityType">
+					<xsd:sequence>
+						<xsd:element name="ActivityAssociation" type="ActivityAssociationType"/>
+						<xsd:element ref="Party" minOccurs="6" maxOccurs="2002"/>
+						<xsd:element ref="CurrencyTransactionActivity"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Party">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="PartyType">
+					<xsd:sequence>
+						<xsd:element name="PartyName" type="PartyNameType" maxOccurs="2"/>
+						<xsd:element name="Address" type="AddressType" minOccurs="0"/>
+						<xsd:element name="PhoneNumber" type="PhoneNumberType" minOccurs="0"/>
+						<xsd:element name="PartyIdentification" type="PartyIdentificationType" minOccurs="0" maxOccurs="2"/>
+						<xsd:element name="OrganizationClassificationTypeSubtype" type="OrganizationClassificationTypeSubtypeType" minOccurs="0"/>
+						<xsd:element name="PartyOccupationBusiness" type="PartyOccupationBusinessType" minOccurs="0"/>
+						<xsd:element name="ElectronicAddress" type="ElectronicAddressType" minOccurs="0"/>
+						<xsd:element name="Account" minOccurs="0" maxOccurs="198">
+							<xsd:complexType>
+								<xsd:complexContent>
+									<xsd:extension base="AccountType">
+										<xsd:sequence>
+											<xsd:element name="PartyAccountAssociation" type="PartyAccountAssociationType" minOccurs="0"/>
+										</xsd:sequence>
+									</xsd:extension>
+								</xsd:complexContent>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CurrencyTransactionActivity">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="CurrencyTransactionActivityType">
+					<xsd:sequence>
+						<xsd:element name="CurrencyTransactionActivityDetail" type="CurrencyTransactionActivityDetailType" maxOccurs="219"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:simpleType name="ValidateIndicatorType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+			<xsd:enumeration value=""/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateYYYYMMDDType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="(19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateYYYYMMDDOrBlankType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="(19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateYYYYMMDDOrBlankTypeDOB">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="(19|20)[0-9][0-9](0[0-9]|1[0-2])(0[0-9]|1[0-9]|2[0-9]|3[01])|"/>
+		</xsd:restriction>
+	</xsd:simpleType>	
+	<xsd:simpleType name="RestrictString2">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString3">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString6">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString9">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="9"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString15">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString16">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="16"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString25">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString30">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString35">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString40">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString50">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString100">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString150">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="150"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString517">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="517"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidateActivityPartyCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="35">
+				<xsd:annotation>
+					<xsd:documentation>Transmitter</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="37">
+				<xsd:annotation>
+					<xsd:documentation>Transmitter Contact</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="30">
+				<xsd:annotation>
+					<xsd:documentation>Reporting financial institution</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="34">
+				<xsd:annotation>
+					<xsd:documentation>Transaction location business</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="50">
+				<xsd:annotation>
+					<xsd:documentation>Person conducting transaction on own behalf</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="17">
+				<xsd:annotation>
+					<xsd:documentation>Person conducting transaction for another</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="23">
+				<xsd:annotation>
+					<xsd:documentation>Person on whose behalf this transaction was conducted</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="58">
+				<xsd:annotation>
+					<xsd:documentation>Common carrier</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="8">
+				<xsd:annotation>
+					<xsd:documentation>Contact for assistance</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidateOrganizationCodeType">
+		<xsd:restriction base="xsd:int">
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:documentation>Casino/Card club</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="2">
+				<xsd:annotation>
+					<xsd:documentation>Depository institution</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="4">
+				<xsd:annotation>
+					<xsd:documentation>Money Services Business (MSB)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="5">
+				<xsd:annotation>
+					<xsd:documentation>Securities/Futures</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="999">
+				<xsd:annotation>
+					<xsd:documentation>Other</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidateOrganizationSubtypeCodeType">
+		<xsd:restriction base="xsd:int">
+			<xsd:enumeration value="101">
+				<xsd:annotation>
+					<xsd:documentation>State licensed casino</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="102">
+				<xsd:annotation>
+					<xsd:documentation>Tribal authorized casino</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="103">
+				<xsd:annotation>
+					<xsd:documentation>Card club</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="1999">
+				<xsd:annotation>
+					<xsd:documentation>Other</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidatePartyNameCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="L">
+				<xsd:annotation>
+					<xsd:documentation>Legal name</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="AKA">
+				<xsd:annotation>
+					<xsd:documentation>Also known as (AKA)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="DBA">
+				<xsd:annotation>
+					<xsd:documentation>Doing business as (DBA)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidatePartyAccountAssociationCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="8">
+				<xsd:annotation>
+					<xsd:documentation>Activity affected account - Cash in</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="9">
+				<xsd:annotation>
+					<xsd:documentation>Activity affected account - Cash out</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidateFederalRegulatorCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="9">
+				<xsd:annotation>
+					<xsd:documentation>CFTC</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:documentation>Federal Reserve</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="2">
+				<xsd:annotation>
+					<xsd:documentation>FDIC</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="7">
+				<xsd:annotation>
+					<xsd:documentation>IRS</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="3">
+				<xsd:annotation>
+					<xsd:documentation>NCUA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="4">
+				<xsd:annotation>
+					<xsd:documentation>OCC</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="6">
+				<xsd:annotation>
+					<xsd:documentation>SEC</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="14">
+				<xsd:annotation>
+					<xsd:documentation>Unknown</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidatePartyIdentificationCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:documentation>SSN/ITIN</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="2">
+				<xsd:annotation>
+					<xsd:documentation>EIN</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="4">
+				<xsd:annotation>
+					<xsd:documentation>TIN</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="5">
+				<xsd:annotation>
+					<xsd:documentation>Driver's license/State ID</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="6">
+				<xsd:annotation>
+					<xsd:documentation>Passport</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="7">
+				<xsd:annotation>
+					<xsd:documentation>Alien registration</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="9">
+				<xsd:annotation>
+					<xsd:documentation>Foreign</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="10">
+				<xsd:annotation>
+					<xsd:documentation>CRD number</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="11">
+				<xsd:annotation>
+					<xsd:documentation>IARD number</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="12">
+				<xsd:annotation>
+					<xsd:documentation>NFA ID number</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="13">
+				<xsd:annotation>
+					<xsd:documentation>SEC number</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="14">
+				<xsd:annotation>
+					<xsd:documentation>RSSD number</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="28">
+				<xsd:annotation>
+					<xsd:documentation>Transmitter Control Code</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="999">
+				<xsd:annotation>
+					<xsd:documentation>Other</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidateCurrencyTransactionActvityDetailCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="55">
+				<xsd:annotation>
+					<xsd:documentation>Deposit(s)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="46">
+				<xsd:annotation>
+					<xsd:documentation>Payment(s)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="23">
+				<xsd:annotation>
+					<xsd:documentation>Currency received from wire transfer(s) out</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="12">
+				<xsd:annotation>
+					<xsd:documentation>Negotiable instrument(s) purchased</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="14">
+				<xsd:annotation>
+					<xsd:documentation>Currency exchange in</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="49">
+				<xsd:annotation>
+					<xsd:documentation>Currency to prepaid access</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="18">
+				<xsd:annotation>
+					<xsd:documentation>Purchase(s) of casino chips, tokens, and other gaming instruments</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="21">
+				<xsd:annotation>
+					<xsd:documentation>Currency wager(s) (including money plays)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="25">
+				<xsd:annotation>
+					<xsd:documentation>Bills inserted into gaming devices</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="997">
+				<xsd:annotation>
+					<xsd:documentation>Other cash in</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="56">
+				<xsd:annotation>
+					<xsd:documentation>Withdrawal(s)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="30">
+				<xsd:annotation>
+					<xsd:documentation>Advance(s) on credit (including markers)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="32">
+				<xsd:annotation>
+					<xsd:documentation>Currency paid from wire transfer(s) in</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="13">
+				<xsd:annotation>
+					<xsd:documentation>Negotiable instrument(s) cashed</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="15">
+				<xsd:annotation>
+					<xsd:documentation>Currency exchange out</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="48">
+				<xsd:annotation>
+					<xsd:documentation>Currency from prepaid access</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="28">
+				<xsd:annotation>
+					<xsd:documentation>Redemption(s) of casino chips, tokens, TITO tickets, and other gaming instruments</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="31">
+				<xsd:annotation>
+					<xsd:documentation>Payment(s) on wager(s)/bet(s) (Including race book, slot jackpot(s) and OTB or sports pool)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="33">
+				<xsd:annotation>
+					<xsd:documentation>Travel and complimentary expenses and gaming incentives</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="34">
+				<xsd:annotation>
+					<xsd:documentation>Payment for tournament, contest or other promotions</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="998">
+				<xsd:annotation>
+					<xsd:documentation>Other cash out</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="53">
+				<xsd:annotation>
+					<xsd:documentation>Foreign currency in</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="54">
+				<xsd:annotation>
+					<xsd:documentation>Foreign currency out</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
