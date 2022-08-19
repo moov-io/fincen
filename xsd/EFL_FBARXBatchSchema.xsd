@@ -6,104 +6,104 @@
 <!--v1.2 (07/31/2018) - Revision details: Leading/trailing spaces, carriage returns (&#13;), line feeds (&#10;) and horizontal tabs (&#09;) must not be included in any value in the submitted XML batch file; as a result, FinCEN has added the pattern "\S+( +\S+)*|" to all type string restrictions. Some elements do not include this pattern (such as "sting" type elements with pre-defined enumerations and "int" type elements such as ActivityNarrativeSequenceNumber); however, filers must not include the above unwanted characters/formatting for these elements as well; otherwise, the entire batch submission will be rejected.-->
 <xsd:schema xmlns="www.fincen.gov/base" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="www.fincen.gov/base" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.2">
 
-		<xsd:complexType name="ActivityType">
-					<xsd:sequence>
-						<xsd:element name="ApprovalOfficialSignatureDateText" type="DateYYYYMMDDType"/>
-						<xsd:element name="EFilingPriorDocumentNumber" type="xsd:long" minOccurs="0"/>
-						<xsd:element name="PreparerFilingSignatureIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-						<xsd:element name="ThirdPartyPreparerIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
-		<xsd:complexType name="ActivityAssociationType">
-					<xsd:sequence>
-						<xsd:element name="CorrectsAmendsPriorReportIndicator" type="ValidateIndicatorType"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
-		<xsd:complexType name="PartyNameType">
-					<xsd:sequence>
-						<xsd:element name="PartyNameTypeCode" type="ValidatePartyNameCodeType"/>
-						<xsd:element name="RawEntityIndividualLastName" type="RestrictString150" minOccurs="0"/>
-						<xsd:element name="RawIndividualFirstName" type="RestrictString35" minOccurs="0"/>
-						<xsd:element name="RawIndividualMiddleName" type="RestrictString35" minOccurs="0"/>
-						<xsd:element name="RawIndividualNameSuffixText" type="RestrictString35" minOccurs="0"/>
-						<xsd:element name="RawIndividualTitleText" type="RestrictString20" minOccurs="0"/>
-						<xsd:element name="RawPartyFullName" type="RestrictString150" minOccurs="0"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
-		<xsd:complexType name="PartyIdentificationType">
-					<xsd:sequence>
-						<xsd:element name="OtherIssuerCountryText" type="RestrictString2" minOccurs="0"/>
-						<xsd:element name="OtherPartyIdentificationTypeText" type="RestrictString50" minOccurs="0"/>
-						<xsd:element name="PartyIdentificationNumberText" type="RestrictString25"/>
-						<xsd:element name="PartyIdentificationTypeCode" type="ValidatePartyIdentificationCodeType"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
-		<xsd:complexType name="PhoneNumberType">
-					<xsd:sequence>
-						<xsd:element name="PhoneNumberExtensionText" type="RestrictString6" minOccurs="0"/>
-						<xsd:element name="PhoneNumberText" type="RestrictString16" minOccurs="0"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
-		<xsd:complexType name="PartyType">
-					<xsd:sequence>
-						<xsd:element name="ActivityPartyTypeCode" type="ValidateActivityPartyCodeType"/>
-						<xsd:element name="FilerFinancialInterest25ForeignAccountIndicator" type="ValidateIndicatorYNType" minOccurs="0"/>
-						<xsd:element name="FilerTypeConsolidatedIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-						<xsd:element name="FilerTypeCorporationIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-						<xsd:element name="FilerTypeFiduciaryOtherIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-						<xsd:element name="FilerTypeIndividualIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-						<xsd:element name="FilerTypeOtherText" type="RestrictString50" minOccurs="0"/>
-						<xsd:element name="FilerTypePartnershipIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-						<xsd:element name="IndividualBirthDateText" type="DateYYYYMMDDOrBlankType" minOccurs="0"/>
-						<xsd:element name="PartyAsEntityOrganizationIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-						<xsd:element name="SelfEmployedIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-						<xsd:element name="SignatureAuthoritiesIndicator" type="ValidateIndicatorYNType" minOccurs="0"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
-		<xsd:complexType name="AddressType">
-					<xsd:sequence>
-						<xsd:element name="RawCityText" type="RestrictString50" minOccurs="0"/>
-						<xsd:element name="RawCountryCodeText" type="RestrictString2" minOccurs="0"/>
-						<xsd:element name="RawStateCodeText" type="RestrictString3" minOccurs="0"/>
-						<xsd:element name="RawStreetAddress1Text" type="RestrictString100" minOccurs="0"/>
-						<xsd:element name="RawZIPCode" type="RestrictString9" minOccurs="0"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
-		<xsd:complexType name="ForeignAccountActivityType">
-					<xsd:sequence>
-						<xsd:element name="ForeignAccountHeldQuantityText" type="RestrictString4" minOccurs="0"/>
-						<xsd:element name="LateFilingReasonCode" type="ValidateLateFilingReasonCodeType" minOccurs="0"/>
-						<xsd:element name="ReportCalendarYearText" type="DateYYYYType"/>
-						<xsd:element name="SignatureAuthoritiesQuantityText" type="RestrictString4" minOccurs="0"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
-		<xsd:complexType name="AccountType">
-					<xsd:sequence>
-						<xsd:element name="AccountMaximumValueAmountText" type="RestrictString15" minOccurs="0"/>
-						<xsd:element name="AccountNumberText" type="RestrictString40" minOccurs="0"/>
-						<xsd:element name="AccountTypeCode" type="ValidateAccountTypeCodeType" minOccurs="0"/>
-						<xsd:element name="EFilingAccountTypeCode" type="ValidateEFilingAccountTypeCodeType"/>
-						<xsd:element name="JointOwnerQuantityText" type="RestrictString3" minOccurs="0"/>
-						<xsd:element name="OtherAccountTypeText" type="RestrictString50" minOccurs="0"/>
-						<xsd:element name="UnknownMaximumValueIndicator" type="ValidateIndicatorType" minOccurs="0"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
-		<xsd:complexType name="ActivityNarrativeInformationType">
-					<xsd:sequence>
-						<xsd:element name="ActivityNarrativeSequenceNumber" type="xsd:int"/>
-						<xsd:element name="ActivityNarrativeText" type="RestrictString4000"/>
-					</xsd:sequence>
-					<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
-		</xsd:complexType>
+	<xsd:complexType name="ActivityType">
+				<xsd:sequence>
+					<xsd:element name="ApprovalOfficialSignatureDateText" type="DateYYYYMMDDType"/>
+					<xsd:element name="EFilingPriorDocumentNumber" type="xsd:long" minOccurs="0"/>
+					<xsd:element name="PreparerFilingSignatureIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="ThirdPartyPreparerIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ActivityAssociationType">
+				<xsd:sequence>
+					<xsd:element name="CorrectsAmendsPriorReportIndicator" type="ValidateIndicatorType"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PartyNameType">
+				<xsd:sequence>
+					<xsd:element name="PartyNameTypeCode" type="ValidatePartyNameCodeType"/>
+					<xsd:element name="RawEntityIndividualLastName" type="RestrictString150" minOccurs="0"/>
+					<xsd:element name="RawIndividualFirstName" type="RestrictString35" minOccurs="0"/>
+					<xsd:element name="RawIndividualMiddleName" type="RestrictString35" minOccurs="0"/>
+					<xsd:element name="RawIndividualNameSuffixText" type="RestrictString35" minOccurs="0"/>
+					<xsd:element name="RawIndividualTitleText" type="RestrictString20" minOccurs="0"/>
+					<xsd:element name="RawPartyFullName" type="RestrictString150" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PartyIdentificationType">
+				<xsd:sequence>
+					<xsd:element name="OtherIssuerCountryText" type="RestrictString2" minOccurs="0"/>
+					<xsd:element name="OtherPartyIdentificationTypeText" type="RestrictString50" minOccurs="0"/>
+					<xsd:element name="PartyIdentificationNumberText" type="RestrictString25"/>
+					<xsd:element name="PartyIdentificationTypeCode" type="ValidatePartyIdentificationCodeType"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PhoneNumberType">
+				<xsd:sequence>
+					<xsd:element name="PhoneNumberExtensionText" type="RestrictString6" minOccurs="0"/>
+					<xsd:element name="PhoneNumberText" type="RestrictString16" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PartyType">
+				<xsd:sequence>
+					<xsd:element name="ActivityPartyTypeCode" type="ValidateActivityPartyCodeType"/>
+					<xsd:element name="FilerFinancialInterest25ForeignAccountIndicator" type="ValidateIndicatorYNType" minOccurs="0"/>
+					<xsd:element name="FilerTypeConsolidatedIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="FilerTypeCorporationIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="FilerTypeFiduciaryOtherIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="FilerTypeIndividualIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="FilerTypeOtherText" type="RestrictString50" minOccurs="0"/>
+					<xsd:element name="FilerTypePartnershipIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="IndividualBirthDateText" type="DateYYYYMMDDOrBlankType" minOccurs="0"/>
+					<xsd:element name="PartyAsEntityOrganizationIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="SelfEmployedIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="SignatureAuthoritiesIndicator" type="ValidateIndicatorYNType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="AddressType">
+				<xsd:sequence>
+					<xsd:element name="RawCityText" type="RestrictString50" minOccurs="0"/>
+					<xsd:element name="RawCountryCodeText" type="RestrictString2" minOccurs="0"/>
+					<xsd:element name="RawStateCodeText" type="RestrictString3" minOccurs="0"/>
+					<xsd:element name="RawStreetAddress1Text" type="RestrictString100" minOccurs="0"/>
+					<xsd:element name="RawZIPCode" type="RestrictString9" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ForeignAccountActivityType">
+				<xsd:sequence>
+					<xsd:element name="ForeignAccountHeldQuantityText" type="RestrictString4" minOccurs="0"/>
+					<xsd:element name="LateFilingReasonCode" type="ValidateLateFilingReasonCodeType" minOccurs="0"/>
+					<xsd:element name="ReportCalendarYearText" type="DateYYYYType"/>
+					<xsd:element name="SignatureAuthoritiesQuantityText" type="RestrictString4" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="AccountType">
+				<xsd:sequence>
+					<xsd:element name="AccountMaximumValueAmountText" type="RestrictString15" minOccurs="0"/>
+					<xsd:element name="AccountNumberText" type="RestrictString40" minOccurs="0"/>
+					<xsd:element name="AccountTypeCode" type="ValidateAccountTypeCodeType" minOccurs="0"/>
+					<xsd:element name="EFilingAccountTypeCode" type="ValidateEFilingAccountTypeCodeType"/>
+					<xsd:element name="JointOwnerQuantityText" type="RestrictString3" minOccurs="0"/>
+					<xsd:element name="OtherAccountTypeText" type="RestrictString50" minOccurs="0"/>
+					<xsd:element name="UnknownMaximumValueIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ActivityNarrativeInformationType">
+				<xsd:sequence>
+					<xsd:element name="ActivityNarrativeSequenceNumber" type="xsd:int"/>
+					<xsd:element name="ActivityNarrativeText" type="RestrictString4000"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
 	<!-- End of redefine -->
 
 	<xsd:element name="EFilingBatchXML">
