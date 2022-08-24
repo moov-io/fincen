@@ -3,14 +3,14 @@ package suspicious_activity
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/moov-io/fincen"
 	"reflect"
 	"testing"
 
+	"github.com/moov-io/fincen"
+	
 	"github.com/stretchr/testify/require"
 )
 
-// ActualAmountPaid creates a ActualAmountPaid
 func mockEFilingBatchXML() *EFilingBatchXML {
 	batch := EFilingBatchXML{}
 	return &batch
