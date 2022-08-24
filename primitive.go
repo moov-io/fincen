@@ -547,3 +547,13 @@ func (r ValidateExemptBasisTypeCode) Validate() error {
 	}
 	return NewErrValueInvalid("ValidateExemptBasisTypeCode")
 }
+
+// May be one of C, D, E, F
+type SeqNumber int64
+
+func (r SeqNumber) Validate() error {
+	if int64(r) == 0 {
+		return NewErrValueInvalid("SeqNumber")
+	}
+	return nil
+}
