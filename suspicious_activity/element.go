@@ -6,7 +6,6 @@ package suspicious_activity
 
 import (
 	"encoding/xml"
-
 	"github.com/moov-io/fincen"
 )
 
@@ -210,7 +209,7 @@ func (r PartyType) fieldInclusion() error {
 			return fincen.NewErrValueInvalid("Party")
 		}
 	case "8":
-		if len(r.PartyName) != 1 || len(r.Address) != 1 {
+		if len(r.PartyName) != 1 || len(r.PhoneNumber) != 1 {
 			return fincen.NewErrValueInvalid("Party")
 		}
 	case "18":
@@ -222,14 +221,14 @@ func (r PartyType) fieldInclusion() error {
 			(len(r.PartyName) < 1 || len(r.PartyName) > 2) ||
 			(len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3) ||
 			(len(r.OrganizationClassificationTypeSubtype) < 1 || len(r.OrganizationClassificationTypeSubtype) > 12) ||
-			len(r.Address) != 1 || r.PartyAccountAssociation == nil {
+			len(r.Address) != 1 {
 
 			return fincen.NewErrValueInvalid("Party")
 		}
 	case "33":
 		if (len(r.PartyName) < 1 || len(r.PartyName) > 100) ||
 			(len(r.Address) < 1 || len(r.Address) > 99) ||
-			(len(r.PartyIdentification) < 2 || len(r.Address) > 100) {
+			(len(r.PartyIdentification) < 2 || len(r.PartyIdentification) > 100) {
 
 			return fincen.NewErrValueInvalid("Party")
 		}
@@ -521,11 +520,12 @@ func (r PartyAccountAssociationType) Validate(args ...string) error {
 }
 
 type AccountAssociationParty struct {
-	XMLName               xml.Name                      `xml:"Party"`
-	SeqNum                int64                         `xml:"SeqNum,attr"`
-	ActivityPartyTypeCode ValidateActivityPartyCodeType `xml:"ActivityPartyTypeCode"`
-	PartyIdentification   *PartyIdentificationType      `xml:"PartyIdentification,omitempty" json:",omitempty"`
-	Account               []AccountType                 `xml:"Account,omitempty" json:",omitempty"`
+	XMLName                            xml.Name                      `xml:"Party"`
+	SeqNum                             int64                         `xml:"SeqNum,attr"`
+	ActivityPartyTypeCode              ValidateActivityPartyCodeType `xml:"ActivityPartyTypeCode"`
+	NonUSFinancialInstitutionIndicator *fincen.ValidateIndicatorType `xml:"NonUSFinancialInstitutionIndicator,omitempty" json:",omitempty"`
+	PartyIdentification                *PartyIdentificationType      `xml:"PartyIdentification,omitempty" json:",omitempty"`
+	Account                            []AccountType                 `xml:"Account,omitempty" json:",omitempty"`
 }
 
 func (r AccountAssociationParty) Validate(args ...string) error {

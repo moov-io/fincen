@@ -39,11 +39,18 @@ func getTypeName(value string) string {
 func validateCallbackByValue(data reflect.Value, args ...string) error {
 	method := data.MethodByName(DefaultValidateFunction)
 	if method.IsValid() {
-		var converted []reflect.Value
-		for _, arg := range args {
-			converted = append(converted, reflect.ValueOf(arg))
+
+		var response []reflect.Value
+		_, ok := method.Interface().(func(args ...string))
+		if ok {
+			var converted []reflect.Value
+			for _, arg := range args {
+				converted = append(converted, reflect.ValueOf(arg))
+			}
+			response = method.Call(converted)
 		}
-		response := method.Call(converted)
+
+		response = method.Call(response)
 		if len(response) > 0 {
 			err := response[0]
 			if !err.IsNil() {
