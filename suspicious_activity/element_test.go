@@ -166,7 +166,7 @@ func mocParties() map[string][]byte {
 	<PartyAssociation SeqNum="38">
 		<Party SeqNum="39">
 			<ActivityPartyTypeCode>46</ActivityPartyTypeCode>
-			<Address SeqNum="0"></Address>
+			<Address SeqNum="40"></Address>
 		</Party>
 	</PartyAssociation>
 </Party>`)
@@ -283,7 +283,7 @@ func mocParties() map[string][]byte {
 	return parties
 }
 
-func TestPartyByTypeCode(t *testing.T) {
+func TestParty(t *testing.T) {
 	t.Run("Transmitter Party Record", func(t *testing.T) {
 		sample := mocParties()["35"]
 		party := PartyType{}
@@ -291,7 +291,7 @@ func TestPartyByTypeCode(t *testing.T) {
 
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(4))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(4))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("35"))
 		require.Equal(t, len(party.PartyName), 1)
 		require.Equal(t, len(party.Address), 1)
@@ -299,12 +299,12 @@ func TestPartyByTypeCode(t *testing.T) {
 		require.Equal(t, len(party.PartyIdentification), 1)
 
 		name := party.PartyName[0]
-		require.Equal(t, name.SeqNum, int64(5))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(5))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Transmitter legal name"))
 
 		address := party.Address[0]
-		require.Equal(t, address.SeqNum, int64(6))
+		require.Equal(t, address.SeqNum, fincen.SeqNumber(6))
 		require.Equal(t, *address.RawCityText, fincen.RestrictString50("Transmitter city"))
 		require.Equal(t, *address.RawCountryCodeText, fincen.RestrictString2("US"))
 		require.Equal(t, *address.RawStateCodeText, fincen.RestrictString3("VA"))
@@ -312,11 +312,11 @@ func TestPartyByTypeCode(t *testing.T) {
 		require.Equal(t, *address.RawZIPCode, fincen.RestrictString9("22113"))
 
 		number := party.PhoneNumber[0]
-		require.Equal(t, number.SeqNum, int64(7))
+		require.Equal(t, number.SeqNum, fincen.SeqNumber(7))
 		require.Equal(t, *number.PhoneNumberText, fincen.RestrictString16("7217894455"))
 
 		identification := party.PartyIdentification[0]
-		require.Equal(t, identification.SeqNum, int64(8))
+		require.Equal(t, identification.SeqNum, fincen.SeqNumber(8))
 		require.Equal(t, *identification.PartyIdentificationNumberText, fincen.RestrictString25("458985215"))
 		require.Equal(t, *identification.PartyIdentificationTypeCode, ValidatePartyIdentificationCodeType("4"))
 
@@ -335,12 +335,12 @@ func TestPartyByTypeCode(t *testing.T) {
 
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(10))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(10))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("37"))
 		require.Equal(t, len(party.PartyName), 1)
 
 		name := party.PartyName[0]
-		require.Equal(t, name.SeqNum, int64(11))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(11))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Transmitter contact legal name"))
 
@@ -359,7 +359,7 @@ func TestPartyByTypeCode(t *testing.T) {
 
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(12))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(12))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("30"))
 		require.Equal(t, *party.PrimaryRegulatorTypeCode, ValidateFederalRegulatorCodeType("7"))
 		require.Equal(t, len(party.PartyName), 2)
@@ -368,12 +368,12 @@ func TestPartyByTypeCode(t *testing.T) {
 		require.Equal(t, len(party.OrganizationClassificationTypeSubtype), 2)
 
 		name := party.PartyName[0]
-		require.Equal(t, name.SeqNum, int64(13))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(13))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Filer name"))
 
 		name = party.PartyName[1]
-		require.Equal(t, name.SeqNum, int64(14))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(14))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("DBA"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Alternate name"))
 
@@ -392,18 +392,18 @@ func TestPartyByTypeCode(t *testing.T) {
 
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(26))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(26))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("8"))
 		require.Equal(t, len(party.PartyName), 1)
 		require.Equal(t, len(party.PhoneNumber), 1)
 
 		name := party.PartyName[0]
-		require.Equal(t, name.SeqNum, int64(27))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(27))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Designated contact office"))
 
 		number := party.PhoneNumber[0]
-		require.Equal(t, number.SeqNum, int64(28))
+		require.Equal(t, number.SeqNum, fincen.SeqNumber(28))
 		require.Equal(t, *number.PhoneNumberExtensionText, fincen.RestrictString6("1234"))
 		require.Equal(t, *number.PhoneNumberText, fincen.RestrictString16("4157653838"))
 
@@ -422,12 +422,12 @@ func TestPartyByTypeCode(t *testing.T) {
 
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(21))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(21))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("18"))
 		require.Equal(t, len(party.PartyName), 1)
 
 		name := party.PartyName[0]
-		require.Equal(t, name.SeqNum, int64(22))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(22))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("LE Contact Agency"))
 
@@ -446,13 +446,13 @@ func TestPartyByTypeCode(t *testing.T) {
 
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(23))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(23))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("19"))
 		require.Equal(t, len(party.PartyName), 1)
 		require.Equal(t, len(party.PhoneNumber), 1)
 
 		name := party.PartyName[0]
-		require.Equal(t, name.SeqNum, int64(24))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(24))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("LE Contact Name"))
 
@@ -471,7 +471,7 @@ func TestPartyByTypeCode(t *testing.T) {
 
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(29))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(29))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("34"))
 		require.Equal(t, *party.LossToFinancialAmountText, fincen.RestrictString15("15000"))
 		require.Equal(t, *party.NoBranchActivityInvolvedIndicator, fincen.ValidateIndicatorType("Y"))
@@ -480,12 +480,12 @@ func TestPartyByTypeCode(t *testing.T) {
 		require.Equal(t, len(party.PartyName), 2)
 
 		name := party.PartyName[0]
-		require.Equal(t, name.SeqNum, int64(30))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(30))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Union Bank of California"))
 
 		name = party.PartyName[1]
-		require.Equal(t, name.SeqNum, int64(31))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(31))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("DBA"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Doing Business As Name"))
 
@@ -504,7 +504,7 @@ func TestPartyByTypeCode(t *testing.T) {
 		err := xml.Unmarshal(sample, &party)
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(61))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(61))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("33"))
 		require.Equal(t, *party.AdmissionConfessionYesIndicator, fincen.ValidateIndicatorType("Y"))
 		require.Equal(t, *party.BothPurchaserSenderPayeeReceiveIndicator, fincen.ValidateIndicatorType("Y"))
@@ -513,13 +513,13 @@ func TestPartyByTypeCode(t *testing.T) {
 		require.Equal(t, len(party.PartyName), 3)
 
 		name := party.PartyName[0]
-		require.Equal(t, name.SeqNum, int64(62))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(62))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
 		require.Equal(t, *name.RawEntityIndividualLastName, fincen.RestrictString150("Mann"))
 		require.Equal(t, *name.RawIndividualFirstName, fincen.RestrictString35("Janice"))
 
 		name = party.PartyName[1]
-		require.Equal(t, name.SeqNum, int64(63))
+		require.Equal(t, name.SeqNum, fincen.SeqNumber(63))
 		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("AKA"))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Janda"))
 
@@ -538,16 +538,16 @@ func TestPartyByTypeCode(t *testing.T) {
 
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(39))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(39))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("46"))
 		require.Equal(t, *party.SellingLocationIndicator, fincen.ValidateIndicatorType("Y"))
 
 		address := party.Address
-		require.Equal(t, address.SeqNum, int64(40))
+		require.Equal(t, address.SeqNum, fincen.SeqNumber(40))
 		require.Equal(t, *address.RawCityText, fincen.RestrictString50("Cityville"))
 
 		identification := party.PartyIdentification
-		require.Equal(t, identification.SeqNum, int64(41))
+		require.Equal(t, identification.SeqNum, fincen.SeqNumber(41))
 		require.Equal(t, *identification.PartyIdentificationNumberText, fincen.RestrictString25("445564615654"))
 
 		buf, err := xml.MarshalIndent(&party, "", "\t")
@@ -565,17 +565,17 @@ func TestPartyByTypeCode(t *testing.T) {
 
 		require.NoError(t, err)
 
-		require.Equal(t, party.SeqNum, int64(75))
+		require.Equal(t, party.SeqNum, fincen.SeqNumber(75))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("41"))
 		require.Equal(t, *party.NonUSFinancialInstitutionIndicator, fincen.ValidateIndicatorType("Y"))
 		require.Equal(t, len(party.Account), 2)
 
 		identification := party.PartyIdentification
-		require.Equal(t, identification.SeqNum, int64(76))
+		require.Equal(t, identification.SeqNum, fincen.SeqNumber(76))
 		require.Equal(t, *identification.PartyIdentificationNumberText, fincen.RestrictString25("458789856"))
 
 		acc := party.Account[0]
-		require.Equal(t, acc.SeqNum, int64(77))
+		require.Equal(t, acc.SeqNum, fincen.SeqNumber(77))
 		require.Equal(t, *acc.AccountNumberText, fincen.RestrictString40("1502417873"))
 
 		buf, err := xml.MarshalIndent(&party, "", "\t")

@@ -366,20 +366,6 @@ func (r ValidateOrganizationSubtypeCodeSarType) Validate() error {
 	return NewErrValueInvalid("ValidateOrganizationSubtypeCodeSarType")
 }
 
-// May be one of 5, 7
-type ValidatePartyAccountAssociationCodeType string
-
-func (r ValidatePartyAccountAssociationCodeType) Validate() error {
-	for _, vv := range []string{
-		"5", "7",
-	} {
-		if reflect.DeepEqual(string(r), vv) {
-			return nil
-		}
-	}
-	return NewErrValueInvalid("ValidatePartyAccountAssociationCodeType")
-}
-
 // May be one of F, M, R, W
 type ValidatePhoneNumberCodeType string
 

@@ -13,18 +13,14 @@ import (
 // validating elements
 var (
 	_ fincen.Element = (*EFilingBatchXML)(nil)
-	_ fincen.Element = (*Account)(nil)
 	_ fincen.Element = (*AccountType)(nil)
-	_ fincen.Element = (*Activity)(nil)
 	_ fincen.Element = (*ActivityAssociationType)(nil)
 	_ fincen.Element = (*ActivityType)(nil)
 	_ fincen.Element = (*AddressType)(nil)
-	_ fincen.Element = (*CurrencyTransactionActivity)(nil)
 	_ fincen.Element = (*CurrencyTransactionActivityDetailType)(nil)
 	_ fincen.Element = (*CurrencyTransactionActivityType)(nil)
 	_ fincen.Element = (*ElectronicAddressType)(nil)
 	_ fincen.Element = (*OrganizationClassificationTypeSubtypeType)(nil)
-	_ fincen.Element = (*Party)(nil)
 	_ fincen.Element = (*PartyAccountAssociationType)(nil)
 	_ fincen.Element = (*PartyIdentificationType)(nil)
 	_ fincen.Element = (*PartyNameType)(nil)
@@ -87,4 +83,18 @@ func (r ValidateFederalRegulatorCodeType) Validate() error {
 		}
 	}
 	return fincen.NewErrValueInvalid("ValidateFederalRegulatorCodeType")
+}
+
+// May be one of 8, 9
+type ValidatePartyAccountAssociationCodeType string
+
+func (r ValidatePartyAccountAssociationCodeType) Validate() error {
+	for _, vv := range []string{
+		"8", "9",
+	} {
+		if reflect.DeepEqual(string(r), vv) {
+			return nil
+		}
+	}
+	return fincen.NewErrValueInvalid("ValidatePartyAccountAssociationCodeType")
 }

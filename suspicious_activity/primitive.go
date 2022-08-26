@@ -124,3 +124,17 @@ func (r EFilingPriorDocumentNumberType) Validate() error {
 func (r EFilingPriorDocumentNumberType) String() string {
 	return fincen.NumericStringField(string(r), 14)
 }
+
+// May be one of 5, 7
+type ValidatePartyAccountAssociationCodeType string
+
+func (r ValidatePartyAccountAssociationCodeType) Validate() error {
+	for _, vv := range []string{
+		"5", "7",
+	} {
+		if reflect.DeepEqual(string(r), vv) {
+			return nil
+		}
+	}
+	return fincen.NewErrValueInvalid("ValidatePartyAccountAssociationCodeType")
+}
