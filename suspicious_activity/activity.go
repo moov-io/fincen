@@ -6,6 +6,7 @@ package suspicious_activity
 
 import (
 	"encoding/xml"
+
 	"github.com/moov-io/fincen"
 )
 

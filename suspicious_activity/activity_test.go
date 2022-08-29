@@ -10,11 +10,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func mockEFilingBatchXML() *EFilingBatchXML {
-	batch := EFilingBatchXML{}
-	return &batch
-}
-
 func mocParties() map[string][]byte {
 	parties := make(map[string][]byte)
 

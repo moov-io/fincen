@@ -2,11 +2,12 @@ package currency_transaction
 
 import (
 	"encoding/xml"
-	"github.com/moov-io/fincen"
 	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/require"
+
+	"github.com/moov-io/fincen"
 )
 
 func mocParties() map[string][]byte {
