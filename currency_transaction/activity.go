@@ -19,24 +19,6 @@ func checkInvolved(element string, elements ...string) bool {
 	return false
 }
 
-type EFilingBatchXML struct {
-	XMLName       xml.Name       `xml:"EFilingBatchXML"`
-	FormTypeCode  string         `xml:"FormTypeCode"`
-	Activity      []ActivityType `xml:"Activity"`
-	TotalAmount   float64        `xml:"TotalAmount,attr"`
-	PartyCount    int64          `xml:"PartyCount,attr"`
-	ActivityCount int64          `xml:"ActivityCount,attr"`
-}
-
-func (r EFilingBatchXML) Validate(args ...string) error {
-
-	if r.FormTypeCode != "CTRX" {
-		return fincen.NewErrValueInvalid("FormTypeCode")
-	}
-
-	return fincen.Validate(&r, args...)
-}
-
 type ActivityType struct {
 	XMLName                     xml.Name                        `xml:"Activity"`
 	SeqNum                      fincen.SeqNumber                `xml:"SeqNum,attr"`
@@ -47,7 +29,53 @@ type ActivityType struct {
 	CurrencyTransactionActivity CurrencyTransactionActivityType `xml:"CurrencyTransactionActivity"`
 }
 
+func (r ActivityType) FormTypeCode() string {
+	return "CTRX"
+}
+
+func (r ActivityType) fieldInclusion() error {
+	if len(r.Party) < 6 || len(r.Party) > 2002 {
+		return fincen.NewErrValueInvalid("Party")
+	}
+
+	return nil
+}
+
 func (r ActivityType) Validate(args ...string) error {
+
+	if err := r.fieldInclusion(); err != nil {
+		return err
+	}
+
+	existed := make(map[string]int)
+	for _, p := range r.Party {
+		typeCode := string(p.ActivityPartyTypeCode)
+		if cnt, ok := existed[typeCode]; !ok {
+			existed[typeCode] = cnt + 1
+		} else {
+			existed[typeCode] = 1
+		}
+	}
+
+	if _, ok := existed["35"]; !ok {
+		return fincen.NewErrValueInvalid("Party")
+	}
+	if _, ok := existed["37"]; !ok {
+		return fincen.NewErrValueInvalid("Party")
+	}
+	if _, ok := existed["30"]; !ok {
+		return fincen.NewErrValueInvalid("Party")
+	}
+	if _, ok := existed["8"]; !ok {
+		return fincen.NewErrValueInvalid("Party")
+	}
+	if cnt, ok := existed["34"]; !ok || cnt > 999 {
+		return fincen.NewErrValueInvalid("Party")
+	}
+	if cnt, ok := existed["50"]; !ok || cnt > 999 {
+		return fincen.NewErrValueInvalid("Party")
+	}
+
 	return fincen.Validate(&r, args...)
 }
 
@@ -535,6 +563,7 @@ func (r CurrencyTransactionActivityType) Validate(args ...string) error {
 	if err := r.fieldInclusion(); err != nil {
 		return err
 	}
+
 	return fincen.Validate(&r, args...)
 }
 

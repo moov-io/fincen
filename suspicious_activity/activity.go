@@ -9,38 +9,6 @@ import (
 	"github.com/moov-io/fincen"
 )
 
-type EFilingBatchXML struct {
-	XMLName                 xml.Name       `xml:"EFilingBatchXML"`
-	FormTypeCode            string         `xml:"FormTypeCode"`
-	Activity                []ActivityType `xml:"Activity"`
-	TotalAmount             float64        `xml:"TotalAmount,attr"`
-	PartyCount              int64          `xml:"PartyCount,attr"`
-	ActivityCount           int64          `xml:"ActivityCount,attr"`
-	ActivityAttachmentCount int64          `xml:"ActivityAttachmentCount,attr"`
-	AttachmentCount         int64          `xml:"AttachmentCount,attr"`
-}
-
-func (r *EFilingBatchXML) fieldInclusion() error {
-	if len(r.Activity) < 0 {
-		return fincen.NewErrValueInvalid("Activity")
-	}
-
-	return nil
-}
-
-func (r EFilingBatchXML) Validate(args ...string) error {
-
-	if r.FormTypeCode != "SARX" {
-		return fincen.NewErrValueInvalid("FormTypeCode")
-	}
-
-	if err := r.fieldInclusion(); err != nil {
-		return err
-	}
-
-	return fincen.Validate(&r)
-}
-
 type ActivityType struct {
 	XMLName                       xml.Name                           `xml:"Activity"`
 	SeqNum                        fincen.SeqNumber                   `xml:"SeqNum,attr"`
@@ -56,6 +24,10 @@ type ActivityType struct {
 	Assets                        []AssetsTableType                  `xml:"Assets,omitempty" json:",omitempty"`
 	AssetsAttribute               []AssetsAttributeType              `xml:"AssetsAttribute,omitempty" json:",omitempty"`
 	ActivityNarrativeInformation  []ActivityNarrativeInformationType `xml:"ActivityNarrativeInformation"`
+}
+
+func (r ActivityType) FormTypeCode() string {
+	return "SARX"
 }
 
 func (r ActivityType) fieldInclusion() error {

@@ -140,11 +140,31 @@ func (r RestrictString50) Validate() error {
 }
 
 // Must match the pattern \S+( +\S+)*|
+type RestrictString512 string
+
+func (r RestrictString512) Validate() error {
+	if len(string(r)) > 512 {
+		return NewErrValueInvalid("RestrictString517")
+	}
+	return nil
+}
+
+// Must match the pattern \S+( +\S+)*|
 type RestrictString517 string
 
 func (r RestrictString517) Validate() error {
 	if len(string(r)) > 517 {
 		return NewErrValueInvalid("RestrictString517")
+	}
+	return nil
+}
+
+// Must match the pattern \S+( +\S+)*|
+type RestrictString525 string
+
+func (r RestrictString525) Validate() error {
+	if len(string(r)) > 525 {
+		return NewErrValueInvalid("RestrictString525")
 	}
 	return nil
 }
@@ -540,6 +560,16 @@ type SeqNumber int64
 func (r SeqNumber) Validate() error {
 	if int64(r) == 0 {
 		return NewErrValueInvalid("SeqNumber")
+	}
+	return nil
+}
+
+type RestrictNumeric14 string
+
+func (r RestrictNumeric14) Validate() error {
+	reg := regexp.MustCompile(`[0-9]{14}`)
+	if !reg.MatchString(string(r)) {
+		return NewErrValueInvalid("RestrictNumeric14")
 	}
 	return nil
 }
