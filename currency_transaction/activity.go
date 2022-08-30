@@ -233,7 +233,7 @@ func (r PartyType) Validate(args ...string) error {
 		return err
 	}
 
-	return fincen.Validate(&r, args...)
+	return fincen.Validate(&r, string(r.ActivityPartyTypeCode))
 }
 
 type PartyNameType struct {
