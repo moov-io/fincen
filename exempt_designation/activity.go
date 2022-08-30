@@ -260,15 +260,6 @@ type AddressType struct {
 	RawZIPCode            fincen.RestrictString9   `xml:"RawZIPCode"`
 }
 
-func checkInvolved(element string, elements ...string) bool {
-	for _, elm := range elements {
-		if element == elm {
-			return true
-		}
-	}
-	return false
-}
-
 func (r AddressType) fieldInclusion(typeCode string) error {
 
 	if typeCode == "35" {
@@ -277,7 +268,7 @@ func (r AddressType) fieldInclusion(typeCode string) error {
 		}
 	}
 
-	if !checkInvolved(typeCode, "35", "11", "35", "12") {
+	if !fincen.CheckInvolved(typeCode, "35", "11", "35", "12") {
 		return fincen.NewErrFiledNotAssociated("Address")
 	}
 
@@ -315,7 +306,7 @@ type ElectronicAddressType struct {
 }
 
 func (r ElectronicAddressType) fieldInclusion(typeCode string) error {
-	if !checkInvolved(typeCode, "11") {
+	if !fincen.CheckInvolved(typeCode, "11") {
 		return fincen.NewErrFiledNotAssociated("ElectronicAddress")
 	}
 
@@ -343,7 +334,7 @@ type PartyIdentificationType struct {
 }
 
 func (r PartyIdentificationType) fieldInclusion(typeCode string) error {
-	if !checkInvolved(typeCode, "35", "45", "11", "12") {
+	if !fincen.CheckInvolved(typeCode, "35", "45", "11", "12") {
 		return fincen.NewErrFiledNotAssociated("PartyIdentification")
 	}
 
@@ -371,7 +362,7 @@ type PartyOccupationBusinessType struct {
 }
 
 func (r PartyOccupationBusinessType) fieldInclusion(typeCode string) error {
-	if !checkInvolved(typeCode, "11") {
+	if !fincen.CheckInvolved(typeCode, "11") {
 		return fincen.NewErrFiledNotAssociated("PartyOccupationBusiness")
 	}
 
@@ -418,7 +409,7 @@ func (r PhoneNumberType) fieldInclusion(typeCode string) error {
 		}
 	}
 
-	if !checkInvolved(typeCode, "35", "3", "11") {
+	if !fincen.CheckInvolved(typeCode, "35", "3", "11") {
 		return fincen.NewErrFiledNotAssociated("PhoneNumber")
 	}
 

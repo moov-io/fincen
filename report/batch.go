@@ -49,7 +49,7 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 		}
 	} else {
 		// FinCEN XML Batch Reporting
-		if r.FormTypeCode != "CTRX" && r.FormTypeCode != "SARX" {
+		if fincen.CheckInvolved(r.FormTypeCode, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") {
 			return fincen.NewErrValueInvalid("FormTypeCode")
 		}
 

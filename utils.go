@@ -128,3 +128,12 @@ func ValidateNumericCharacters(str string, min, max int) bool {
 	}
 	return true
 }
+
+func CheckInvolved(element string, elements ...string) bool {
+	for _, elm := range elements {
+		if element == elm {
+			return true
+		}
+	}
+	return false
+}

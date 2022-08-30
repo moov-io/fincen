@@ -10,19 +10,39 @@ import (
 	"github.com/moov-io/fincen"
 )
 
-type EFilingBatchXML struct {
-	XMLName                xml.Name `xml:"EFilingBatchXML"`
-	FormTypeCode           string   `xml:"FormTypeCode"`
-	Activity               []string `xml:"Activity"`
-	ActivityCount          int64    `xml:"ActivityCount,attr"`
-	PartyCount             int64    `xml:"PartyCount,attr"`
-	AccountCount           int64    `xml:"AccountCount,attr"`
-	JointlyOwnedOwnerCount int64    `xml:"JointlyOwnedOwnerCount,attr"`
-	NoFIOwnerCount         int64    `xml:"NoFIOwnerCount,attr"`
-	ConsolidatedOwnerCount int64    `xml:"ConsolidatedOwnerCount,attr"`
+type ActivityType struct {
+	XMLName                           xml.Name                      `xml:"Activity"`
+	SeqNum                            fincen.SeqNumber              `xml:"SeqNum,attr"`
+	ApprovalOfficialSignatureDateText fincen.DateYYYYMMDDType       `xml:"ApprovalOfficialSignatureDateText"`
+	EFilingPriorDocumentNumber        int64                         `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
+	PreparerFilingSignatureIndicator  *fincen.ValidateIndicatorType `xml:"PreparerFilingSignatureIndicator,omitempty" json:",omitempty"`
+	ThirdPartyPreparerIndicator       *fincen.ValidateIndicatorType `xml:"ThirdPartyPreparerIndicator,omitempty" json:",omitempty"`
+	ActivityAssociation               ActivityAssociationType       `xml:"ActivityAssociation"`
+	Party                             []string                      `xml:"Party"`
+	Account                           []string                      `xml:"Account,omitempty" json:",omitempty"`
+	ForeignAccountActivity            string                        `xml:"ForeignAccountActivity"`
+	ActivityNarrativeInformation      string                        `xml:"ActivityNarrativeInformation,omitempty" json:",omitempty"`
 }
 
-func (r EFilingBatchXML) Validate(args ...string) error {
+func (r ActivityType) FormTypeCode() string {
+	return "FBARX"
+}
+
+func (r ActivityType) Validate(args ...string) error {
+	if len(r.Party) < 4 || len(r.Party) > 104 {
+		return fincen.NewErrValueInvalid("Party")
+	}
+
+	return fincen.Validate(&r, args...)
+}
+
+type ActivityAssociationType struct {
+	XMLName                            xml.Name                     `xml:"ActivityAssociation"`
+	SeqNum                             fincen.SeqNumber             `xml:"SeqNum,attr"`
+	CorrectsAmendsPriorReportIndicator fincen.ValidateIndicatorType `xml:"CorrectsAmendsPriorReportIndicator"`
+}
+
+func (r ActivityAssociationType) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
 }
 
@@ -57,32 +77,6 @@ func (r AccountType) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
 }
 
-type Activity struct {
-	ApprovalOfficialSignatureDateText fincen.DateYYYYMMDDType       `xml:"ApprovalOfficialSignatureDateText"`
-	EFilingPriorDocumentNumber        int64                         `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
-	PreparerFilingSignatureIndicator  *fincen.ValidateIndicatorType `xml:"PreparerFilingSignatureIndicator,omitempty" json:",omitempty"`
-	ThirdPartyPreparerIndicator       *fincen.ValidateIndicatorType `xml:"ThirdPartyPreparerIndicator,omitempty" json:",omitempty"`
-	ActivityAssociation               ActivityAssociationType       `xml:"ActivityAssociation"`
-	Party                             []string                      `xml:"Party"`
-	Account                           []string                      `xml:"Account,omitempty" json:",omitempty"`
-	ForeignAccountActivity            string                        `xml:"ForeignAccountActivity"`
-	ActivityNarrativeInformation      string                        `xml:"ActivityNarrativeInformation,omitempty" json:",omitempty"`
-	SeqNum                            int64                         `xml:"SeqNum,attr"`
-}
-
-func (r Activity) Validate(args ...string) error {
-	return fincen.Validate(&r, args...)
-}
-
-type ActivityAssociationType struct {
-	CorrectsAmendsPriorReportIndicator fincen.ValidateIndicatorType `xml:"CorrectsAmendsPriorReportIndicator"`
-	SeqNum                             int64                        `xml:"SeqNum,attr"`
-}
-
-func (r ActivityAssociationType) Validate(args ...string) error {
-	return fincen.Validate(&r, args...)
-}
-
 type ActivityNarrativeInformation struct {
 	ActivityNarrativeSequenceNumber int                       `xml:"ActivityNarrativeSequenceNumber"`
 	ActivityNarrativeText           fincen.RestrictString4000 `xml:"ActivityNarrativeText"`
@@ -100,18 +94,6 @@ type ActivityNarrativeInformationType struct {
 }
 
 func (r ActivityNarrativeInformationType) Validate(args ...string) error {
-	return fincen.Validate(&r, args...)
-}
-
-type ActivityType struct {
-	ApprovalOfficialSignatureDateText fincen.DateYYYYMMDDType       `xml:"ApprovalOfficialSignatureDateText"`
-	EFilingPriorDocumentNumber        int64                         `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
-	PreparerFilingSignatureIndicator  *fincen.ValidateIndicatorType `xml:"PreparerFilingSignatureIndicator,omitempty" json:",omitempty"`
-	ThirdPartyPreparerIndicator       *fincen.ValidateIndicatorType `xml:"ThirdPartyPreparerIndicator,omitempty" json:",omitempty"`
-	SeqNum                            int64                         `xml:"SeqNum,attr"`
-}
-
-func (r ActivityType) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
 }
 
