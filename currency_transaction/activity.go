@@ -2,6 +2,8 @@
 // Use of this source code is governed by an Apache License
 // license that can be found in the LICENSE file.
 
+// FinCEN Currency Transaction Report (CTR) FinCEN Report 112
+
 package currency_transaction
 
 import (

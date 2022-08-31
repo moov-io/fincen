@@ -2,6 +2,8 @@
 // Use of this source code is governed by an Apache License
 // license that can be found in the LICENSE file.
 
+// Report of Cash Payments Over $10,000 Received in a Trade or Business (FinCEN Form 8300)
+
 package cash_payments
 
 import (

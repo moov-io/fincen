@@ -2,6 +2,8 @@
 // Use of this source code is governed by an Apache License
 // license that can be found in the LICENSE file.
 
+// FinCEN Designation of Exempt Person (FinCEN DOEP | Form 110)
+
 package exempt_designation
 
 import (
