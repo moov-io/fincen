@@ -32,11 +32,11 @@ func (r ActivityType) FormTypeCode() string {
 
 func (r ActivityType) fieldInclusion() error {
 	if len(r.Party) < 3 || len(r.Party) > 5 {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrMinMaxRange("Party")
 	}
 
 	if len(r.Account) > 9999 {
-		return fincen.NewErrValueInvalid("Account")
+		return fincen.NewErrMinMaxRange("Account")
 	}
 
 	return nil
@@ -58,23 +58,22 @@ func (r ActivityType) Validate(args ...string) error {
 	}
 
 	if _, ok := existed["35"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 35)")
 	}
 	if _, ok := existed["37"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 37)")
 	}
 	if _, ok := existed["15"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 15)")
 	}
-
 	if cnt, ok := existed["35"]; !ok || cnt > 1 {
-		return fincen.NewErrMinMaxRange("Party")
+		return fincen.NewErrMinMaxRange("Party(type 35)")
 	}
 	if cnt, ok := existed["37"]; !ok || cnt > 1 {
-		return fincen.NewErrMinMaxRange("Party")
+		return fincen.NewErrMinMaxRange("Party(type 37)")
 	}
 	if cnt, ok := existed["15"]; !ok || cnt > 1 {
-		return fincen.NewErrMinMaxRange("Party")
+		return fincen.NewErrMinMaxRange("Party(type 15)")
 	}
 
 	return fincen.Validate(&r, args...)

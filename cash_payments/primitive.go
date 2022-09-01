@@ -12,31 +12,28 @@ import (
 
 // validating elements
 var (
-	_ fincen.Element = (*EFilingBatchXML)(nil)
-	_ fincen.Element = (*Activity)(nil)
-	_ fincen.Element = (*ActivityAssociationType)(nil)
-	_ fincen.Element = (*ActivityNarrativeInformationType)(nil)
-	_ fincen.Element = (*ActivityType)(nil)
-	_ fincen.Element = (*AddressType)(nil)
-	_ fincen.Element = (*CurrencyTransactionActivity)(nil)
-	_ fincen.Element = (*CurrencyTransactionActivityDetailType)(nil)
-	_ fincen.Element = (*CurrencyTransactionActivityType)(nil)
-	_ fincen.Element = (*Party)(nil)
-	_ fincen.Element = (*PartyIdentificationType)(nil)
-	_ fincen.Element = (*PartyNameType)(nil)
-	_ fincen.Element = (*PartyOccupationBusinessType)(nil)
-	_ fincen.Element = (*PartyType)(nil)
-	_ fincen.Element = (*PhoneNumberType)(nil)
+	_ fincen.ElementActivity = (*ActivityType)(nil)
+	_ fincen.Element         = (*ActivityAssociationType)(nil)
+	_ fincen.Element         = (*ActivityNarrativeInformationType)(nil)
+	_ fincen.Element         = (*ActivityType)(nil)
+	_ fincen.Element         = (*AddressType)(nil)
+	_ fincen.Element         = (*CurrencyTransactionActivityDetailType)(nil)
+	_ fincen.Element         = (*CurrencyTransactionActivityType)(nil)
+	_ fincen.Element         = (*PartyIdentificationType)(nil)
+	_ fincen.Element         = (*PartyNameType)(nil)
+	_ fincen.Element         = (*PartyOccupationBusinessType)(nil)
+	_ fincen.Element         = (*PartyType)(nil)
+	_ fincen.Element         = (*PhoneNumberType)(nil)
 )
 
 // May be one of 1
 type ValidateActivityNarrativeSequenceNumber int
 
 func (r ValidateActivityNarrativeSequenceNumber) Validate() error {
-	for _, vv := range []string{
-		"1",
+	for _, vv := range []int{
+		1,
 	} {
-		if reflect.DeepEqual(string(r), vv) {
+		if reflect.DeepEqual(int(r), vv) {
 			return nil
 		}
 	}

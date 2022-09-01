@@ -53,7 +53,7 @@ func (r ActivityType) fieldInclusion() error {
 	}
 
 	if len(r.Party) < 6 || len(r.Party) > 1203 {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrMinMaxRange("Party")
 	}
 
 	return nil
@@ -76,22 +76,22 @@ func (r ActivityType) Validate(args ...string) error {
 	}
 
 	if _, ok := existed["35"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 35)")
 	}
 	if _, ok := existed["37"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 37)")
 	}
 	if _, ok := existed["30"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 30)")
 	}
 	if _, ok := existed["8"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 8)")
 	}
 	if cnt, ok := existed["34"]; !ok || cnt > 99 {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrMinMaxRange("Party(type 34)")
 	}
 	if cnt, ok := existed["33"]; !ok || cnt > 999 {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrMinMaxRange("Party(type 33)")
 	}
 
 	return fincen.Validate(&r)

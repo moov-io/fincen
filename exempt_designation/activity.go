@@ -29,7 +29,7 @@ func (r ActivityType) FormTypeCode() string {
 
 func (r ActivityType) fieldInclusion() error {
 	if len(r.Party) < 4 || len(r.Party) > 104 {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrMinMaxRange("Party")
 	}
 
 	return nil
@@ -52,19 +52,19 @@ func (r ActivityType) Validate(args ...string) error {
 	}
 
 	if _, ok := existed["35"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 35)")
 	}
 	if _, ok := existed["37"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 37)")
 	}
 	if _, ok := existed["11"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 11)")
 	}
 	if _, ok := existed["45"]; !ok {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrFiledNotAssociated("Party(type 45)")
 	}
 	if cnt, ok := existed["12"]; ok && cnt > 99 {
-		return fincen.NewErrValueInvalid("Party")
+		return fincen.NewErrMinMaxRange("Party(type 12)")
 	}
 
 	return fincen.Validate(&r, args...)
