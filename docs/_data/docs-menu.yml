@@ -1,0 +1,24 @@
+- label: Getting started
+  items:
+    - name: Overview
+      link: /
+
+- label: Usage
+  items:
+    - name: Docker
+      link: /usage-docker/
+    - name: Go library
+      link: /usage-go/
+
+- label: Reports
+  items:
+    - name: Cash Payments over $10k
+      link: /cash-payments/
+    - name: Currency Transaction Report
+      link: /ctr/
+    - name: Designation of Exempt Person
+      link: /doep/
+    - name: Foreign Bank and Financial Accounts
+      link: /fbar/
+    - name: Suspicious Activity Report
+      link: /sar/
