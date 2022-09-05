@@ -4,7 +4,7 @@
 		<EFilingActivityXML SeqNum="1">
 			<BSAID>31000000000001</BSAID>
 			<EFilingActivityErrorXML SeqNum="1">
-				<ErrorContextText> EFilingBatchXML/Activity[1]/Party[218]/Address[232]/RawZIPCode</ErrorContextText>
+				<ErrorContextText>EFilingBatchXML/Activity[1]/Party[218]/Address[232]/RawZIPCode</ErrorContextText>
 				<ErrorElementNameText>RawZIPCode</ErrorElementNameText>
 				<ErrorLevelText>WARN</ErrorLevelText>
 				<ErrorText>The value recorded contains non-numeric characters or is in an invalid format and the country is US.</ErrorText>

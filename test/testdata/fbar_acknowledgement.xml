@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EFilingBatchXML StatusCode="A" SeqNum="1">
+    <EFilingSubmissionXML StatusCode="A" SeqNum="1">
+        <EFilingActivityXML SeqNum="1">
+            <BSAID>31000000000001</BSAID>
+            <EFilingActivityErrorXML SeqNum="1">
+                <ErrorContextText>EFilingBatchXML/Activity[1]/Party[3]/Address[1]/RawStateCodeText</ErrorContextText>
+                <ErrorElementNameText>RawStateCodeText</ErrorElementNameText>
+                <ErrorLevelText>WARN</ErrorLevelText>
+                <ErrorText>The element is not recorded or does not contain a value and the associated country is US, CA, MX, or a U.S. Territory.</ErrorText>
+                <ErrorTypeCode>C33</ErrorTypeCode>
+            </EFilingActivityErrorXML>
+        </EFilingActivityXML>
+        <EFilingActivityXML SeqNum="2">
+            <BSAID>31000000000002</BSAID>
+            <EFilingActivityErrorXML SeqNum="1"/>
+        </EFilingActivityXML>
+        <EFilingActivityXML SeqNum="3">
+            <BSAID>31000000000003</BSAID>
+            <EFilingActivityErrorXML SeqNum="1">
+                <ErrorContextText>EFilingBatchXML/Activity[3]/Account[3]/Party[1]/PartyIdentification[1]/
+                    PartyIdentificationNumberText</ErrorContextText>
+                <ErrorElementNameText>PartyIdentificationNumberText</ErrorElementNameText>
+                <ErrorLevelText>WARN</ErrorLevelText>
+                <ErrorText>The TIN contains formatting such as spaces, hyphens, or periods.</ErrorText>
+                <ErrorTypeCode>E33</ErrorTypeCode>
+            </EFilingActivityErrorXML>
+            <EFilingActivityErrorXML SeqNum="2">
+                <ErrorContextText>EFilingBatchXML/Activity[3]/Account[9]/Party[2]/Address[1]/
+                    RawCountryCodeText</ErrorContextText>
+                <ErrorElementNameText>RawCountryCodeText</ErrorElementNameText>
+                <ErrorLevelText>WARN</ErrorLevelText>
+                <ErrorText> The element is not recorded or does not contain a value.</ErrorText>
+                <ErrorTypeCode>E22</ErrorTypeCode>
+            </EFilingActivityErrorXML>
+        </EFilingActivityXML>
+    </EFilingSubmissionXML>
+</EFilingBatchXML>

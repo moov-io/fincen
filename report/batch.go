@@ -19,10 +19,11 @@ var (
 
 type EFilingBatchXML struct {
 	XMLName              xml.Name                 `xml:"EFilingBatchXML"`
-	StatusCode           string                   `xml:"StatusCode,attr"`
-	TotalAmount          float64                  `xml:"TotalAmount,attr"`
-	PartyCount           int64                    `xml:"PartyCount,attr"`
-	ActivityCount        int64                    `xml:"ActivityCount,attr"`
+	SeqNum               fincen.SeqNumber         `xml:"SeqNum,attr"`
+	StatusCode           string                   `xml:"StatusCode,attr,omitempty" json:",omitempty"`
+	TotalAmount          float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
+	PartyCount           int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
+	ActivityCount        int64                    `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
 	FormTypeCode         string                   `xml:"FormTypeCode,omitempty" json:",omitempty"`
 	Activity             []fincen.ElementActivity `xml:"Activity,omitempty" json:",omitempty"`
 	EFilingSubmissionXML *EFilingSubmissionXML    `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
@@ -53,7 +54,7 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 		}
 	} else {
 		// FinCEN XML Batch Reporting
-		if fincen.CheckInvolved(r.FormTypeCode, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") {
+		if !fincen.CheckInvolved(r.FormTypeCode, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") {
 			return fincen.NewErrValueInvalid("FormTypeCode")
 		}
 
@@ -68,6 +69,7 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 type EFilingSubmissionXML struct {
 	XMLName            xml.Name             `xml:"EFilingSubmissionXML"`
 	SeqNum             fincen.SeqNumber     `xml:"SeqNum,attr"`
+	StatusCode         string               `xml:"StatusCode,attr,omitempty" json:",omitempty"`
 	EFilingActivityXML []EFilingActivityXML `xml:"EFilingActivityXML"`
 }
 
