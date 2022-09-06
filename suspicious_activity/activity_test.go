@@ -585,3 +585,137 @@ func TestParty(t *testing.T) {
 		require.NoError(t, err)
 	})
 }
+
+func TestElements(t *testing.T) {
+
+	t.Run("ActivityType", func(t *testing.T) {
+		var sample ActivityType
+
+		require.Equal(t, "SARX", sample.FormTypeCode())
+		require.Equal(t, "The Party has invalid min & max range", sample.Validate().Error())
+
+		indicator := fincen.ValidateIndicatorType("Y")
+
+		sample.EFilingPriorDocumentNumber = nil
+		sample.ActivityAssociation.CorrectsAmendsPriorReportIndicator = &indicator
+		require.Equal(t, "The EFilingPriorDocumentNumber is a required field", sample.Validate().Error())
+
+		number := EFilingPriorDocumentNumberType("00000000000000")
+		sample.EFilingPriorDocumentNumber = &number
+		sample.ActivityAssociation.CorrectsAmendsPriorReportIndicator = nil
+		require.Equal(t, "The EFilingPriorDocumentNumber has invalid value", sample.Validate().Error())
+
+		sample.EFilingPriorDocumentNumber = nil
+		sample.ActivityAssociation.CorrectsAmendsPriorReportIndicator = nil
+
+		for i := 0; i < 6; i++ {
+			sample.Party = append(sample.Party, PartyType{})
+		}
+		require.Equal(t, "The Party(type 35) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 37) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 30) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "30"})
+		require.Equal(t, "The Party(type 8) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "8"})
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+	})
+
+	t.Run("ActivityAssociationType", func(t *testing.T) {
+		var sample ActivityAssociationType
+		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())
+		indicator := fincen.ValidateIndicatorType("Y")
+		sample.InitialReportIndicator = &indicator
+		sample.CorrectsAmendsPriorReportIndicator = &indicator
+		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())
+	})
+
+	t.Run("PartyType", func(t *testing.T) {
+		var sample PartyType
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		sample.ActivityPartyTypeCode = "35"
+		require.Equal(t, "The Party has invalid value", sample.Validate().Error())
+		sample.ActivityPartyTypeCode = "37"
+		require.Equal(t, "The Party has invalid value", sample.Validate().Error())
+		sample.ActivityPartyTypeCode = "30"
+		require.Equal(t, "The Party has invalid value", sample.Validate().Error())
+		sample.ActivityPartyTypeCode = "8"
+		require.Equal(t, "The Party has invalid value", sample.Validate().Error())
+		sample.ActivityPartyTypeCode = "18"
+		require.Equal(t, "The Party has invalid value", sample.Validate().Error())
+		sample.ActivityPartyTypeCode = "34"
+		require.Equal(t, "The Party has invalid value", sample.Validate().Error())
+		sample.ActivityPartyTypeCode = "33"
+		require.Equal(t, "The Party has invalid value", sample.Validate().Error())
+	})
+
+	t.Run("PartyNameType", func(t *testing.T) {
+		var sample PartyNameType
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PartyName has invalid value", sample.Validate("35").Error())
+		require.Equal(t, "The PartyName has invalid value", sample.Validate("30").Error())
+		require.Equal(t, "The PartyName has invalid value", sample.Validate("34").Error())
+		c := ValidatePartyNameCodeType("TEST")
+		sample.PartyNameTypeCode = &c
+		require.Equal(t, "The PartyName has invalid value", sample.Validate("34").Error())
+	})
+
+	t.Run("AddressType", func(t *testing.T) {
+		var sample AddressType
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The Address has invalid value", sample.Validate("35").Error())
+	})
+
+	t.Run("PhoneNumberType", func(t *testing.T) {
+		var sample PhoneNumberType
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PhoneNumber has invalid value", sample.Validate("8").Error())
+	})
+
+	t.Run("PartyIdentificationType", func(t *testing.T) {
+		var sample PartyIdentificationType
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PartyIdentification has invalid value", sample.Validate("30").Error())
+	})
+
+	t.Run("PartyAssociationType", func(t *testing.T) {
+		var sample PartyAssociationType
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		for i := 0; i < 100; i++ {
+			sample.Party = append(sample.Party, AssociationParty{})
+		}
+		require.Equal(t, "The Party has invalid min & max range", sample.Validate("34").Error())
+	})
+
+	t.Run("PartyAccountAssociationType", func(t *testing.T) {
+		var sample PartyAccountAssociationType
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The Party has invalid min & max range", sample.Validate("33").Error())
+	})
+
+	t.Run("AccountType", func(t *testing.T) {
+		var sample AccountType
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The Account has invalid value", sample.Validate("41").Error())
+	})
+
+	t.Run("SuspiciousActivityType", func(t *testing.T) {
+		var sample SuspiciousActivityType
+		require.Equal(t, "The SuspiciousActivity has invalid value", sample.Validate().Error())
+
+		sample.SuspiciousActivityClassification = append(sample.SuspiciousActivityClassification, SuspiciousActivityClassificationType{})
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+	})
+}

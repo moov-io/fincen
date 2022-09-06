@@ -375,3 +375,154 @@ func TestParty(t *testing.T) {
 		require.NoError(t, err)
 	})
 }
+
+func TestElements(t *testing.T) {
+
+	t.Run("ActivityType", func(t *testing.T) {
+		var sample ActivityType
+
+		require.Equal(t, "DOEPX", sample.FormTypeCode())
+		require.Equal(t, "The Party has invalid min & max range", sample.Validate().Error())
+
+		for i := 0; i < 6; i++ {
+			sample.Party = append(sample.Party, PartyType{})
+		}
+		require.Equal(t, "The Party(type 35) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 37) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 11) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "11"})
+		require.Equal(t, "The Party(type 45) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "45"})
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+	})
+
+	t.Run("ActivityAssociationType", func(t *testing.T) {
+		var sample ActivityAssociationType
+
+		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())
+
+		indicator := fincen.ValidateIndicatorType("Y")
+
+		sample.ExemptionAmendedIndicator = &indicator
+		sample.ExemptionRevokedIndicator = &indicator
+		sample.InitialDesignationIndicator = &indicator
+		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())
+	})
+
+	t.Run("PartyType", func(t *testing.T) {
+		var sample PartyType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+
+		sample = PartyType{ActivityPartyTypeCode: "35"}
+
+		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
+		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		require.Equal(t, "The Address is a required field", sample.Validate().Error())
+		sample.Address = &AddressType{}
+		require.Equal(t, "The PhoneNumber is a required field", sample.Validate().Error())
+		sample.PhoneNumber = &PhoneNumberType{}
+		require.Equal(t, "The PartyIdentification is a required field", sample.Validate().Error())
+
+		sample = PartyType{ActivityPartyTypeCode: "37"}
+
+		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
+
+		sample = PartyType{ActivityPartyTypeCode: "11"}
+
+		sample.PartyName = nil
+		require.Equal(t, "The PartyName has invalid min & max range", sample.Validate().Error())
+		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		require.Equal(t, "The Address is a required field", sample.Validate().Error())
+		sample.Address = &AddressType{}
+		require.Equal(t, "The PartyIdentification is a required field", sample.Validate().Error())
+
+		sample = PartyType{ActivityPartyTypeCode: "45"}
+
+		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
+		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		require.Equal(t, "The PrimaryRegulatorTypeCode is a required field", sample.Validate().Error())
+		rType := ValidateFederalRegulatorCodeType("1")
+		sample.PrimaryRegulatorTypeCode = &rType
+		require.Equal(t, "The Address is a required field", sample.Validate().Error())
+		sample.Address = &AddressType{}
+		require.Equal(t, "The PartyIdentification has invalid min & max range", sample.Validate().Error())
+	})
+
+	t.Run("PartyNameType", func(t *testing.T) {
+		var sample PartyNameType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PartyNameTypeCode is a required field", sample.Validate("35").Error())
+
+		nameType := ValidatePartyNameCodeType("")
+		sample.PartyNameTypeCode = &nameType
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("35").Error())
+		nameType = "L"
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("35").Error())
+
+		require.Equal(t, "The RawEntityIndividualLastName is a required field", sample.Validate("11").Error())
+		nameType = "DBA"
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("11").Error())
+		sample.PartyNameTypeCode = nil
+		require.Equal(t, "The PartyNameTypeCode is a required field", sample.Validate("11").Error())
+
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("45").Error())
+	})
+
+	t.Run("AddressType", func(t *testing.T) {
+		var sample AddressType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("11").Error())
+		require.Equal(t, "The RawCountryCodeText is a required field", sample.Validate("35").Error())
+		require.Equal(t, "The Address should be omitted", sample.Validate("INVALID").Error())
+
+	})
+
+	t.Run("ElectronicAddressType", func(t *testing.T) {
+		var sample ElectronicAddressType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("11").Error())
+		require.Equal(t, "The ElectronicAddress should be omitted", sample.Validate("INVALID").Error())
+
+	})
+
+	t.Run("PartyIdentificationType", func(t *testing.T) {
+		var sample PartyIdentificationType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("11").Error())
+		require.Equal(t, "The PartyIdentification should be omitted", sample.Validate("INVALID").Error())
+
+	})
+
+	t.Run("PartyOccupationBusinessType", func(t *testing.T) {
+		var sample PartyOccupationBusinessType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("11").Error())
+		require.Equal(t, "The PartyOccupationBusiness should be omitted", sample.Validate("INVALID").Error())
+
+	})
+
+	t.Run("PhoneNumberType", func(t *testing.T) {
+		var sample PhoneNumberType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The PhoneNumber should be omitted", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("35").Error())
+		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("11").Error())
+		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("3").Error())
+
+	})
+
+}

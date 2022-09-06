@@ -8,7 +8,6 @@ package financial_accounts
 
 import (
 	"encoding/xml"
-
 	"github.com/moov-io/fincen"
 )
 
@@ -50,7 +49,7 @@ func (r ActivityType) Validate(args ...string) error {
 	existed := make(map[string]int)
 	for _, p := range r.Party {
 		typeCode := string(p.ActivityPartyTypeCode)
-		if cnt, ok := existed[typeCode]; !ok {
+		if cnt, ok := existed[typeCode]; ok {
 			existed[typeCode] = cnt + 1
 		} else {
 			existed[typeCode] = 1
@@ -58,21 +57,21 @@ func (r ActivityType) Validate(args ...string) error {
 	}
 
 	if _, ok := existed["35"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 35)")
+		return fincen.NewErrFieldRequired("Party(type 35)")
 	}
 	if _, ok := existed["37"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 37)")
+		return fincen.NewErrFieldRequired("Party(type 37)")
 	}
 	if _, ok := existed["15"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 15)")
+		return fincen.NewErrFieldRequired("Party(type 15)")
 	}
-	if cnt, ok := existed["35"]; !ok || cnt > 1 {
+	if cnt, ok := existed["35"]; ok && cnt > 1 {
 		return fincen.NewErrMinMaxRange("Party(type 35)")
 	}
-	if cnt, ok := existed["37"]; !ok || cnt > 1 {
+	if cnt, ok := existed["37"]; ok && cnt > 1 {
 		return fincen.NewErrMinMaxRange("Party(type 37)")
 	}
-	if cnt, ok := existed["15"]; !ok || cnt > 1 {
+	if cnt, ok := existed["15"]; ok && cnt > 1 {
 		return fincen.NewErrMinMaxRange("Party(type 15)")
 	}
 
@@ -119,47 +118,47 @@ func (r PartyType) fieldInclusion() error {
 	}
 
 	if typeCode != "15" && r.FilerTypeConsolidatedIndicator != nil {
-		return fincen.NewErrFiledNotAssociated("FilerTypeConsolidatedIndicator")
+		return fincen.NewErrFiledOmitted("FilerTypeConsolidatedIndicator")
 	}
 
 	if typeCode != "15" && r.FilerTypeCorporationIndicator != nil {
-		return fincen.NewErrFiledNotAssociated("FilerTypeCorporationIndicator")
+		return fincen.NewErrFiledOmitted("FilerTypeCorporationIndicator")
 	}
 
 	if typeCode != "15" && r.FilerTypeFiduciaryOtherIndicator != nil {
-		return fincen.NewErrFiledNotAssociated("FilerTypeFiduciaryOtherIndicator")
+		return fincen.NewErrFiledOmitted("FilerTypeFiduciaryOtherIndicator")
 	}
 
 	if typeCode != "15" && r.FilerTypeIndividualIndicator != nil {
-		return fincen.NewErrFiledNotAssociated("FilerTypeIndividualIndicator")
-	}
-
-	if r.FilerTypeOtherText != nil && !(typeCode == "15" && r.FilerTypeFiduciaryOtherIndicator != nil) {
-		return fincen.NewErrFiledNotAssociated("FilerTypeOtherText")
+		return fincen.NewErrFiledOmitted("FilerTypeIndividualIndicator")
 	}
 
 	if typeCode != "15" && r.FilerTypePartnershipIndicator != nil {
-		return fincen.NewErrFiledNotAssociated("FilerTypePartnershipIndicator")
-	}
-
-	if r.IndividualBirthDateText != nil && !(typeCode == "15" && r.FilerTypeIndividualIndicator != nil) {
-		return fincen.NewErrFiledNotAssociated("IndividualBirthDateText")
+		return fincen.NewErrFiledOmitted("FilerTypePartnershipIndicator")
 	}
 
 	if typeCode != "57" && r.SelfEmployedIndicator != nil {
-		return fincen.NewErrFiledNotAssociated("SelfEmployedIndicator")
+		return fincen.NewErrFiledOmitted("SelfEmployedIndicator")
 	}
 
 	if typeCode != "15" && r.SignatureAuthoritiesIndicator != nil {
-		return fincen.NewErrFiledNotAssociated("SignatureAuthoritiesIndicator")
+		return fincen.NewErrFiledOmitted("SignatureAuthoritiesIndicator")
+	}
+
+	if r.FilerTypeOtherText != nil && !(typeCode == "15" && r.FilerTypeFiduciaryOtherIndicator != nil) {
+		return fincen.NewErrValueInvalid("FilerTypeOtherText")
+	}
+
+	if r.IndividualBirthDateText != nil && !(typeCode == "15" && r.FilerTypeIndividualIndicator != nil) {
+		return fincen.NewErrValueInvalid("IndividualBirthDateText")
 	}
 
 	if r.Address == nil && fincen.CheckInvolved(typeCode, "35", "15", "57") {
-		return fincen.NewErrFiledNotAssociated("Address")
+		return fincen.NewErrFieldRequired("Address")
 	}
 
 	if r.PhoneNumber == nil && fincen.CheckInvolved(typeCode, "35", "57") {
-		return fincen.NewErrFiledNotAssociated("Address")
+		return fincen.NewErrFieldRequired("PhoneNumber")
 	}
 
 	if len(r.PartyIdentification) > 2 {
@@ -274,11 +273,11 @@ func (r AccountPartyType) fieldInclusion() error {
 	typeCode := string(r.ActivityPartyTypeCode)
 
 	if !fincen.CheckInvolved(typeCode, "42", "43") && r.PartyAsEntityOrganizationIndicator != nil {
-		return fincen.NewErrFiledNotAssociated("PartyAsEntityOrganizationIndicator")
+		return fincen.NewErrFiledOmitted("PartyAsEntityOrganizationIndicator")
 	}
 
 	if typeCode == "41" && r.PartyIdentification != nil {
-		return fincen.NewErrFiledNotAssociated("PartyIdentification")
+		return fincen.NewErrFiledOmitted("PartyIdentification")
 	}
 
 	return nil
@@ -390,23 +389,23 @@ type PartyNameType struct {
 func (r PartyNameType) fieldInclusion(typeCode string, individualIndicator bool) error {
 
 	if r.RawEntityIndividualLastName != nil && !fincen.CheckInvolved(typeCode, "15", "57") {
-		return fincen.NewErrFiledNotAssociated("RawEntityIndividualLastName")
+		return fincen.NewErrFiledOmitted("RawEntityIndividualLastName")
 	}
 
 	if r.RawIndividualFirstName != nil && !((typeCode == "15" && individualIndicator) || typeCode == "57") {
-		return fincen.NewErrFiledNotAssociated("RawIndividualFirstName")
+		return fincen.NewErrFiledOmitted("RawIndividualFirstName")
 	}
 
 	if r.RawIndividualMiddleName != nil && !((typeCode == "15" && individualIndicator) || typeCode == "57") {
-		return fincen.NewErrFiledNotAssociated("RawIndividualMiddleName")
+		return fincen.NewErrFiledOmitted("RawIndividualMiddleName")
 	}
 
 	if r.RawIndividualNameSuffixText != nil && !(typeCode == "15" && individualIndicator) {
-		return fincen.NewErrFiledNotAssociated("RawIndividualNameSuffixText")
+		return fincen.NewErrFiledOmitted("RawIndividualNameSuffixText")
 	}
 
 	if r.RawIndividualTitleText != nil && !(typeCode == "15" && individualIndicator) {
-		return fincen.NewErrFiledNotAssociated("RawIndividualTitleText")
+		return fincen.NewErrFiledOmitted("RawIndividualTitleText")
 	}
 
 	if r.RawPartyFullName == nil && fincen.CheckInvolved(typeCode, "35", "57", "56") {
@@ -442,7 +441,7 @@ type PhoneNumberType struct {
 
 func (r PhoneNumberType) fieldInclusion(typeCode string) error {
 	if r.PhoneNumberExtensionText != nil && typeCode != "57" {
-		return fincen.NewErrFiledNotAssociated("PhoneNumberExtensionText")
+		return fincen.NewErrFiledOmitted("PhoneNumberExtensionText")
 	}
 
 	if r.PhoneNumberText == nil && fincen.CheckInvolved(typeCode, "35", "57") {
@@ -480,27 +479,27 @@ type AccountPartyNameType struct {
 func (r AccountPartyNameType) fieldInclusion(typeCode string) error {
 
 	if r.RawEntityIndividualLastName != nil && !fincen.CheckInvolved(typeCode, "42", "43") {
-		return fincen.NewErrFiledNotAssociated("RawEntityIndividualLastName")
+		return fincen.NewErrFiledOmitted("RawEntityIndividualLastName")
 	}
 
 	if r.RawIndividualFirstName != nil && !fincen.CheckInvolved(typeCode, "42", "43") {
-		return fincen.NewErrFiledNotAssociated("RawIndividualFirstName")
+		return fincen.NewErrFiledOmitted("RawIndividualFirstName")
 	}
 
 	if r.RawIndividualMiddleName != nil && !fincen.CheckInvolved(typeCode, "42", "43") {
-		return fincen.NewErrFiledNotAssociated("RawIndividualMiddleName")
+		return fincen.NewErrFiledOmitted("RawIndividualMiddleName")
 	}
 
 	if r.RawIndividualNameSuffixText != nil && !fincen.CheckInvolved(typeCode, "42", "43") {
-		return fincen.NewErrFiledNotAssociated("RawIndividualNameSuffixText")
+		return fincen.NewErrFiledOmitted("RawIndividualNameSuffixText")
 	}
 
 	if r.RawIndividualTitleText != nil && typeCode != "43" {
-		return fincen.NewErrFiledNotAssociated("RawIndividualTitleText")
+		return fincen.NewErrFiledOmitted("RawIndividualTitleText")
 	}
 
 	if r.RawPartyFullName != nil && !fincen.CheckInvolved(typeCode, "41", "44") {
-		return fincen.NewErrFiledNotAssociated("RawIndividualNameSuffixText")
+		return fincen.NewErrFiledOmitted("RawPartyFullName")
 	}
 
 	return nil

@@ -113,20 +113,14 @@ func Validate(r interface{}, args ...string) error {
 // ValidateDateText check input string is date string (YYYYMMDD)
 func ValidateDateText(str string) bool {
 	reg := regexp.MustCompile(`^\d{4}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$`)
-	if !reg.MatchString(str) {
-		return false
-	}
-	return true
+	return !reg.MatchString(str)
 }
 
 // ValidateNumericCharacters check input string is numeric characters
 func ValidateNumericCharacters(str string, min, max int) bool {
 	fmtStr := fmt.Sprintf(`[0-9]{%d,%d}`, min, max)
 	reg := regexp.MustCompile(fmtStr)
-	if !reg.MatchString(str) {
-		return false
-	}
-	return true
+	return !reg.MatchString(str)
 }
 
 func CheckInvolved(element string, elements ...string) bool {

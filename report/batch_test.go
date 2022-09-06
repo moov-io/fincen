@@ -252,17 +252,17 @@ func TestElements(t *testing.T) {
 	t.Run("EFilingBatchXML", func(t *testing.T) {
 
 		sample := EFilingBatchXML{}
-		require.Equal(t, "The FormTypeCode is invalid", sample.Validate().Error())
+		require.Equal(t, "The FormTypeCode has invalid value", sample.Validate().Error())
 
 		sample.FormTypeCode = "CTRX"
-		require.Equal(t, "The Activity is invalid", sample.Validate().Error())
+		require.Equal(t, "The Activity has invalid value", sample.Validate().Error())
 
 		var emptyActivity fincen.ElementActivity = (*emptyElementActivity)(nil)
 		sample.Activity = append(sample.Activity, emptyActivity)
 
-		require.Equal(t, "The SeqNumber is invalid (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
 
 		sample.StatusCode = "A"
-		require.Equal(t, "The EFilingSubmissionXML is invalid", sample.Validate().Error())
+		require.Equal(t, "The EFilingSubmissionXML has invalid value", sample.Validate().Error())
 	})
 }

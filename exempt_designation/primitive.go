@@ -11,21 +11,6 @@ import (
 	"github.com/moov-io/fincen"
 )
 
-// validating elements
-var (
-	_ fincen.ElementActivity = (*ActivityType)(nil)
-	_ fincen.Element         = (*ActivityAssociationType)(nil)
-	_ fincen.Element         = (*ActivityType)(nil)
-	_ fincen.Element         = (*AddressType)(nil)
-	_ fincen.Element         = (*DesignationExemptActivityType)(nil)
-	_ fincen.Element         = (*ElectronicAddressType)(nil)
-	_ fincen.Element         = (*PartyIdentificationType)(nil)
-	_ fincen.Element         = (*PartyNameType)(nil)
-	_ fincen.Element         = (*PartyOccupationBusinessType)(nil)
-	_ fincen.Element         = (*PartyType)(nil)
-	_ fincen.Element         = (*PhoneNumberType)(nil)
-)
-
 // May be one of 35, 37, 11, 45, 12, 3
 type ValidateActivityPartyCodeType string
 
@@ -37,7 +22,7 @@ func (r ValidateActivityPartyCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateActivityPartyCodeType")
+	return fincen.NewErrValueInvalid("ValidateActivityPartyCode")
 }
 
 // May be one of 1, 2, 14, 28
@@ -51,7 +36,7 @@ func (r ValidatePartyIdentificationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCodeType")
+	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCode")
 }
 
 // May be one of L, DBA
@@ -65,7 +50,7 @@ func (r ValidatePartyNameCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyNameCodeType")
+	return fincen.NewErrValueInvalid("ValidatePartyNameCode")
 }
 
 // May be one of 1, 2, 7, 3, 4
@@ -79,7 +64,7 @@ func (r ValidateFederalRegulatorCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateFederalRegulatorCodeType")
+	return fincen.NewErrValueInvalid("ValidateFederalRegulatorCode")
 }
 
 // 14-digit numeric

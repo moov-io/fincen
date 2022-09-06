@@ -10,25 +10,6 @@ import (
 	"github.com/moov-io/fincen"
 )
 
-// validating elements
-var (
-	_ fincen.ElementActivity = (*ActivityType)(nil)
-	_ fincen.Element         = (*AccountType)(nil)
-	_ fincen.Element         = (*ActivityAssociationType)(nil)
-	_ fincen.Element         = (*ActivityType)(nil)
-	_ fincen.Element         = (*AddressType)(nil)
-	_ fincen.Element         = (*CurrencyTransactionActivityDetailType)(nil)
-	_ fincen.Element         = (*CurrencyTransactionActivityType)(nil)
-	_ fincen.Element         = (*ElectronicAddressType)(nil)
-	_ fincen.Element         = (*OrganizationClassificationTypeSubtypeType)(nil)
-	_ fincen.Element         = (*PartyAccountAssociationType)(nil)
-	_ fincen.Element         = (*PartyIdentificationType)(nil)
-	_ fincen.Element         = (*PartyNameType)(nil)
-	_ fincen.Element         = (*PartyOccupationBusinessType)(nil)
-	_ fincen.Element         = (*PartyType)(nil)
-	_ fincen.Element         = (*PhoneNumberType)(nil)
-)
-
 // May be one of 35, 37, 30, 34, 50, 17, 23, 58, 8
 type ValidateActivityPartyCodeType string
 
@@ -40,7 +21,7 @@ func (r ValidateActivityPartyCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateActivityPartyCodeType")
+	return fincen.NewErrValueInvalid("ValidateActivityPartyCode")
 }
 
 // May be one of 1, 2, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 28, 999
@@ -54,7 +35,7 @@ func (r ValidatePartyIdentificationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCodeType")
+	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCode")
 }
 
 // May be one of L, AKA, DBA
@@ -68,7 +49,7 @@ func (r ValidatePartyNameCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyNameCodeType")
+	return fincen.NewErrValueInvalid("ValidatePartyNameCode")
 }
 
 // May be one of 9, 1, 2, 7, 3, 4, 6, 14
@@ -82,7 +63,7 @@ func (r ValidateFederalRegulatorCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateFederalRegulatorCodeType")
+	return fincen.NewErrValueInvalid("ValidateFederalRegulatorCode")
 }
 
 // May be one of 8, 9
@@ -96,5 +77,5 @@ func (r ValidatePartyAccountAssociationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyAccountAssociationCodeType")
+	return fincen.NewErrValueInvalid("ValidatePartyAccountAssociationCode")
 }

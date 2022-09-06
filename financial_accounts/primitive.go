@@ -10,21 +10,6 @@ import (
 	"github.com/moov-io/fincen"
 )
 
-// validating elements
-var (
-	_ fincen.ElementActivity = (*ActivityType)(nil)
-	_ fincen.Element         = (*AccountType)(nil)
-	_ fincen.Element         = (*ActivityAssociationType)(nil)
-	_ fincen.Element         = (*ActivityNarrativeInformationType)(nil)
-	_ fincen.Element         = (*ActivityType)(nil)
-	_ fincen.Element         = (*AddressType)(nil)
-	_ fincen.Element         = (*ForeignAccountActivityType)(nil)
-	_ fincen.Element         = (*PartyIdentificationType)(nil)
-	_ fincen.Element         = (*PartyNameType)(nil)
-	_ fincen.Element         = (*PartyType)(nil)
-	_ fincen.Element         = (*PhoneNumberType)(nil)
-)
-
 // May be one of 15, 35, 37, 56, 57
 type ValidateActivityPartyCodeType string
 
@@ -36,7 +21,7 @@ func (r ValidateActivityPartyCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateActivityPartyCodeType")
+	return fincen.NewErrValueInvalid("ValidateActivityPartyCode")
 }
 
 // May be one of 41, 42, 43, 44
@@ -50,7 +35,7 @@ func (r ValidateAccountPartyCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyCodeType")
+	return fincen.NewErrValueInvalid("ValidateAccountPartyCode")
 }
 
 // May be one of 1, 2, 4, 6, 9, 28, 31, 999
@@ -64,7 +49,7 @@ func (r ValidateActivityPartyIdentificationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCodeType")
+	return fincen.NewErrValueInvalid("ValidateActivityPartyIdentificationCode")
 }
 
 // May be one of -2, 1, 2, 9
@@ -78,7 +63,7 @@ func (r ValidateAccountPartyIdentificationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCodeType")
+	return fincen.NewErrValueInvalid("ValidateAccountPartyIdentificationCode")
 }
 
 // May be one of L
@@ -92,5 +77,5 @@ func (r ValidatePartyNameCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyNameCodeType")
+	return fincen.NewErrValueInvalid("ValidatePartyNameCode")
 }

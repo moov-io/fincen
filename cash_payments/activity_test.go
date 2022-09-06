@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/moov-io/fincen"
-	
+
 	"github.com/stretchr/testify/require"
 )
 
@@ -412,4 +412,166 @@ func TestParty(t *testing.T) {
 		err = party.Validate()
 		require.NoError(t, err)
 	})
+}
+
+func TestElements(t *testing.T) {
+
+	t.Run("ActivityType", func(t *testing.T) {
+		var sample ActivityType
+
+		require.Equal(t, "8300X", sample.FormTypeCode())
+		require.Equal(t, "The Party has invalid min & max range", sample.Validate().Error())
+
+		for i := 0; i < 4; i++ {
+			sample.Party = append(sample.Party, PartyType{})
+		}
+		require.Equal(t, "The Party(type 35) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 37) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 3) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "3"})
+		require.Equal(t, "The Party(type 4) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "4"})
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "4"})
+		require.Equal(t, "The Party(type 4) has invalid min & max range", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "3"})
+		require.Equal(t, "The Party(type 3) has invalid min & max range", sample.Validate().Error())
+
+	})
+
+	t.Run("PartyType", func(t *testing.T) {
+		var sample PartyType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+
+		sample.ActivityPartyTypeCode = "35"
+		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
+
+		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		require.Equal(t, "The Address is a required field", sample.Validate().Error())
+
+		sample.Address = &AddressType{}
+		require.Equal(t, "The PhoneNumber is a required field", sample.Validate().Error())
+
+		sample.PhoneNumber = &PhoneNumberType{}
+		require.Equal(t, "The PartyIdentification is a required field", sample.Validate().Error())
+
+		for i := 0; i < 5; i++ {
+			sample.PartyIdentification = append(sample.PartyIdentification, PartyIdentificationType{})
+		}
+		require.Equal(t, "The PartyIdentification has invalid min & max range", sample.Validate().Error())
+
+		sample.ActivityPartyTypeCode = "37"
+		sample.PartyName = nil
+		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
+
+		sample.ActivityPartyTypeCode = "16"
+		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
+
+		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		require.Equal(t, "The PartyIdentification has invalid min & max range", sample.Validate().Error())
+
+		for i := 0; i < 5; i++ {
+			sample.PartyIdentification = append(sample.PartyIdentification, PartyIdentificationType{})
+		}
+		require.Equal(t, "The PartyIdentification has invalid min & max range", sample.Validate().Error())
+
+		sample.ActivityPartyTypeCode = "23"
+		sample.PartyName = nil
+		require.Equal(t, "The PartyTypeCode is a required field", sample.Validate().Error())
+
+		pType := fincen.ValidatePartyTypeCode("I")
+		sample.PartyTypeCode = &pType
+		for i := 0; i < 5; i++ {
+			sample.PartyName = append(sample.PartyName, PartyNameType{})
+		}
+		require.Equal(t, "The PartyName has invalid min & max range", sample.Validate().Error())
+
+		sample.ActivityPartyTypeCode = "4"
+		sample.PartyIdentification = nil
+		require.Equal(t, "The PartyIdentification is a required field", sample.Validate().Error())
+
+		sample.PartyName = nil
+		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
+
+	})
+
+	t.Run("PartyNameType", func(t *testing.T) {
+		var sample PartyNameType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("4").Error())
+		require.Equal(t, "The RawIndividualTitleText is a required field", sample.Validate("3").Error())
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("8").Error())
+		require.Equal(t, "The PartyNameTypeCode has invalid value", sample.Validate("35").Error())
+
+		c := ValidatePartyNameCodeType("L")
+		sample.PartyNameTypeCode = &c
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("23").Error())
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("37").Error())
+
+	})
+
+	t.Run("AddressType", func(t *testing.T) {
+		var sample AddressType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The RawCityText is a required field", sample.Validate("35").Error())
+
+		v50 := fincen.RestrictString50("SAMPLE")
+		sample.RawCityText = &v50
+		require.Equal(t, "The RawCountryCodeText is a required field", sample.Validate("35").Error())
+
+		v2 := fincen.RestrictString2("SA")
+		sample.RawCountryCodeText = &v2
+		require.Equal(t, "The RawStateCodeText is a required field", sample.Validate("35").Error())
+
+		v3 := fincen.RestrictString3("SA")
+		sample.RawStateCodeText = &v3
+		require.Equal(t, "The RawStreetAddress1Text is a required field", sample.Validate("35").Error())
+
+		v100 := fincen.RestrictString100("SA")
+		sample.RawStreetAddress1Text = &v100
+		require.Equal(t, "The RawZIPCode is a required field", sample.Validate("35").Error())
+
+		v9 := fincen.RestrictString9("SA")
+		sample.RawZIPCode = &v9
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("35").Error())
+	})
+
+	t.Run("PhoneNumberType", func(t *testing.T) {
+		var sample PhoneNumberType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("35").Error())
+	})
+
+	t.Run("PartyIdentificationType", func(t *testing.T) {
+		var sample PartyIdentificationType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PartyIdentificationNumberText is a required field", sample.Validate("4").Error())
+		require.Equal(t, "The PartyIdentificationNumberText is a required field", sample.Validate("35").Error())
+		n := fincen.RestrictString25("SAMPLE")
+		sample.PartyIdentificationNumberText = &n
+		require.Equal(t, "The PartyIdentificationTypeCode has invalid value", sample.Validate("35").Error())
+	})
+
+	t.Run("CurrencyTransactionActivityType", func(t *testing.T) {
+		var sample CurrencyTransactionActivityType
+		require.Equal(t, "The CurrencyTransactionActivityDetail has invalid min & max range", sample.Validate().Error())
+	})
+
 }

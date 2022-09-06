@@ -403,3 +403,235 @@ func TestParty(t *testing.T) {
 		require.NoError(t, err)
 	})
 }
+
+func TestElements(t *testing.T) {
+
+	t.Run("ActivityType", func(t *testing.T) {
+		var sample ActivityType
+
+		require.Equal(t, "FBARX", sample.FormTypeCode())
+		require.Equal(t, "The Party has invalid min & max range", sample.Validate().Error())
+
+		for i := 0; i < 3; i++ {
+			sample.Party = append(sample.Party, PartyType{})
+		}
+		require.Equal(t, "The Party(type 35) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 37) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 15) is a required field", sample.Validate().Error())
+
+		sample.Party = nil
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "15"})
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 37) has invalid min & max range", sample.Validate().Error())
+
+		sample.Party = nil
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "15"})
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "15"})
+		require.Equal(t, "The Party(type 15) has invalid min & max range", sample.Validate().Error())
+
+		sample.Party = nil
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "15"})
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 35) has invalid min & max range", sample.Validate().Error())
+	})
+
+	t.Run("PartyType", func(t *testing.T) {
+		var sample PartyType
+		indicatorYN := fincen.ValidateIndicatorYNType("Y")
+		indicator := fincen.ValidateIndicatorType("Y")
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+
+		sample = PartyType{ActivityPartyTypeCode: "15"}
+
+		require.Equal(t, "The FilerFinancialInterest25ForeignAccountIndicator is a required field", sample.Validate().Error())
+		sample.FilerFinancialInterest25ForeignAccountIndicator = &indicatorYN
+		require.Equal(t, "The Address is a required field", sample.Validate().Error())
+
+		sample = PartyType{ActivityPartyTypeCode: "35"}
+
+		require.Equal(t, "The Address is a required field", sample.Validate().Error())
+		sample.Address = &AddressType{}
+		require.Equal(t, "The PhoneNumber is a required field", sample.Validate().Error())
+
+		sample = PartyType{ActivityPartyTypeCode: "INVALID"}
+
+		sample.FilerTypeConsolidatedIndicator = &indicator
+		require.Equal(t, "The FilerTypeConsolidatedIndicator should be omitted", sample.Validate().Error())
+		sample.FilerTypeConsolidatedIndicator = nil
+		sample.FilerTypeCorporationIndicator = &indicator
+		require.Equal(t, "The FilerTypeCorporationIndicator should be omitted", sample.Validate().Error())
+		sample.FilerTypeCorporationIndicator = nil
+		sample.FilerTypeFiduciaryOtherIndicator = &indicator
+		require.Equal(t, "The FilerTypeFiduciaryOtherIndicator should be omitted", sample.Validate().Error())
+		sample.FilerTypeFiduciaryOtherIndicator = nil
+		sample.FilerTypeIndividualIndicator = &indicator
+		require.Equal(t, "The FilerTypeIndividualIndicator should be omitted", sample.Validate().Error())
+		sample.FilerTypeIndividualIndicator = nil
+		sample.FilerTypePartnershipIndicator = &indicator
+		require.Equal(t, "The FilerTypePartnershipIndicator should be omitted", sample.Validate().Error())
+		sample.FilerTypePartnershipIndicator = nil
+		sample.SelfEmployedIndicator = &indicator
+		require.Equal(t, "The SelfEmployedIndicator should be omitted", sample.Validate().Error())
+		sample.SelfEmployedIndicator = nil
+		sample.SignatureAuthoritiesIndicator = &indicatorYN
+		require.Equal(t, "The SignatureAuthoritiesIndicator should be omitted", sample.Validate().Error())
+		v50 := fincen.RestrictString50("")
+		sample.FilerTypeOtherText = &v50
+		sample.SignatureAuthoritiesIndicator = nil
+		require.Equal(t, "The FilerTypeOtherText has invalid value", sample.Validate().Error())
+		sample.FilerTypeOtherText = nil
+		dd := fincen.DateYYYYMMDDOrBlankType("")
+		sample.IndividualBirthDateText = &dd
+		require.Equal(t, "The IndividualBirthDateText has invalid value", sample.Validate().Error())
+		sample.IndividualBirthDateText = nil
+		for i := 0; i < 3; i++ {
+			sample.PartyIdentification = append(sample.PartyIdentification, PartyIdentificationType{})
+		}
+		require.Equal(t, "The PartyIdentification has invalid min & max range", sample.Validate().Error())
+	})
+
+	t.Run("AccountType", func(t *testing.T) {
+		var sample AccountType
+
+		require.Equal(t, "The Party is a required field", sample.Validate().Error())
+	})
+
+	t.Run("AddressType", func(t *testing.T) {
+		var sample AddressType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+
+		require.Equal(t, "The RawCityText is a required field", sample.Validate("35").Error())
+		v50 := fincen.RestrictString50("")
+		sample.RawCityText = &v50
+		require.Equal(t, "The RawCountryCodeText is a required field", sample.Validate("35").Error())
+		v2 := fincen.RestrictString2("")
+		sample.RawCountryCodeText = &v2
+		require.Equal(t, "The RawStateCodeText is a required field", sample.Validate("35").Error())
+		v3 := fincen.RestrictString3("")
+		sample.RawStateCodeText = &v3
+		require.Equal(t, "The RawStreetAddress1Text is a required field", sample.Validate("35").Error())
+		v100 := fincen.RestrictString100("")
+		sample.RawStreetAddress1Text = &v100
+		require.Equal(t, "The RawZIPCode is a required field", sample.Validate("35").Error())
+	})
+
+	t.Run("AccountPartyType", func(t *testing.T) {
+		var sample AccountPartyType
+		indicator := fincen.ValidateIndicatorType("Y")
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+
+		sample.ActivityPartyTypeCode = "41"
+		sample.PartyAsEntityOrganizationIndicator = &indicator
+		require.Equal(t, "The PartyAsEntityOrganizationIndicator should be omitted", sample.Validate().Error())
+		sample.PartyAsEntityOrganizationIndicator = nil
+		sample.PartyIdentification = &AccountPartyIdentificationType{}
+		require.Equal(t, "The PartyIdentification should be omitted", sample.Validate().Error())
+	})
+
+	t.Run("PartyIdentificationType", func(t *testing.T) {
+		var sample PartyIdentificationType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+
+		require.Equal(t, "The OtherIssuerCountryText is a required field", sample.Validate("15").Error())
+		v2 := fincen.RestrictString2("")
+		sample.OtherIssuerCountryText = &v2
+		require.Equal(t, "The OtherPartyIdentificationTypeText is a required field", sample.Validate("15").Error())
+		v50 := fincen.RestrictString50("")
+		sample.OtherPartyIdentificationTypeText = &v50
+		require.Equal(t, "The PartyIdentificationNumberText is a required field", sample.Validate("15").Error())
+		v25 := fincen.RestrictString25("")
+		sample.PartyIdentificationNumberText = &v25
+		iCode := ValidateActivityPartyIdentificationCodeType("")
+		sample.PartyIdentificationTypeCode = &iCode
+		require.Equal(t, "The PartyIdentificationTypeCode has invalid value", sample.Validate("15").Error())
+		require.Equal(t, "The PartyIdentificationTypeCode has invalid value", sample.Validate("35").Error())
+		require.Equal(t, "The PartyIdentificationTypeCode has invalid value", sample.Validate("57").Error())
+		require.Equal(t, "The PartyIdentificationTypeCode has invalid value", sample.Validate("56").Error())
+	})
+
+	t.Run("PartyNameType", func(t *testing.T) {
+		var sample PartyNameType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+
+		v150 := fincen.RestrictString150("")
+		sample.RawEntityIndividualLastName = &v150
+		require.Equal(t, "The RawEntityIndividualLastName should be omitted", sample.Validate("INVALID").Error())
+		sample.RawEntityIndividualLastName = nil
+		v35 := fincen.RestrictString35("")
+		sample.RawIndividualFirstName = &v35
+		require.Equal(t, "The RawIndividualFirstName should be omitted", sample.Validate("INVALID").Error())
+		sample.RawIndividualFirstName = nil
+		sample.RawIndividualMiddleName = &v35
+		require.Equal(t, "The RawIndividualMiddleName should be omitted", sample.Validate("INVALID").Error())
+		sample.RawIndividualMiddleName = nil
+		sample.RawIndividualNameSuffixText = &v35
+		require.Equal(t, "The RawIndividualNameSuffixText should be omitted", sample.Validate("INVALID").Error())
+		sample.RawIndividualNameSuffixText = nil
+		v20 := fincen.RestrictString20("")
+		sample.RawIndividualTitleText = &v20
+		require.Equal(t, "The RawIndividualTitleText should be omitted", sample.Validate("INVALID").Error())
+		sample.RawIndividualTitleText = nil
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("35").Error())
+	})
+
+	t.Run("PhoneNumberType", func(t *testing.T) {
+		var sample PhoneNumberType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+
+		v6 := fincen.RestrictString6("")
+		sample.PhoneNumberExtensionText = &v6
+		require.Equal(t, "The PhoneNumberExtensionText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.PhoneNumberExtensionText = nil
+		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("35").Error())
+	})
+
+	t.Run("AccountPartyNameType", func(t *testing.T) {
+		var sample AccountPartyNameType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+
+		v150 := fincen.RestrictString150("")
+		sample.RawEntityIndividualLastName = &v150
+		require.Equal(t, "The RawEntityIndividualLastName should be omitted", sample.Validate("INVALID").Error())
+		sample.RawEntityIndividualLastName = nil
+		v35 := fincen.RestrictString35("")
+		sample.RawIndividualFirstName = &v35
+		require.Equal(t, "The RawIndividualFirstName should be omitted", sample.Validate("INVALID").Error())
+		sample.RawIndividualFirstName = nil
+		sample.RawIndividualMiddleName = &v35
+		require.Equal(t, "The RawIndividualMiddleName should be omitted", sample.Validate("INVALID").Error())
+		sample.RawIndividualMiddleName = nil
+		sample.RawIndividualNameSuffixText = &v35
+		require.Equal(t, "The RawIndividualNameSuffixText should be omitted", sample.Validate("INVALID").Error())
+		sample.RawIndividualNameSuffixText = nil
+		v20 := fincen.RestrictString20("")
+		sample.RawIndividualTitleText = &v20
+		require.Equal(t, "The RawIndividualTitleText should be omitted", sample.Validate("INVALID").Error())
+		sample.RawIndividualTitleText = nil
+		sample.RawPartyFullName = &v150
+		require.Equal(t, "The RawPartyFullName should be omitted", sample.Validate("INVALID").Error())
+	})
+
+}

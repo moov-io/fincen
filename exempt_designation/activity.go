@@ -44,7 +44,7 @@ func (r ActivityType) Validate(args ...string) error {
 	existed := make(map[string]int)
 	for _, p := range r.Party {
 		typeCode := string(p.ActivityPartyTypeCode)
-		if cnt, ok := existed[typeCode]; !ok {
+		if cnt, ok := existed[typeCode]; ok {
 			existed[typeCode] = cnt + 1
 		} else {
 			existed[typeCode] = 1
@@ -52,16 +52,16 @@ func (r ActivityType) Validate(args ...string) error {
 	}
 
 	if _, ok := existed["35"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 35)")
+		return fincen.NewErrFieldRequired("Party(type 35)")
 	}
 	if _, ok := existed["37"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 37)")
+		return fincen.NewErrFieldRequired("Party(type 37)")
 	}
 	if _, ok := existed["11"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 11)")
+		return fincen.NewErrFieldRequired("Party(type 11)")
 	}
 	if _, ok := existed["45"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 45)")
+		return fincen.NewErrFieldRequired("Party(type 45)")
 	}
 	if cnt, ok := existed["12"]; ok && cnt > 99 {
 		return fincen.NewErrMinMaxRange("Party(type 12)")
@@ -151,22 +151,7 @@ func (r PartyType) fieldInclusion() error {
 		}
 	}
 
-	if typeCode == "45" {
-		if len(r.PartyName) != 1 {
-			return fincen.NewErrFieldRequired("PartyName")
-		}
-		if r.PrimaryRegulatorTypeCode == nil {
-			return fincen.NewErrFieldRequired("PrimaryRegulatorTypeCode")
-		}
-		if r.Address == nil {
-			return fincen.NewErrFieldRequired("Address")
-		}
-		if len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 2 {
-			return fincen.NewErrMinMaxRange("PartyIdentification")
-		}
-	}
-
-	if typeCode == "12" {
+	if typeCode == "45" || typeCode == "12" {
 		if len(r.PartyName) != 1 {
 			return fincen.NewErrFieldRequired("PartyName")
 		}
@@ -271,7 +256,7 @@ func (r AddressType) fieldInclusion(typeCode string) error {
 	}
 
 	if !fincen.CheckInvolved(typeCode, "35", "11", "35", "12") {
-		return fincen.NewErrFiledNotAssociated("Address")
+		return fincen.NewErrFiledOmitted("Address")
 	}
 
 	return nil
@@ -309,7 +294,7 @@ type ElectronicAddressType struct {
 
 func (r ElectronicAddressType) fieldInclusion(typeCode string) error {
 	if !fincen.CheckInvolved(typeCode, "11") {
-		return fincen.NewErrFiledNotAssociated("ElectronicAddress")
+		return fincen.NewErrFiledOmitted("ElectronicAddress")
 	}
 
 	return nil
@@ -337,7 +322,7 @@ type PartyIdentificationType struct {
 
 func (r PartyIdentificationType) fieldInclusion(typeCode string) error {
 	if !fincen.CheckInvolved(typeCode, "35", "45", "11", "12") {
-		return fincen.NewErrFiledNotAssociated("PartyIdentification")
+		return fincen.NewErrFiledOmitted("PartyIdentification")
 	}
 
 	return nil
@@ -365,7 +350,7 @@ type PartyOccupationBusinessType struct {
 
 func (r PartyOccupationBusinessType) fieldInclusion(typeCode string) error {
 	if !fincen.CheckInvolved(typeCode, "11") {
-		return fincen.NewErrFiledNotAssociated("PartyOccupationBusiness")
+		return fincen.NewErrFiledOmitted("PartyOccupationBusiness")
 	}
 
 	return nil
@@ -412,7 +397,7 @@ func (r PhoneNumberType) fieldInclusion(typeCode string) error {
 	}
 
 	if !fincen.CheckInvolved(typeCode, "35", "3", "11") {
-		return fincen.NewErrFiledNotAssociated("PhoneNumber")
+		return fincen.NewErrFiledOmitted("PhoneNumber")
 	}
 
 	return nil

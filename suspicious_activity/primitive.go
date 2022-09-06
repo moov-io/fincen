@@ -11,35 +11,6 @@ import (
 	"github.com/moov-io/fincen"
 )
 
-// validating elements
-var (
-	_ fincen.ElementActivity = (*ActivityType)(nil)
-	_ fincen.Element         = (*AccountType)(nil)
-	_ fincen.Element         = (*AccountType)(nil)
-	_ fincen.Element         = (*ActivityAssociationType)(nil)
-	_ fincen.Element         = (*ActivityIPAddressType)(nil)
-	_ fincen.Element         = (*ActivityNarrativeInformationType)(nil)
-	_ fincen.Element         = (*ActivitySupportDocumentType)(nil)
-	_ fincen.Element         = (*ActivityType)(nil)
-	_ fincen.Element         = (*AddressType)(nil)
-	_ fincen.Element         = (*AssociationParty)(nil)
-	_ fincen.Element         = (*AccountAssociationParty)(nil)
-	_ fincen.Element         = (*AssetsAttributeType)(nil)
-	_ fincen.Element         = (*AssetsTableType)(nil)
-	_ fincen.Element         = (*CyberEventIndicatorsType)(nil)
-	_ fincen.Element         = (*ElectronicAddressType)(nil)
-	_ fincen.Element         = (*OrganizationClassificationTypeSubtypeType)(nil)
-	_ fincen.Element         = (*PartyAccountAssociationType)(nil)
-	_ fincen.Element         = (*PartyAssociationType)(nil)
-	_ fincen.Element         = (*PartyIdentificationType)(nil)
-	_ fincen.Element         = (*PartyNameType)(nil)
-	_ fincen.Element         = (*PartyOccupationBusinessType)(nil)
-	_ fincen.Element         = (*PartyType)(nil)
-	_ fincen.Element         = (*PhoneNumberType)(nil)
-	_ fincen.Element         = (*SuspiciousActivityClassificationType)(nil)
-	_ fincen.Element         = (*SuspiciousActivityType)(nil)
-)
-
 // May be one of 1, 2, 3, 4, 5
 type ValidateActivityNarrativeSequenceNumber int
 
@@ -65,7 +36,7 @@ func (r ValidateActivityPartyCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateActivityPartyCodeType")
+	return fincen.NewErrValueInvalid("ValidateActivityPartyCode")
 }
 
 // May be one of 1, 2, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 28, 32, 33, 29, 999
@@ -79,7 +50,7 @@ func (r ValidatePartyIdentificationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCodeType")
+	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCode")
 }
 
 // May be one of L, AKA, DBA
@@ -93,7 +64,7 @@ func (r ValidatePartyNameCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyNameCodeType")
+	return fincen.NewErrValueInvalid("ValidatePartyNameCode")
 }
 
 // May be one of 9, 1, 2, 7, 3, 4, 6, 13, 99
@@ -107,7 +78,7 @@ func (r ValidateFederalRegulatorCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateFederalRegulatorCodeType")
+	return fincen.NewErrValueInvalid("ValidateFederalRegulatorCode")
 }
 
 // 14-digit numeric
@@ -136,5 +107,5 @@ func (r ValidatePartyAccountAssociationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyAccountAssociationCodeType")
+	return fincen.NewErrValueInvalid("ValidatePartyAccountAssociationCode")
 }

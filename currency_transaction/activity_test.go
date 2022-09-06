@@ -940,3 +940,295 @@ func TestParty(t *testing.T) {
 	})
 
 }
+
+func TestElements(t *testing.T) {
+
+	t.Run("ActivityType", func(t *testing.T) {
+		var sample ActivityType
+
+		require.Equal(t, "CTRX", sample.FormTypeCode())
+		require.Equal(t, "The Party has invalid min & max range", sample.Validate().Error())
+
+		for i := 0; i < 6; i++ {
+			sample.Party = append(sample.Party, PartyType{})
+		}
+		require.Equal(t, "The Party(type 35) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 37) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 30) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "30"})
+		require.Equal(t, "The Party(type 8) is a required field", sample.Validate().Error())
+
+		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "8"})
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+	})
+
+	t.Run("ActivityAssociationType", func(t *testing.T) {
+		var sample ActivityAssociationType
+
+		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())
+
+		indicator := fincen.ValidateIndicatorType("Y")
+
+		sample.CorrectsAmendsPriorReportIndicator = &indicator
+		sample.FinCENDirectBackFileIndicator = &indicator
+		sample.InitialReportIndicator = &indicator
+		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())
+	})
+
+	t.Run("PartyType", func(t *testing.T) {
+		var sample PartyType
+
+		require.Equal(t, "The PartyName has invalid min & max range", sample.Validate().Error())
+
+		indicator := fincen.ValidateIndicatorType("Y")
+
+		sample.BirthDateUnknownIndicator = &indicator
+		require.Equal(t, "The BirthDateUnknownIndicator should be omitted", sample.Validate().Error())
+
+		sample.BirthDateUnknownIndicator = nil
+		mmDD := fincen.DateYYYYMMDDType("20170101")
+		sample.EFilingCoverageBeginningDateText = &mmDD
+		require.Equal(t, "The EFilingCoverageBeginningDateText should be omitted", sample.Validate().Error())
+
+		sample.EFilingCoverageBeginningDateText = nil
+		sample.EFilingCoverageEndDateText = &mmDD
+		require.Equal(t, "The EFilingCoverageEndDateText should be omitted", sample.Validate().Error())
+
+		sample.EFilingCoverageEndDateText = nil
+		sample.FemaleGenderIndicator = &indicator
+		require.Equal(t, "The FemaleGenderIndicator should be omitted", sample.Validate().Error())
+
+		sample.FemaleGenderIndicator = nil
+		dob := fincen.DateYYYYMMDDOrBlankTypeDOB("20170101")
+		sample.IndividualBirthDateText = &dob
+		require.Equal(t, "The IndividualBirthDateText should be omitted", sample.Validate().Error())
+
+		sample.IndividualBirthDateText = nil
+		v15 := fincen.RestrictString15("SA")
+		sample.IndividualEntityCashInAmountText = &v15
+		require.Equal(t, "The IndividualEntityCashInAmountText should be omitted", sample.Validate().Error())
+
+		sample.IndividualEntityCashInAmountText = nil
+		sample.IndividualEntityCashOutAmountText = &v15
+		require.Equal(t, "The IndividualEntityCashOutAmountText should be omitted", sample.Validate().Error())
+
+		sample.IndividualEntityCashOutAmountText = nil
+		sample.MaleGenderIndicator = &indicator
+		require.Equal(t, "The MaleGenderIndicator should be omitted", sample.Validate().Error())
+
+		sample.MaleGenderIndicator = nil
+		sample.MultipleTransactionsPersonsIndividualsIndicator = &indicator
+		require.Equal(t, "The MultipleTransactionsPersonsIndividualsIndicator should be omitted", sample.Validate().Error())
+
+		sample.MultipleTransactionsPersonsIndividualsIndicator = nil
+		sample.PartyAsEntityOrganizationIndicator = &indicator
+		require.Equal(t, "The PartyAsEntityOrganizationIndicator should be omitted", sample.Validate().Error())
+
+		sample.PartyAsEntityOrganizationIndicator = nil
+		sample.UnknownGenderIndicator = &indicator
+		require.Equal(t, "The UnknownGenderIndicator should be omitted", sample.Validate().Error())
+
+		sample.UnknownGenderIndicator = nil
+		c1 := ValidateFederalRegulatorCodeType("1")
+		sample.PrimaryRegulatorTypeCode = &c1
+		require.Equal(t, "The PrimaryRegulatorTypeCode should be omitted", sample.Validate().Error())
+
+		sample.PrimaryRegulatorTypeCode = nil
+		require.Equal(t, "The PartyName has invalid min & max range", sample.Validate().Error())
+
+		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		a1 := AddressType{}
+		sample.Address = &a1
+		require.Equal(t, "The Address should be omitted", sample.Validate().Error())
+
+		sample.Address = nil
+		p1 := PhoneNumberType{}
+		sample.PhoneNumber = &p1
+		require.Equal(t, "The PhoneNumber should be omitted", sample.Validate().Error())
+
+		sample.PhoneNumber = nil
+		sample.PartyIdentification = append(sample.PartyIdentification, PartyIdentificationType{})
+		require.Equal(t, "The PartyIdentification should be omitted", sample.Validate().Error())
+
+		sample.PartyIdentification = nil
+		sample.OrganizationClassificationTypeSubtype = &OrganizationClassificationTypeSubtypeType{}
+		require.Equal(t, "The OrganizationClassificationTypeSubtype should be omitted", sample.Validate().Error())
+
+		sample.OrganizationClassificationTypeSubtype = nil
+		sample.PartyOccupationBusiness = &PartyOccupationBusinessType{}
+		require.Equal(t, "The PartyOccupationBusiness should be omitted", sample.Validate().Error())
+
+		sample.PartyOccupationBusiness = nil
+		sample.ElectronicAddress = &ElectronicAddressType{}
+		require.Equal(t, "The ElectronicAddress should be omitted", sample.Validate().Error())
+
+		sample.ElectronicAddress = nil
+		sample.Account = append(sample.Account, AccountType{})
+		require.Equal(t, "The Account should be omitted", sample.Validate("35").Error())
+
+		sample.Account = nil
+		sample.PartyIdentification = append(sample.PartyIdentification, PartyIdentificationType{}, PartyIdentificationType{}, PartyIdentificationType{})
+		sample.ActivityPartyTypeCode = "35"
+		require.Equal(t, "The PartyIdentification has invalid min & max range", sample.Validate("35").Error())
+
+	})
+
+	t.Run("PartyNameType", func(t *testing.T) {
+		var sample PartyNameType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+
+		indicator := fincen.ValidateIndicatorType("Y")
+
+		sample.EntityLastNameUnknownIndicator = &indicator
+		require.Equal(t, "The EntityLastNameUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
+
+		sample.EntityLastNameUnknownIndicator = nil
+		sample.FirstNameUnknownIndicator = &indicator
+		require.Equal(t, "The FirstNameUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
+
+		sample.FirstNameUnknownIndicator = nil
+		partyName := ValidatePartyNameCodeType("DBA")
+		sample.PartyNameTypeCode = &partyName
+		require.Equal(t, "The PartyNameTypeCode has invalid value", sample.Validate("INVALID").Error())
+
+		sample.PartyNameTypeCode = nil
+		v150 := fincen.RestrictString150("SA")
+		sample.RawEntityIndividualLastName = &v150
+		require.Equal(t, "The RawEntityIndividualLastName should be omitted", sample.Validate("INVALID").Error())
+
+		sample.RawEntityIndividualLastName = nil
+		v35 := fincen.RestrictString35("SA")
+		sample.RawIndividualFirstName = &v35
+		require.Equal(t, "The RawIndividualFirstName should be omitted", sample.Validate("INVALID").Error())
+
+		sample.RawIndividualFirstName = nil
+		sample.RawIndividualMiddleName = &v35
+		require.Equal(t, "The RawIndividualMiddleName should be omitted", sample.Validate("INVALID").Error())
+
+		sample.RawIndividualMiddleName = nil
+		sample.RawIndividualNameSuffixText = &v35
+		require.Equal(t, "The RawIndividualNameSuffixText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.RawIndividualNameSuffixText = nil
+		sample.RawPartyFullName = &v150
+		require.Equal(t, "The RawPartyFullName should be omitted", sample.Validate("50").Error())
+	})
+
+	t.Run("AddressType", func(t *testing.T) {
+		var sample AddressType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+
+		indicator := fincen.ValidateIndicatorType("Y")
+
+		sample.CityUnknownIndicator = &indicator
+		require.Equal(t, "The CityUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
+
+		sample.CityUnknownIndicator = nil
+		sample.CountryCodeUnknownIndicator = &indicator
+		require.Equal(t, "The CountryCodeUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
+
+		sample.CountryCodeUnknownIndicator = nil
+		v50 := fincen.RestrictString50("SA")
+		sample.RawCityText = &v50
+		require.Equal(t, "The RawCityText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.RawCityText = nil
+		v2 := fincen.RestrictString2("SA")
+		sample.RawCountryCodeText = &v2
+		require.Equal(t, "The RawCountryCodeText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.RawCountryCodeText = nil
+		v3 := fincen.RestrictString3("SA")
+		sample.RawStateCodeText = &v3
+		require.Equal(t, "The RawStateCodeText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.RawStateCodeText = nil
+		v100 := fincen.RestrictString100("SA")
+		sample.RawStreetAddress1Text = &v100
+		require.Equal(t, "The RawStreetAddress1Text should be omitted", sample.Validate("INVALID").Error())
+
+		sample.RawStreetAddress1Text = nil
+		v9 := fincen.RestrictString9("SA")
+		sample.RawZIPCode = &v9
+		require.Equal(t, "The RawZIPCode should be omitted", sample.Validate("INVALID").Error())
+
+		sample.RawZIPCode = nil
+		sample.StateCodeUnknownIndicator = &indicator
+		require.Equal(t, "The StateCodeUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
+
+		sample.StateCodeUnknownIndicator = nil
+		sample.StreetAddressUnknownIndicator = &indicator
+		require.Equal(t, "The StreetAddressUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
+
+		sample.StreetAddressUnknownIndicator = nil
+		sample.ZIPCodeUnknownIndicator = &indicator
+		require.Equal(t, "The ZIPCodeUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
+	})
+
+	t.Run("PhoneNumberType", func(t *testing.T) {
+		var sample PhoneNumberType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+
+		v6 := fincen.RestrictString6("SA")
+		sample.PhoneNumberExtensionText = &v6
+		require.Equal(t, "The PhoneNumberExtensionText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.PhoneNumberExtensionText = nil
+		v16 := fincen.RestrictString16("SA")
+		sample.PhoneNumberText = &v16
+		require.Equal(t, "The PhoneNumberText should be omitted", sample.Validate("INVALID").Error())
+	})
+
+	t.Run("PartyIdentificationType", func(t *testing.T) {
+		var sample PartyIdentificationType
+
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+
+		indicator := fincen.ValidateIndicatorType("Y")
+		sample.IdentificationPresentUnknownIndicator = &indicator
+		require.Equal(t, "The IdentificationPresentUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
+
+		sample.IdentificationPresentUnknownIndicator = nil
+		v2 := fincen.RestrictString2("SA")
+		sample.OtherIssuerCountryText = &v2
+		require.Equal(t, "The OtherIssuerCountryText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.OtherIssuerCountryText = nil
+		v3 := fincen.RestrictString3("SA")
+		sample.OtherIssuerStateText = &v3
+		require.Equal(t, "The OtherIssuerStateText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.OtherIssuerStateText = nil
+		v50 := fincen.RestrictString50("SA")
+		sample.OtherPartyIdentificationTypeText = &v50
+		require.Equal(t, "The OtherPartyIdentificationTypeText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.OtherPartyIdentificationTypeText = nil
+		v25 := fincen.RestrictString25("SA")
+		sample.PartyIdentificationNumberText = &v25
+		require.Equal(t, "The PartyIdentificationNumberText should be omitted", sample.Validate("INVALID").Error())
+
+		sample.PartyIdentificationNumberText = nil
+		identificationCode := ValidatePartyIdentificationCodeType("1")
+		sample.PartyIdentificationTypeCode = &identificationCode
+		require.Equal(t, "The PartyIdentificationTypeCode should be omitted", sample.Validate("INVALID").Error())
+
+		sample.PartyIdentificationTypeCode = nil
+		sample.TINUnknownIndicator = &indicator
+		require.Equal(t, "The TINUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
+
+	})
+
+}

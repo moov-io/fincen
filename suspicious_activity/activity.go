@@ -39,7 +39,7 @@ func (r ActivityType) fieldInclusion() error {
 			// The element is not recorded and one or both of the following elements contains a “Y” value:
 			//  <CorrectsAmendsPriorReportIndicator>
 			//  <ContinuingActivityReportIndicator>
-			return fincen.NewErrValueInvalid("EFilingPriorDocumentNumber")
+			return fincen.NewErrFieldRequired("EFilingPriorDocumentNumber")
 		}
 	}
 	if r.EFilingPriorDocumentNumber != nil {
@@ -68,7 +68,7 @@ func (r ActivityType) Validate(args ...string) error {
 	existed := make(map[string]int)
 	for _, p := range r.Party {
 		typeCode := string(p.ActivityPartyTypeCode)
-		if cnt, ok := existed[typeCode]; !ok {
+		if cnt, ok := existed[typeCode]; ok {
 			existed[typeCode] = cnt + 1
 		} else {
 			existed[typeCode] = 1
@@ -76,21 +76,21 @@ func (r ActivityType) Validate(args ...string) error {
 	}
 
 	if _, ok := existed["35"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 35)")
+		return fincen.NewErrFieldRequired("Party(type 35)")
 	}
 	if _, ok := existed["37"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 37)")
+		return fincen.NewErrFieldRequired("Party(type 37)")
 	}
 	if _, ok := existed["30"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 30)")
+		return fincen.NewErrFieldRequired("Party(type 30)")
 	}
 	if _, ok := existed["8"]; !ok {
-		return fincen.NewErrFiledNotAssociated("Party(type 8)")
+		return fincen.NewErrFieldRequired("Party(type 8)")
 	}
-	if cnt, ok := existed["34"]; !ok || cnt > 99 {
+	if cnt, ok := existed["34"]; ok && cnt > 99 {
 		return fincen.NewErrMinMaxRange("Party(type 34)")
 	}
-	if cnt, ok := existed["33"]; !ok || cnt > 999 {
+	if cnt, ok := existed["33"]; ok && cnt > 999 {
 		return fincen.NewErrMinMaxRange("Party(type 33)")
 	}
 
@@ -288,7 +288,7 @@ func (r AddressType) fieldInclusion(typeCode string) error {
 	if typeCode == "35" || typeCode == "30" {
 		if r.RawCityText == nil || r.RawCountryCodeText == nil || r.RawStateCodeText == nil ||
 			r.RawStreetAddress1Text == nil || r.RawZIPCode == nil {
-			return fincen.NewErrValueInvalid("AddressType")
+			return fincen.NewErrValueInvalid("Address")
 		}
 	}
 
@@ -319,7 +319,7 @@ type PhoneNumberType struct {
 func (r PhoneNumberType) fieldInclusion(typeCode string) error {
 	if typeCode == "35" || typeCode == "8" {
 		if r.PhoneNumberText == nil {
-			return fincen.NewErrValueInvalid("PhoneNumberType")
+			return fincen.NewErrValueInvalid("PhoneNumber")
 		}
 	}
 
@@ -354,7 +354,7 @@ type PartyIdentificationType struct {
 func (r PartyIdentificationType) fieldInclusion(typeCode string) error {
 	if typeCode == "35" || typeCode == "30" || typeCode == "34" || typeCode == "41" {
 		if r.PartyIdentificationNumberText == nil || r.PartyIdentificationTypeCode == nil {
-			return fincen.NewErrValueInvalid("PartyIdentificationType")
+			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	}
 
@@ -437,7 +437,7 @@ type PartyAssociationType struct {
 func (r PartyAssociationType) fieldInclusion(typeCode string) error {
 	if typeCode == "34" {
 		if len(r.Party) > 99 {
-			return fincen.NewErrValueInvalid("PartyAssociationType")
+			return fincen.NewErrMinMaxRange("Party")
 		}
 	}
 
@@ -483,7 +483,7 @@ type PartyAccountAssociationType struct {
 func (r PartyAccountAssociationType) fieldInclusion(typeCode string) error {
 	if typeCode == "33" {
 		if len(r.Party) < 1 || len(r.Party) > 99 {
-			return fincen.NewErrValueInvalid("PartyAccountAssociationType")
+			return fincen.NewErrMinMaxRange("Party")
 		}
 	}
 
@@ -491,6 +491,15 @@ func (r PartyAccountAssociationType) fieldInclusion(typeCode string) error {
 }
 
 func (r PartyAccountAssociationType) Validate(args ...string) error {
+	if len(args) == 0 {
+		return fincen.Validate(&r, args...)
+	}
+
+	typeCode := args[0]
+	if err := r.fieldInclusion(typeCode); err != nil {
+		return err
+	}
+
 	return fincen.Validate(&r, args...)
 }
 
@@ -612,7 +621,7 @@ type SuspiciousActivityType struct {
 
 func (r SuspiciousActivityType) fieldInclusion() error {
 	if len(r.SuspiciousActivityClassification) < 1 || len(r.SuspiciousActivityClassification) > 99 {
-		return fincen.NewErrValueInvalid("SuspiciousActivityType")
+		return fincen.NewErrValueInvalid("SuspiciousActivity")
 	}
 
 	return nil
