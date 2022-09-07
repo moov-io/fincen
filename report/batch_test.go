@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestParty(t *testing.T) {
+func TestAcknowledgement(t *testing.T) {
 	t.Run("FinCEN SAR XML Acknowledgement", func(t *testing.T) {
 		buf, err := os.ReadFile(path.Join("..", "test", "testdata", "sar_acknowledgement.xml"))
 		require.NoError(t, err)
@@ -237,6 +237,17 @@ func TestParty(t *testing.T) {
 
 }
 
+func TestBatch(t *testing.T) {
+	t.Run("FinCEN FBAR XML Batch", func(t *testing.T) {
+		buf, err := os.ReadFile(path.Join("..", "test", "testdata", "fbar_batch.xml"))
+		require.NoError(t, err)
+
+		batch := EFilingBatchXML{}
+		err = xml.Unmarshal(buf, &batch)
+		require.NoError(t, err)
+	})
+}
+
 type emptyElementActivity struct{}
 
 func (r *emptyElementActivity) Validate(args ...string) error {
@@ -260,6 +271,7 @@ func TestElements(t *testing.T) {
 		var emptyActivity fincen.ElementActivity = (*emptyElementActivity)(nil)
 		sample.Activity = append(sample.Activity, emptyActivity)
 
+		require.NotNil(t, sample.Validate())
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
 
 		sample.StatusCode = "A"

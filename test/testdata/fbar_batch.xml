@@ -1,0 +1,71 @@
+<EFilingBatchXML ActivityCount="55" PartyCount="102" AccountCount="102" JointlyOwnedOwnerCount="27"
+                     NoFIOwnerCount="36" ConsolidatedOwnerCount="10"
+                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xmlns:fc2="www.fincen.gov/base">
+    <Activity SeqNum="1">
+        <Party SeqNum="3">
+            <ActivityPartyTypeCode>35</ActivityPartyTypeCode>
+            <PartyName SeqNum="4">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Transmitter Legal Name</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="5">
+                <RawCityText>Vienna</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>VA</RawStateCodeText>
+                <RawStreetAddress1Text>123 Address Road</RawStreetAddress1Text>
+                <RawZIPCode>22102</RawZIPCode>
+            </Address>
+            <PhoneNumber SeqNum="6">
+                <PhoneNumberText>7039991234</PhoneNumberText>
+            </PhoneNumber>
+            <PartyIdentification SeqNum="7">
+                <PartyIdentificationNumberText>547898569</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="8">
+                <PartyIdentificationNumberText>PTCC1234</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>28</PartyIdentificationTypeCode>
+            </PartyIdentification>
+        </Party>
+        <Party SeqNum="9">
+            <ActivityPartyTypeCode>37</ActivityPartyTypeCode>
+            <PartyName SeqNum="10">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Transmitter Contact Name</RawPartyFullName>
+            </PartyName>
+        </Party>
+        <Party SeqNum="19">
+            <ActivityPartyTypeCode>15</ActivityPartyTypeCode>
+            <FilerFinancialInterest25ForeignAccountIndicator>N</FilerFinancialInterest25ForeignAccountIndicator>
+            <FilerTypeIndividualIndicator>Y</FilerTypeIndividualIndicator>
+            <IndividualBirthDateText>19700515</IndividualBirthDateText>
+            <SignatureAuthoritiesIndicator>N</SignatureAuthoritiesIndicator>
+            <PartyName SeqNum="20">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawEntityIndividualLastName>Johnson</RawEntityIndividualLastName>
+                <RawIndividualFirstName>John</RawIndividualFirstName>
+                <RawIndividualMiddleName>Martin</RawIndividualMiddleName>
+                <RawIndividualNameSuffixText>Sr.</RawIndividualNameSuffixText>
+            </PartyName>
+            <Address SeqNum="21">
+                <RawCityText>Detroit</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>MI</RawStateCodeText>
+                <RawStreetAddress1Text>555 Rock Avenue</RawStreetAddress1Text>
+                <RawZIPCode>48127</RawZIPCode>
+            </Address>
+            <PartyIdentification SeqNum="22">
+                <PartyIdentificationNumberText>115478895</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>1</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="23">
+                <OtherIssuerCountryText>MX</OtherIssuerCountryText>
+                <PartyIdentificationNumberText>55881266698547</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>9</PartyIdentificationTypeCode>
+            </PartyIdentification>
+        </Party>
+    </Activity>
+    <FormTypeCode>FBARX</FormTypeCode>
+</EFilingBatchXML>
