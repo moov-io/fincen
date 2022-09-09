@@ -8,6 +8,8 @@ package currency_transaction
 
 import (
 	"encoding/xml"
+	"strconv"
+
 	"github.com/moov-io/fincen"
 )
 
@@ -23,6 +25,23 @@ type ActivityType struct {
 
 func (r ActivityType) FormTypeCode() string {
 	return "CTRX"
+}
+
+func (r ActivityType) TotalAmount() float64 {
+	// The sum of all amount values recorded for the <DetailTransactionAmountText> element
+	var amount float64
+	for _, currency := range r.CurrencyTransactionActivity.CurrencyTransactionActivityDetail {
+		valueStr := string(currency.DetailTransactionAmountText)
+		if value, err := strconv.ParseFloat(valueStr, 64); err == nil {
+			amount += value
+		}
+	}
+
+	return amount
+}
+
+func (r ActivityType) PartyCount(args ...string) int64 {
+	return int64(len(r.Party))
 }
 
 func (r ActivityType) fieldInclusion() error {

@@ -8,6 +8,7 @@ package financial_accounts
 
 import (
 	"encoding/xml"
+
 	"github.com/moov-io/fincen"
 )
 
@@ -27,6 +28,23 @@ type ActivityType struct {
 
 func (r ActivityType) FormTypeCode() string {
 	return "FBARX"
+}
+
+func (r ActivityType) TotalAmount() float64 {
+	// Dummy
+	return 0
+}
+
+func (r ActivityType) PartyCount(args ...string) int64 {
+	var count int64
+	for _, party := range r.Party {
+		typeCode := string(party.ActivityPartyTypeCode)
+		if fincen.CheckInvolved(typeCode, args...) {
+			count++
+		}
+	}
+
+	return count
 }
 
 func (r ActivityType) fieldInclusion() error {

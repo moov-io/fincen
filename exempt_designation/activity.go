@@ -27,6 +27,23 @@ func (r ActivityType) FormTypeCode() string {
 	return "DOEPX"
 }
 
+func (r ActivityType) TotalAmount() float64 {
+	// Dummy
+	return 0
+}
+
+func (r ActivityType) PartyCount(args ...string) int64 {
+	var count int64
+	for _, party := range r.Party {
+		typeCode := string(party.ActivityPartyTypeCode)
+		if fincen.CheckInvolved(typeCode, args...) {
+			count++
+		}
+	}
+
+	return count
+}
+
 func (r ActivityType) fieldInclusion() error {
 	if len(r.Party) < 4 || len(r.Party) > 104 {
 		return fincen.NewErrMinMaxRange("Party")

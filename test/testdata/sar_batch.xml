@@ -1,0 +1,216 @@
+<EFilingBatchXML ActivityCount="1" PartyCount="1" AccountCount="102" JointlyOwnedOwnerCount="0"
+                     NoFIOwnerCount="0" ConsolidatedOwnerCount="0" SeqNum="1"
+                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xmlns:fc2="www.fincen.gov/base">
+    <Activity SeqNum="1">
+        <Party SeqNum="4">
+            <ActivityPartyTypeCode>35</ActivityPartyTypeCode>
+            <PartyName SeqNum="5">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Transmitter legal name</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="6">
+                <RawCityText>Transmitter city</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>VA</RawStateCodeText>
+                <RawStreetAddress1Text>Transmitter street address</RawStreetAddress1Text>
+                <RawZIPCode>22113</RawZIPCode>
+            </Address>
+            <PhoneNumber SeqNum="7">
+                <PhoneNumberText>7217894455</PhoneNumberText>
+            </PhoneNumber>
+            <PartyIdentification SeqNum="8">
+                <PartyIdentificationNumberText>458985215</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
+            </PartyIdentification>
+        </Party>
+        <Party SeqNum="10">
+            <ActivityPartyTypeCode>37</ActivityPartyTypeCode>
+            <PartyName SeqNum="11">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Transmitter contact legal name</RawPartyFullName>
+            </PartyName>
+        </Party>
+        <Party SeqNum="12">
+            <ActivityPartyTypeCode>30</ActivityPartyTypeCode>
+            <PrimaryRegulatorTypeCode>7</PrimaryRegulatorTypeCode>
+            <PartyName SeqNum="13">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Filer name</RawPartyFullName>
+            </PartyName>
+            <PartyName SeqNum="14">
+                <PartyNameTypeCode>DBA</PartyNameTypeCode>
+                <RawPartyFullName>Alternate name</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="15">
+                <RawCityText>Rockville</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>MD</RawStateCodeText>
+                <RawStreetAddress1Text>123 Viers Mill Road</RawStreetAddress1Text>
+                <RawZIPCode>20905</RawZIPCode>
+            </Address>
+            <PartyIdentification SeqNum="16">
+                <PartyIdentificationNumberText>125478965</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="17">
+                <PartyIdentificationNumberText>5558789654</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>10</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="18">
+                <PartyIdentificationNumberText>451256558</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>29</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <OrganizationClassificationTypeSubtype SeqNum="19">
+                <OrganizationSubtypeID>535</OrganizationSubtypeID>
+                <OrganizationTypeID>5</OrganizationTypeID>
+            </OrganizationClassificationTypeSubtype>
+            <OrganizationClassificationTypeSubtype SeqNum="20">
+                <OrganizationSubtypeID>529</OrganizationSubtypeID>
+                <OrganizationTypeID>5</OrganizationTypeID>
+            </OrganizationClassificationTypeSubtype>
+        </Party>
+        <Party SeqNum="26">
+            <ActivityPartyTypeCode>8</ActivityPartyTypeCode>
+            <PartyName SeqNum="27">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Designated contact office</RawPartyFullName>
+            </PartyName>
+            <PhoneNumber SeqNum="28">
+                <PhoneNumberExtensionText>1234</PhoneNumberExtensionText>
+                <PhoneNumberText>4157653838</PhoneNumberText>
+            </PhoneNumber>
+        </Party>
+        <Party SeqNum="29">
+            <ActivityPartyTypeCode>34</ActivityPartyTypeCode>
+            <LossToFinancialAmountText>15000</LossToFinancialAmountText>
+            <NoBranchActivityInvolvedIndicator>Y</NoBranchActivityInvolvedIndicator>
+            <PayLocationIndicator>Y</PayLocationIndicator>
+            <PrimaryRegulatorTypeCode>4</PrimaryRegulatorTypeCode>
+            <PartyName SeqNum="30">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Union Bank of California</RawPartyFullName>
+            </PartyName>
+            <PartyName SeqNum="31">
+                <PartyNameTypeCode>DBA</PartyNameTypeCode>
+                <RawPartyFullName>Doing Business As Name</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="32">
+                <CityUnknownIndicator>Y</CityUnknownIndicator>
+                <CountryCodeUnknownIndicator>Y</CountryCodeUnknownIndicator>
+                <RawStreetAddress1Text>987 Rocky Road</RawStreetAddress1Text>
+                <StreetAddressUnknownIndicator>Y</StreetAddressUnknownIndicator>
+                <ZIPCodeUnknownIndicator>Y</ZIPCodeUnknownIndicator>
+            </Address>
+            <PartyIdentification SeqNum="33">
+                <PartyIdentificationNumberText>458789856</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="34">
+                <PartyIdentificationNumberText>5589887789</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>10</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="35">
+                <PartyIdentificationNumberText>4578958658</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>29</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <OrganizationClassificationTypeSubtype SeqNum="36">
+                <OrganizationSubtypeID>533</OrganizationSubtypeID>
+                <OrganizationTypeID>5</OrganizationTypeID>
+            </OrganizationClassificationTypeSubtype>
+            <OrganizationClassificationTypeSubtype SeqNum="37">
+                <OrganizationSubtypeID>5999</OrganizationSubtypeID>
+                <OrganizationTypeID>5</OrganizationTypeID>
+                <OtherOrganizationSubTypeText>other S/F institution &#xA;description</OtherOrganizationSubTypeText>
+            </OrganizationClassificationTypeSubtype>
+            <PartyAssociation SeqNum="38">
+                <Party SeqNum="39">
+                    <ActivityPartyTypeCode>46</ActivityPartyTypeCode>
+                    <Address SeqNum="40"></Address>
+                </Party>
+            </PartyAssociation>
+        </Party>
+        <Party SeqNum="61">
+            <ActivityPartyTypeCode>33</ActivityPartyTypeCode>
+            <AdmissionConfessionYesIndicator>Y</AdmissionConfessionYesIndicator>
+            <BothPurchaserSenderPayeeReceiveIndicator>Y</BothPurchaserSenderPayeeReceiveIndicator>
+            <FemaleGenderIndicator>Y</FemaleGenderIndicator>
+            <IndividualBirthDateText>19801025</IndividualBirthDateText>
+            <PartyName SeqNum="62">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawEntityIndividualLastName>Mann</RawEntityIndividualLastName>
+                <RawIndividualFirstName>Janice</RawIndividualFirstName>
+            </PartyName>
+            <PartyName SeqNum="63">
+                <PartyNameTypeCode>AKA</PartyNameTypeCode>
+                <RawPartyFullName>Janda</RawPartyFullName>
+            </PartyName>
+            <PartyName SeqNum="64">
+                <PartyNameTypeCode>AKA</PartyNameTypeCode>
+                <RawPartyFullName>Jan</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="65">
+                <CityUnknownIndicator>Y</CityUnknownIndicator>
+                <CountryCodeUnknownIndicator>Y</CountryCodeUnknownIndicator>
+                <StateCodeUnknownIndicator>Y</StateCodeUnknownIndicator>
+                <StreetAddressUnknownIndicator>Y</StreetAddressUnknownIndicator>
+                <ZIPCodeUnknownIndicator>Y</ZIPCodeUnknownIndicator>
+            </Address>
+            <PhoneNumber SeqNum="66">
+                <PhoneNumberText>6194760276</PhoneNumberText>
+                <PhoneNumberTypeCode>R</PhoneNumberTypeCode>
+            </PhoneNumber>
+            <PhoneNumber SeqNum="67">
+                <PhoneNumberExtensionText>5584</PhoneNumberExtensionText>
+                <PhoneNumberText>6589784589</PhoneNumberText>
+                <PhoneNumberTypeCode>W</PhoneNumberTypeCode>
+            </PhoneNumber>
+            <PartyIdentification SeqNum="68">
+                <IdentificationPresentUnknownIndicator>Y</IdentificationPresentUnknownIndicator>
+                <OtherIssuerCountryText>US</OtherIssuerCountryText>
+                <OtherIssuerStateText>CA</OtherIssuerStateText>
+                <OtherPartyIdentificationTypeText>Student ID</OtherPartyIdentificationTypeText>
+                <PartyIdentificationNumberText>660623559</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>999</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="69">
+                <TINUnknownIndicator>Y</TINUnknownIndicator>
+            </PartyIdentification>
+            <PartyOccupationBusiness SeqNum="70">
+                <NAICSCode>7548</NAICSCode>
+                <OccupationBusinessText>Mechanic</OccupationBusinessText>
+            </PartyOccupationBusiness>
+            <ElectronicAddress SeqNum="71">
+                <ElectronicAddressText>jan@gmail.com</ElectronicAddressText>
+                <ElectronicAddressTypeCode>E</ElectronicAddressTypeCode>
+            </ElectronicAddress>
+            <ElectronicAddress SeqNum="72">
+                <ElectronicAddressText>janda.org</ElectronicAddressText>
+                <ElectronicAddressTypeCode>U</ElectronicAddressTypeCode>
+            </ElectronicAddress>
+            <PartyAssociation SeqNum="73">
+                <NoRelationshipToInstitutionIndicator>Y</NoRelationshipToInstitutionIndicator>
+                <SubjectRelationshipFinancialInstitutionTINText>458789856</SubjectRelationshipFinancialInstitutionTINText>
+            </PartyAssociation>
+            <PartyAccountAssociation SeqNum="74">
+                <Party SeqNum="75">
+                    <ActivityPartyTypeCode>41</ActivityPartyTypeCode>
+                </Party>
+                <PartyAccountAssociationTypeCode>7</PartyAccountAssociationTypeCode>
+            </PartyAccountAssociation>
+        </Party>
+        <EFilingPriorDocumentNumber>00000000000001</EFilingPriorDocumentNumber>
+        <FilingDateText>19801025</FilingDateText>
+        <ActivityAssociation SeqNum="2">
+            <CorrectsAmendsPriorReportIndicator>Y</CorrectsAmendsPriorReportIndicator>
+        </ActivityAssociation>
+        <ForeignAccountActivity SeqNum="1">
+            <ForeignAccountHeldQuantityText>31</ForeignAccountHeldQuantityText>
+            <LateFilingReasonCode>999</LateFilingReasonCode>
+            <ReportCalendarYearText>2016</ReportCalendarYearText>
+            <SignatureAuthoritiesQuantityText>52</SignatureAuthoritiesQuantityText>
+        </ForeignAccountActivity>
+    </Activity>
+    <FormTypeCode>SARX</FormTypeCode>
+</EFilingBatchXML>

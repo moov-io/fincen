@@ -6,6 +6,7 @@ package batch
 
 import (
 	"encoding/xml"
+
 	"github.com/moov-io/fincen"
 	"github.com/moov-io/fincen/cash_payments"
 	"github.com/moov-io/fincen/currency_transaction"
@@ -14,25 +15,22 @@ import (
 	"github.com/moov-io/fincen/suspicious_activity"
 )
 
-// validating elements
-var (
-	_ fincen.Element = (*EFilingBatchXML)(nil)
-	_ fincen.Element = (*EFilingSubmissionXML)(nil)
-	_ fincen.Element = (*EFilingActivityXML)(nil)
-	_ fincen.Element = (*EFilingActivityErrorXML)(nil)
-)
-
 type EFilingBatchXML struct {
-	XMLName              xml.Name                 `xml:"EFilingBatchXML"`
-	SeqNum               fincen.SeqNumber         `xml:"SeqNum,attr"`
-	StatusCode           string                   `xml:"StatusCode,attr,omitempty" json:",omitempty"`
-	TotalAmount          float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
-	PartyCount           int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
-	ActivityCount        int64                    `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
-	Attrs                []xml.Attr               `xml:",any,attr"`
-	FormTypeCode         string                   `xml:"FormTypeCode,omitempty" json:",omitempty"`
-	Activity             []fincen.ElementActivity `xml:"Activity,omitempty" json:",omitempty"`
-	EFilingSubmissionXML *EFilingSubmissionXML    `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
+	XMLName                 xml.Name                 `xml:"EFilingBatchXML"`
+	SeqNum                  fincen.SeqNumber         `xml:"SeqNum,attr"`
+	StatusCode              string                   `xml:"StatusCode,attr,omitempty" json:",omitempty"`
+	TotalAmount             float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
+	PartyCount              int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
+	ActivityCount           int64                    `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
+	ActivityAttachmentCount int64                    `xml:"ActivityAttachmentCount,attr,omitempty" json:",omitempty"`
+	AttachmentCount         int64                    `xml:"AttachmentCount,attr,omitempty" json:",omitempty"`
+	JointlyOwnedOwnerCount  int64                    `xml:"JointlyOwnedOwnerCount,attr,omitempty" json:",omitempty"`
+	NoFIOwnerCount          int64                    `xml:"NoFIOwnerCount,attr,omitempty" json:",omitempty"`
+	ConsolidatedOwnerCount  int64                    `xml:"ConsolidatedOwnerCount,attr,omitempty" json:",omitempty"`
+	Attrs                   []xml.Attr               `xml:",any,attr"`
+	FormTypeCode            string                   `xml:"FormTypeCode,omitempty" json:",omitempty"`
+	Activity                []fincen.ElementActivity `xml:"Activity,omitempty" json:",omitempty"`
+	EFilingSubmissionXML    *EFilingSubmissionXML    `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
 }
 
 type dummyXML struct {
@@ -41,20 +39,35 @@ type dummyXML struct {
 	SeqNum     fincen.SeqNumber `xml:"SeqNum,attr"`
 	StatusCode string           `xml:"StatusCode,attr,omitempty" json:",omitempty"`
 	Content    []byte           `xml:",innerxml"`
-	Nodes      []dummyXML       `xml:",any"`
 }
 
 type batchDummy struct {
-	XMLName              xml.Name              `xml:"EFilingBatchXML"`
-	SeqNum               fincen.SeqNumber      `xml:"SeqNum,attr"`
-	StatusCode           string                `xml:"StatusCode,attr,omitempty" json:",omitempty"`
-	TotalAmount          float64               `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
-	PartyCount           int64                 `xml:"PartyCount,attr,omitempty" json:",omitempty"`
-	ActivityCount        int64                 `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
-	Attrs                []xml.Attr            `xml:",any,attr"`
-	FormTypeCode         string                `xml:"FormTypeCode,omitempty" json:",omitempty"`
-	Activity             []dummyXML            `xml:"Activity,omitempty" json:",omitempty"`
-	EFilingSubmissionXML *EFilingSubmissionXML `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
+	XMLName                 xml.Name              `xml:"EFilingBatchXML"`
+	SeqNum                  fincen.SeqNumber      `xml:"SeqNum,attr"`
+	StatusCode              string                `xml:"StatusCode,attr,omitempty" json:",omitempty"`
+	TotalAmount             float64               `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
+	PartyCount              int64                 `xml:"PartyCount,attr,omitempty" json:",omitempty"`
+	ActivityCount           int64                 `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
+	ActivityAttachmentCount int64                 `xml:"ActivityAttachmentCount,attr,omitempty" json:",omitempty"`
+	AttachmentCount         int64                 `xml:"AttachmentCount,attr,omitempty" json:",omitempty"`
+	JointlyOwnedOwnerCount  int64                 `xml:"JointlyOwnedOwnerCount,attr,omitempty" json:",omitempty"`
+	NoFIOwnerCount          int64                 `xml:"NoFIOwnerCount,attr,omitempty" json:",omitempty"`
+	ConsolidatedOwnerCount  int64                 `xml:"ConsolidatedOwnerCount,attr,omitempty" json:",omitempty"`
+	Attrs                   []xml.Attr            `xml:",any,attr"`
+	FormTypeCode            string                `xml:"FormTypeCode,omitempty" json:",omitempty"`
+	Activity                []dummyXML            `xml:"Activity,omitempty" json:",omitempty"`
+	EFilingSubmissionXML    *EFilingSubmissionXML `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
+}
+
+type batchAttr struct {
+	TotalAmount             float64
+	PartyCount              int64
+	ActivityCount           int64
+	ActivityAttachmentCount int64
+	AttachmentCount         int64
+	JointlyOwnedOwnerCount  int64
+	NoFIOwnerCount          int64
+	ConsolidatedOwnerCount  int64
 }
 
 func (r *EFilingBatchXML) copy(org batchDummy) {
@@ -66,6 +79,11 @@ func (r *EFilingBatchXML) copy(org batchDummy) {
 	r.TotalAmount = org.TotalAmount
 	r.PartyCount = org.PartyCount
 	r.ActivityCount = org.ActivityCount
+	r.ActivityAttachmentCount = org.ActivityAttachmentCount
+	r.AttachmentCount = org.AttachmentCount
+	r.JointlyOwnedOwnerCount = org.JointlyOwnedOwnerCount
+	r.NoFIOwnerCount = org.NoFIOwnerCount
+	r.ConsolidatedOwnerCount = org.ConsolidatedOwnerCount
 	r.FormTypeCode = org.FormTypeCode
 	r.EFilingSubmissionXML = org.EFilingSubmissionXML
 }
@@ -80,6 +98,7 @@ func (r *EFilingBatchXML) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	r.copy(dummy)
 
 	for _, act := range dummy.Activity {
+
 		buf, err := xml.Marshal(&act)
 		if err != nil {
 			return fincen.NewErrValueInvalid("Activity")
@@ -103,16 +122,21 @@ func (r *EFilingBatchXML) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 
 func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	a := struct {
-		XMLName              xml.Name                 `xml:"EFilingBatchXML"`
-		SeqNum               fincen.SeqNumber         `xml:"SeqNum,attr"`
-		StatusCode           string                   `xml:"StatusCode,attr,omitempty" json:",omitempty"`
-		TotalAmount          float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
-		PartyCount           int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
-		ActivityCount        int64                    `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
-		Attrs                []xml.Attr               `xml:",any,attr"`
-		FormTypeCode         string                   `xml:"FormTypeCode,omitempty" json:",omitempty"`
-		Activity             []fincen.ElementActivity `xml:"Activity,omitempty" json:",omitempty"`
-		EFilingSubmissionXML *EFilingSubmissionXML    `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
+		XMLName                 xml.Name                 `xml:"EFilingBatchXML"`
+		SeqNum                  fincen.SeqNumber         `xml:"SeqNum,attr"`
+		StatusCode              string                   `xml:"StatusCode,attr,omitempty" json:",omitempty"`
+		TotalAmount             float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
+		PartyCount              int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
+		ActivityCount           int64                    `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
+		ActivityAttachmentCount int64                    `xml:"ActivityAttachmentCount,attr,omitempty" json:",omitempty"`
+		AttachmentCount         int64                    `xml:"AttachmentCount,attr,omitempty" json:",omitempty"`
+		JointlyOwnedOwnerCount  int64                    `xml:"JointlyOwnedOwnerCount,attr,omitempty" json:",omitempty"`
+		NoFIOwnerCount          int64                    `xml:"NoFIOwnerCount,attr,omitempty" json:",omitempty"`
+		ConsolidatedOwnerCount  int64                    `xml:"ConsolidatedOwnerCount,attr,omitempty" json:",omitempty"`
+		Attrs                   []xml.Attr               `xml:",any,attr"`
+		FormTypeCode            string                   `xml:"FormTypeCode,omitempty" json:",omitempty"`
+		Activity                []fincen.ElementActivity `xml:"Activity,omitempty" json:",omitempty"`
+		EFilingSubmissionXML    *EFilingSubmissionXML    `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
 	}(r)
 
 	for index := 0; index < len(a.Attrs); index++ {
@@ -164,14 +188,104 @@ func (r *EFilingBatchXML) fieldInclusionSubmission() error {
 	return nil
 }
 
-func (r *EFilingBatchXML) GenerateAttrs() error {
+func (r EFilingBatchXML) generateAttrs() batchAttr {
+	s := batchAttr{}
 	// The count of all <Activity> elements in the batch
-	r.ActivityCount = int64(len(r.Activity))
+	s.ActivityCount = int64(len(r.Activity))
 
-	// The sum of all <DetailTransactionAmountText> element amounts recorded in the batch
+	for _, activity := range r.Activity {
+		s.TotalAmount += activity.TotalAmount()
 
-	// The count of all <Party> elements in the batch where the
-	// <ActivityPartyTypeCode> is equal to 16, 23, 4, 3, and 8 (combined)
+		switch r.FormTypeCode {
+		case "8300X":
+			// The count of all <Party> elements in the batch where the
+			// <ActivityPartyTypeCode> is equal to 16, 23, 4, 3, and 8 (combined)
+			s.PartyCount += activity.PartyCount("16", "23", "4", "3", "8")
+		case "DOEPX":
+			// The count of all <Party> elements in the batch where the
+			//<ActivityPartyTypeCode> is equal to 3, 11, 12, and 45 (combined)
+			s.PartyCount += activity.PartyCount("3", "11", "12", "45")
+		case "CTRX":
+			// The total count of all <Party> elements recorded in the batch file.
+			s.PartyCount += activity.PartyCount()
+		case "SARX":
+			// The count of all <Party> elements in the batch where the
+			// <ActivityPartyTypeCode> is equal to “33” (Subject)
+			s.PartyCount += activity.PartyCount("33")
+
+			// The total count of <Party> elements where the <ActivityPartyTypeCode>
+			// element is equal to “42”
+			s.JointlyOwnedOwnerCount += activity.PartyCount("42")
+
+			// The total count of <Party> elements where the <ActivityPartyTypeCode> element is
+			// equal to “43”
+			s.NoFIOwnerCount += activity.PartyCount("43")
+
+			// The total count of <Party> elements where the <ActivityPartyTypeCode>
+			// equal to “44”
+			s.NoFIOwnerCount += activity.PartyCount("44")
+
+		case "FBARX":
+			// The total count of <Party> elements where the <ActivityPartyTypeCode> element is equal to “41”
+			s.PartyCount += activity.PartyCount("41")
+		}
+
+	}
+
+	return s
+}
+
+func (r *EFilingBatchXML) GenerateAttrs() error {
+
+	s := r.generateAttrs()
+
+	r.ActivityCount = s.ActivityCount
+	r.TotalAmount = s.TotalAmount
+	r.PartyCount = s.PartyCount
+	r.ActivityAttachmentCount = s.ActivityAttachmentCount
+	r.AttachmentCount = s.AttachmentCount
+	r.JointlyOwnedOwnerCount = s.JointlyOwnedOwnerCount
+	r.NoFIOwnerCount = s.NoFIOwnerCount
+	r.ConsolidatedOwnerCount = s.ConsolidatedOwnerCount
+
+	return nil
+}
+
+func (r *EFilingBatchXML) validateAttrs() error {
+
+	s := r.generateAttrs()
+
+	if r.ActivityCount != s.ActivityCount {
+		return fincen.NewErrValueInvalid("ActivityCount")
+	}
+
+	if r.TotalAmount != s.TotalAmount {
+		return fincen.NewErrValueInvalid("TotalAmount")
+	}
+
+	if r.PartyCount != s.PartyCount {
+		return fincen.NewErrValueInvalid("PartyCount")
+	}
+
+	if r.ActivityAttachmentCount != s.ActivityAttachmentCount {
+		return fincen.NewErrValueInvalid("ActivityAttachmentCount")
+	}
+
+	if r.AttachmentCount != s.AttachmentCount {
+		return fincen.NewErrValueInvalid("AttachmentCount")
+	}
+
+	if r.JointlyOwnedOwnerCount != s.JointlyOwnedOwnerCount {
+		return fincen.NewErrValueInvalid("JointlyOwnedOwnerCount")
+	}
+
+	if r.NoFIOwnerCount != s.NoFIOwnerCount {
+		return fincen.NewErrValueInvalid("NoFIOwnerCount")
+	}
+
+	if r.ConsolidatedOwnerCount != s.ConsolidatedOwnerCount {
+		return fincen.NewErrValueInvalid("ConsolidatedOwnerCount")
+	}
 
 	return nil
 }
@@ -193,6 +307,10 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 		if err := r.fieldInclusionReport(); err != nil {
 			return err
 		}
+	}
+
+	if err := r.validateAttrs(); err != nil {
+		return err
 	}
 
 	return fincen.Validate(&r, args...)

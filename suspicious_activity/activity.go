@@ -8,6 +8,7 @@ package suspicious_activity
 
 import (
 	"encoding/xml"
+	"strconv"
 
 	"github.com/moov-io/fincen"
 )
@@ -31,6 +32,34 @@ type ActivityType struct {
 
 func (r ActivityType) FormTypeCode() string {
 	return "SARX"
+}
+
+func (r ActivityType) TotalAmount() float64 {
+	// The sum of all <TotalSuspiciousAmountText> element amounts
+	// recorded in the batch
+
+	var amount float64
+
+	if r.SuspiciousActivity.TotalSuspiciousAmountText != nil {
+		valueStr := string(*r.SuspiciousActivity.TotalSuspiciousAmountText)
+		if value, err := strconv.ParseFloat(valueStr, 64); err == nil {
+			amount += value
+		}
+	}
+
+	return amount
+}
+
+func (r ActivityType) PartyCount(args ...string) int64 {
+	var count int64
+	for _, party := range r.Party {
+		typeCode := string(party.ActivityPartyTypeCode)
+		if fincen.CheckInvolved(typeCode, args...) {
+			count++
+		}
+	}
+
+	return count
 }
 
 func (r ActivityType) fieldInclusion() error {
@@ -87,6 +116,13 @@ func (r ActivityType) Validate(args ...string) error {
 	if _, ok := existed["8"]; !ok {
 		return fincen.NewErrFieldRequired("Party(type 8)")
 	}
+	if _, ok := existed["34"]; !ok {
+		return fincen.NewErrFieldRequired("Party(type 34)")
+	}
+	if _, ok := existed["33"]; !ok {
+		return fincen.NewErrFieldRequired("Party(type 33)")
+	}
+
 	if cnt, ok := existed["34"]; ok && cnt > 99 {
 		return fincen.NewErrMinMaxRange("Party(type 34)")
 	}

@@ -257,6 +257,7 @@ type DateYYYYMMDDType string
 
 func (r DateYYYYMMDDType) Validate() error {
 	reg := regexp.MustCompile(`(19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])`)
+
 	if !reg.MatchString(string(r)) {
 		return NewErrValueInvalid("DateYYYYMMDDType")
 	}

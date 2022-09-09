@@ -14,6 +14,32 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// validating elements
+var (
+	_ fincen.Element = (*EFilingBatchXML)(nil)
+	_ fincen.Element = (*EFilingSubmissionXML)(nil)
+	_ fincen.Element = (*EFilingActivityXML)(nil)
+	_ fincen.Element = (*EFilingActivityErrorXML)(nil)
+)
+
+type emptyElementActivity struct{}
+
+func (r *emptyElementActivity) Validate(args ...string) error {
+	return nil
+}
+
+func (r *emptyElementActivity) FormTypeCode() string {
+	return ""
+}
+
+func (r *emptyElementActivity) TotalAmount() float64 {
+	return 0
+}
+
+func (r *emptyElementActivity) PartyCount(args ...string) int64 {
+	return 0
+}
+
 func TestAcknowledgement(t *testing.T) {
 	t.Run("FinCEN SAR XML Acknowledgement", func(t *testing.T) {
 		buf, err := os.ReadFile(path.Join("..", "test", "testdata", "sar_acknowledgement.xml"))
@@ -238,24 +264,24 @@ func TestAcknowledgement(t *testing.T) {
 }
 
 func TestBatch(t *testing.T) {
-	t.Run("FinCEN FBAR XML Batch", func(t *testing.T) {
-		buf, err := os.ReadFile(path.Join("..", "test", "testdata", "fbar_batch.xml"))
-		require.NoError(t, err)
+	samples := make(map[string]string)
+	//samples["fbar_batch.xml"] = "FinCEN FBAR XML Batch"
+	samples["sar_batch.xml"] = "FinCEN SAR XML Batch"
 
-		batch := EFilingBatchXML{}
-		err = xml.Unmarshal(buf, &batch)
-		require.NoError(t, err)
-	})
-}
+	for name, description := range samples {
+		t.Run(description, func(t *testing.T) {
+			buf, err := os.ReadFile(path.Join("..", "test", "testdata", name))
+			require.NoError(t, err)
 
-type emptyElementActivity struct{}
+			batch := EFilingBatchXML{}
+			err = xml.Unmarshal(buf, &batch)
+			require.NoError(t, err)
 
-func (r *emptyElementActivity) Validate(args ...string) error {
-	return nil
-}
+			err = batch.Validate()
+			require.NoError(t, err)
+		})
+	}
 
-func (r *emptyElementActivity) FormTypeCode() string {
-	return ""
 }
 
 func TestElements(t *testing.T) {
@@ -270,6 +296,7 @@ func TestElements(t *testing.T) {
 
 		var emptyActivity fincen.ElementActivity = (*emptyElementActivity)(nil)
 		sample.Activity = append(sample.Activity, emptyActivity)
+		sample.ActivityCount = 1
 
 		require.NotNil(t, sample.Validate())
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())

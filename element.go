@@ -13,4 +13,6 @@ type Element interface {
 type ElementActivity interface {
 	Validate(args ...string) error
 	FormTypeCode() string
+	TotalAmount() float64
+	PartyCount(args ...string) int64
 }

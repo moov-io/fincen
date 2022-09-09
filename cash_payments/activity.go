@@ -8,6 +8,7 @@ package cash_payments
 
 import (
 	"encoding/xml"
+	"strconv"
 
 	"github.com/moov-io/fincen"
 )
@@ -28,6 +29,36 @@ type ActivityType struct {
 
 func (r ActivityType) FormTypeCode() string {
 	return "8300X"
+}
+
+func (r ActivityType) TotalAmount() float64 {
+	// The sum of all <DetailTransactionAmountText> element amounts
+
+	var amount float64
+	for _, currency := range r.CurrencyTransactionActivity.CurrencyTransactionActivityDetail {
+		if currency.DetailTransactionAmountText == nil {
+			continue
+		}
+
+		valueStr := string(*currency.DetailTransactionAmountText)
+		if value, err := strconv.ParseFloat(valueStr, 64); err == nil {
+			amount += value
+		}
+	}
+
+	return amount
+}
+
+func (r ActivityType) PartyCount(args ...string) int64 {
+	var count int64
+	for _, party := range r.Party {
+		typeCode := string(party.ActivityPartyTypeCode)
+		if fincen.CheckInvolved(typeCode, args...) {
+			count++
+		}
+	}
+
+	return count
 }
 
 func (r ActivityType) fieldInclusion() error {
