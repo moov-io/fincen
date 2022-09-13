@@ -5,11 +5,42 @@
 *.so
 *.dylib
 
-# Test binary, built with `go test -c`
+# Test binary, build with `go test -c`
 *.test
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# code coverage
+coverage.html
+
+/bin/
+
+# OpenAPITools/openapi-generator
+openapi-generator-cli-*.jar
+
+# macOS
+.DS_Store
+
+# code coverage
+coverage.html
+cover.out
+coverage.txt
+misspell*
+staticcheck*
+/lint-project.sh
+bin/
+tmp/
+
+# fuzzing
+test/fuzz-reader/fuzzreader-fuzz.zip
+test/fuzz-reader/corpus/*.tar.gz
+
+# wasm build
+/cmd/webui/assets/wire.wasm
+
+# GoLand
+/.idea/*
+
+# Gitleaks
+gitleaks.tar.gz

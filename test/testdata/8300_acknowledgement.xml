@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EFilingBatchXML SeqNum="1" StatusCode="A">
+    <EFilingSubmissionXML SeqNum="1" StatusCode="A">
+        <EFilingActivityXML SeqNum="1">
+            <BSAID>31000055053784</BSAID>
+            <EFilingActivityErrorXML SeqNum="1">
+                <ErrorContextText>EFilingBatchXML/Activity[1]/Party[25]/PartyIdentification[49]/OtherIssuerStateText</ErrorContextText>
+                <ErrorElementNameText>PartyIdentificationNumberText</ErrorElementNameText>
+                <ErrorLevelText>WARN</ErrorLevelText>
+                <ErrorText>The element is not recorded or does not contain a value and the PartyIdentificationTypeCode is equal to 5 (Driver’s License/State ID), 6 (Passport), 7 (Alien registration), or 999 (Other).</ErrorText>
+                <ErrorTypeCode>P05</ErrorTypeCode>
+            </EFilingActivityErrorXML>
+            <EFilingActivityErrorXML SeqNum="2">
+                <ErrorContextText>EFilingBatchXML/Activity[1]/Party[78]/PartyName[84]/RawEntity IndividualLastName</ErrorContextText>
+                <ErrorElementNameText>RawIndividualFirstName</ErrorElementNameText>
+                <ErrorLevelText>WARN</ErrorLevelText>
+                <ErrorText>The legal name is not recorded.</ErrorText>
+                <ErrorTypeCode>P03</ErrorTypeCode>
+            </EFilingActivityErrorXML>
+        </EFilingActivityXML>
+        <EFilingActivityXML SeqNum="2">
+            <BSAID>31000055053785</BSAID>
+            <EFilingActivityErrorXML SeqNum="1"/>
+        </EFilingActivityXML>
+        <EFilingActivityXML SeqNum="3">
+            <BSAID>31000055053786</BSAID>
+            <EFilingActivityErrorXML SeqNum="1"/>
+        </EFilingActivityXML>
+    </EFilingSubmissionXML>
+</EFilingBatchXML>

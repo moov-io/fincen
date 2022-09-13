@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EFilingBatchXML StatusCode="A" SeqNum="1">
+	<EFilingSubmissionXML StatusCode="A" SeqNum="1">
+		<EFilingActivityXML SeqNum="1">
+			<BSAID>31000000000001</BSAID>
+			<EFilingActivityErrorXML SeqNum="1">
+				<ErrorContextText>EFilingBatchXML/Activity[1]/Party[218]/Address[232]/RawZIPCode</ErrorContextText>
+				<ErrorElementNameText>RawZIPCode</ErrorElementNameText>
+				<ErrorLevelText>WARN</ErrorLevelText>
+				<ErrorText>The value recorded contains non-numeric characters or is in an invalid format and the country is US.</ErrorText>
+				<ErrorTypeCode>F18</ErrorTypeCode>
+			</EFilingActivityErrorXML>
+		</EFilingActivityXML>
+		<EFilingActivityXML SeqNum="2">
+			<BSAID>31000000000002</BSAID>
+			<EFilingActivityErrorXML SeqNum="1"/>
+		</EFilingActivityXML>
+		<EFilingActivityXML SeqNum="3">
+			<BSAID>31000000000003</BSAID>
+			<EFilingActivityErrorXML SeqNum="1">
+				<ErrorContextText>EFilingBatchXML/Activity[3]/Party[577]/PartyIdentification[608]/PartyIdentificationNumberText</ErrorContextText>
+				<ErrorElementNameText>PartyIdentificationNumberText</ErrorElementNameText>
+				<ErrorLevelText>WARN</ErrorLevelText>
+				<ErrorText>The element contains an invalid number string.</ErrorText>
+				<ErrorTypeCode>C57</ErrorTypeCode>
+			</EFilingActivityErrorXML>
+			<EFilingActivityErrorXML SeqNum="2">
+				<ErrorContextText>EFilingBatchXML/Activity[3]</ErrorContextText>
+				<ErrorElementNameText>Activity</ErrorElementNameText>
+				<ErrorLevelText>WARN</ErrorLevelText>
+				<ErrorText>The sum of all subtotal cash out amounts does not equal the total cash out amount recorded.</ErrorText>
+				<ErrorTypeCode>D29</ErrorTypeCode>
+			</EFilingActivityErrorXML>
+		</EFilingActivityXML>
+	</EFilingSubmissionXML>
+</EFilingBatchXML>

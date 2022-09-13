@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2018 (http://www.altova.com) by FinCEN (Department of the Treasury - Financial Crimes Enforcement Network) -->
+<!-- current version v1.0-->
+<!-- revision history: 
+03/14/2019 (v1.0)-->
+<xsd:schema xmlns="www.fincen.gov/base" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:fc2="www.fincen.gov/base" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="www.fincen.gov/base" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1" xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/sites/default/files/schema/base/BSA_XML_2.0.xsd">
+	<!--Redefine START-->
+	<xsd:complexType name="ActivityAssociationType">
+				<xsd:sequence>
+					<xsd:element name="ExemptionAmendedIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="ExemptionRevokedIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="InitialDesignationIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ActivityType">
+				<xsd:sequence>
+					<xsd:element name="DesignatedMoreThanOneBankIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="EFilingPriorDocumentNumber" type="RestrictLong14" minOccurs="0"/>
+					<xsd:element name="FilingDateText" type="DateYYYYMMDDType"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="AddressType">
+				<xsd:sequence>
+					<xsd:element name="RawCityText" type="RestrictString50"/>
+					<xsd:element name="RawCountryCodeText" type="RestrictString2" minOccurs="0"/>
+					<xsd:element name="RawStateCodeText" type="RestrictString3"/>
+					<xsd:element name="RawStreetAddress1Text" type="RestrictString100"/>
+					<xsd:element name="RawZIPCode" type="RestrictString9"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DesignationExemptActivityType">
+				<xsd:sequence>
+					<xsd:element name="ExemptBasisTypeCode" type="ValidateExemptBasisTypeCode"/>
+					<xsd:element name="ExemptEffectiveBeginDateText" type="DateYYYYMMDDType"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ElectronicAddressType">
+				<xsd:sequence>
+					<xsd:element name="ElectronicAddressText" type="RestrictString100"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PartyIdentificationType">
+				<xsd:sequence>
+					<xsd:element name="PartyIdentificationNumberText" type="RestrictString25"/>
+					<xsd:element name="PartyIdentificationTypeCode" type="ValidatePartyIdentificationCodeType"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PartyNameType">
+				<xsd:sequence>
+					<xsd:element name="PartyNameTypeCode" type="ValidatePartyNameCodeType" minOccurs="0"/>
+					<xsd:element name="RawEntityIndividualLastName" type="RestrictString150" minOccurs="0"/>
+					<xsd:element name="RawIndividualFirstName" type="RestrictString35" minOccurs="0"/>
+					<xsd:element name="RawIndividualMiddleName" type="RestrictString35" minOccurs="0"/>
+					<xsd:element name="RawIndividualNameSuffixText" type="RestrictString35" minOccurs="0"/>
+					<xsd:element name="RawIndividualTitleText" type="RestrictString35" minOccurs="0"/>
+					<xsd:element name="RawPartyFullName" type="RestrictString150" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PartyOccupationBusinessType">
+				<xsd:sequence>
+					<xsd:element name="NAICSCode" type="RestrictString6" minOccurs="0"/>
+					<xsd:element name="OccupationBusinessText" type="RestrictString30" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PartyType">
+				<xsd:sequence>
+					<xsd:element name="ActivityPartyTypeCode" type="ValidateActivityPartyCodeType"/>
+					<xsd:element name="PartyAsEntityOrganizationIndicator" type="ValidateIndicatorType" minOccurs="0"/>
+					<xsd:element name="PrimaryRegulatorTypeCode" type="ValidateFederalRegulatorCodeType" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PhoneNumberType">
+				<xsd:sequence>
+					<xsd:element name="PhoneNumberExtensionText" type="RestrictString6" minOccurs="0"/>
+					<xsd:element name="PhoneNumberText" type="RestrictString16" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:attribute name="SeqNum" type="xsd:long" use="required"/>
+	</xsd:complexType>
+	<!--Redefine END-->
+
+	<!--Batch START-->
+	<xsd:element name="EFilingBatchXML">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="FormTypeCode" type="xsd:string" fixed="DOEPX"/>
+				<xsd:element ref="Activity" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="PartyCount" type="xsd:long" use="required"/>
+			<xsd:attribute name="ActivityCount" type="xsd:long" use="required"/>
+		</xsd:complexType>
+		<xsd:unique name="Unique-SeqNum">
+			<xsd:selector xpath=".//*"/>
+			<xsd:field xpath="@SeqNum"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:element name="Activity">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="ActivityType">
+					<xsd:sequence>
+						<xsd:element name="ActivityAssociation" type="ActivityAssociationType"/>
+						<xsd:element ref="Party" minOccurs="4" maxOccurs="104"/>
+						<xsd:element name="DesignationExemptActivity" type="DesignationExemptActivityType"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Party">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="PartyType">
+					<xsd:sequence>
+						<xsd:element name="PartyName" type="PartyNameType" minOccurs="0" maxOccurs="2"/>
+						<xsd:element name="Address" type="AddressType" minOccurs="0"/>
+						<xsd:element name="PhoneNumber" type="PhoneNumberType" minOccurs="0"/>
+						<xsd:element name="PartyIdentification" type="PartyIdentificationType" minOccurs="0" maxOccurs="2"/>
+						<xsd:element name="PartyOccupationBusiness" type="PartyOccupationBusinessType" minOccurs="0"/>
+						<xsd:element name="ElectronicAddress" type="ElectronicAddressType" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		<xsd:unique name="Unique-PartyNameTypeCode">
+			<xsd:selector xpath="fc2:PartyName"/>
+			<xsd:field xpath="fc2:PartyNameTypeCode"/>
+		</xsd:unique>
+		<xsd:unique name="Unique-PartyIdentificationTypeCode">
+			<xsd:selector xpath="fc2:PartyIdentification"/>
+			<xsd:field xpath="fc2:PartyIdentificationTypeCode"/>
+		</xsd:unique>
+	</xsd:element>
+	<!--Batch END-->
+	<!--Validation START-->
+	<xsd:simpleType name="DateYYYYMMDDType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="(19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString2">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString3">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString6">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString9">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="9"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictLong14">
+		<xsd:restriction base="xsd:long">
+			<xsd:totalDigits value="14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString16">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="16"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString25">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString30">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString35">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString50">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString100">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RestrictString150">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="150"/>
+			<xsd:pattern value="\S+( +\S+)*|"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidateActivityPartyCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="35">
+				<xsd:annotation>
+					<xsd:documentation>Transmitter</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="37">
+				<xsd:annotation>
+					<xsd:documentation>Transmitter Contact</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="11">
+				<xsd:annotation>
+					<xsd:documentation>Exempt party</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="45">
+				<xsd:annotation>
+					<xsd:documentation>Exempt Filer Bank</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="12">
+				<xsd:annotation>
+					<xsd:documentation>Exempt Affiliated Bank</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="3">
+				<xsd:annotation>
+					<xsd:documentation>Authorized Official</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidateExemptBasisTypeCode">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="C">
+				<xsd:annotation>
+					<xsd:documentation>Listed company</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="D">
+				<xsd:annotation>
+					<xsd:documentation>Listed Company Subsidiary</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="E">
+				<xsd:annotation>
+					<xsd:documentation>Eligible non-listed business</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="F">
+				<xsd:annotation>
+					<xsd:documentation>Payroll Customer</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidateFederalRegulatorCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:documentation>Federal Reserve</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="2">
+				<xsd:annotation>
+					<xsd:documentation>FDIC</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="7">
+				<xsd:annotation>
+					<xsd:documentation>IRS</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="3">
+				<xsd:annotation>
+					<xsd:documentation>NCUA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="4">
+				<xsd:annotation>
+					<xsd:documentation>OCC</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidateIndicatorType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+			<xsd:enumeration value=""/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidatePartyIdentificationCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:documentation>SSN/ITIN</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="2">
+				<xsd:annotation>
+					<xsd:documentation>EIN</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="14">
+				<xsd:annotation>
+					<xsd:documentation>RSSD number</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="28">
+				<xsd:annotation>
+					<xsd:documentation>Transmitter Control Code</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ValidatePartyNameCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="L">
+				<xsd:annotation>
+					<xsd:documentation>Legal name</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="DBA">
+				<xsd:annotation>
+					<xsd:documentation>Doing business as (DBA)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--Validation END-->
+</xsd:schema>
