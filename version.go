@@ -4,4 +4,4 @@
 
 package fincen
 
-const Version = "v0.0.0"
+const Version = "v0.1.0"
