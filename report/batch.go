@@ -97,7 +97,8 @@ func (r *EFilingBatchXML) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 
 	r.copy(dummy)
 
-	for _, act := range dummy.Activity {
+	for i := range dummy.Activity {
+		act := dummy.Activity[i]
 
 		buf, err := xml.Marshal(&act)
 		if err != nil {
