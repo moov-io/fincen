@@ -192,7 +192,7 @@ func (r PartyType) Validate(args ...string) error {
 	}
 
 	if r.FilerTypeIndividualIndicator != nil {
-		return fincen.Validate(&r, string(r.ActivityPartyTypeCode), "FilerTypeIndividualIndicator")
+		return fincen.Validate(&r, string(r.ActivityPartyTypeCode), "true")
 	}
 
 	return fincen.Validate(&r, string(r.ActivityPartyTypeCode))

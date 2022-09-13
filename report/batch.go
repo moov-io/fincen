@@ -290,6 +290,8 @@ func (r *EFilingBatchXML) validateAttrs() error {
 	return nil
 }
 
+// Validate args:
+//  1: disableValidateAttrs
 func (r EFilingBatchXML) Validate(args ...string) error {
 
 	if r.StatusCode == "A" {
@@ -309,8 +311,10 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 		}
 	}
 
-	if err := r.validateAttrs(); err != nil {
-		return err
+	if len(args) == 0 {
+		if err := r.validateAttrs(); err != nil {
+			return err
+		}
 	}
 
 	return fincen.Validate(&r, args...)

@@ -623,7 +623,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The Party(type 8) is a required field", sample.Validate().Error())
 
 		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "8"})
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The Party(type 34) is a required field", sample.Validate().Error())
 	})
 
 	t.Run("ActivityAssociationType", func(t *testing.T) {
@@ -713,7 +713,7 @@ func TestElements(t *testing.T) {
 
 	t.Run("SuspiciousActivityType", func(t *testing.T) {
 		var sample SuspiciousActivityType
-		require.Equal(t, "The SuspiciousActivity has invalid value", sample.Validate().Error())
+		require.Equal(t, "The SuspiciousActivity has invalid min & max range", sample.Validate().Error())
 
 		sample.SuspiciousActivityClassification = append(sample.SuspiciousActivityClassification, SuspiciousActivityClassificationType{})
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())

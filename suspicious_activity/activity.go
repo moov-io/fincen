@@ -657,7 +657,7 @@ type SuspiciousActivityType struct {
 
 func (r SuspiciousActivityType) fieldInclusion() error {
 	if len(r.SuspiciousActivityClassification) < 1 || len(r.SuspiciousActivityClassification) > 99 {
-		return fincen.NewErrValueInvalid("SuspiciousActivity")
+		return fincen.NewErrMinMaxRange("SuspiciousActivity")
 	}
 
 	return nil
