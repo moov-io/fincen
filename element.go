@@ -6,9 +6,10 @@ package fincen
 
 // Element defines interface of complex xml elements
 // args:
-//  1: ActivityPartyTypeCode
-//  2: FilerTypeIndividualIndicator (true/false)
-//  1: disableValidateAttrs (EFilingBatchXML only)
+//
+//	1: ActivityPartyTypeCode
+//	2: FilerTypeIndividualIndicator (true/false)
+//	1: disableValidateAttrs (EFilingBatchXML only)
 type Element interface {
 	Validate(args ...string) error
 }

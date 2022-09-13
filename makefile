@@ -7,9 +7,9 @@ build:
 	CGO_ENABLED=0 go build -o ./bin/server github.com/moov-io/fincen/cmd/server
 
 build-webui:
-	cp $(shell go env GOROOT)/misc/wasm/wasm_exec.js ./cmd/webui/assets/wasm_exec.js
-	GOOS=js GOARCH=wasm go build -o ./cmd/webui/assets/fincen.wasm github.com/moov-io/fincen/cmd/webui/fincen/
-	CGO_ENABLED=0 go build -o ./bin/webui ./cmd/webui
+#	cp $(shell go env GOROOT)/misc/wasm/wasm_exec.js ./cmd/webui/assets/wasm_exec.js
+#	GOOS=js GOARCH=wasm go build -o ./cmd/webui/assets/fincen.wasm github.com/moov-io/fincen/cmd/webui/fincen/
+#	CGO_ENABLED=0 go build -o ./bin/webui ./cmd/webui
 
 .PHONY: check
 check:
@@ -43,7 +43,7 @@ else
 	CGO_ENABLED=0 GOOS=$(PLATFORM) go build -o bin/fincen-$(PLATFORM)-amd64 github.com/moov-io/fincen/cmd/server
 endif
 
-docker: clean docker-hub docker-openshift docker-fuzz docker-webui
+docker: clean docker-hub docker-webui
 
 docker-hub:
 	docker build --pull -t moov/fincen:$(VERSION) -f Dockerfile .

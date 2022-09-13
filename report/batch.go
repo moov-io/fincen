@@ -291,7 +291,8 @@ func (r *EFilingBatchXML) validateAttrs() error {
 }
 
 // Validate args:
-//  1: disableValidateAttrs
+//
+//	1: disableValidateAttrs
 func (r EFilingBatchXML) Validate(args ...string) error {
 
 	if r.StatusCode == "A" {
