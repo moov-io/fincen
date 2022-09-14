@@ -15,6 +15,8 @@ import (
 var (
 	DefaultValidateFunction = "Validate"
 
+	SequenceFieldName = "SeqNum"
+
 	dateTextRegex = regexp.MustCompile(`^\d{4}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$`)
 )
 
@@ -184,7 +186,7 @@ func getSeqNum(data reflect.Value) SeqNumber {
 		data = reflect.Indirect(reflect.ValueOf(elm))
 	}
 
-	seqNum := data.FieldByName("SeqNum")
+	seqNum := data.FieldByName(SequenceFieldName)
 	if !seqNum.IsValid() {
 		return ignoreValue
 	}
@@ -211,7 +213,7 @@ func setSeqNum(data reflect.Value, number SeqNumber) SeqNumber {
 		data = reflect.Indirect(reflect.ValueOf(data))
 	}
 
-	seqNum := data.FieldByName("SeqNum")
+	seqNum := data.FieldByName(SequenceFieldName)
 	if seqNum.Kind() != reflect.Int64 || !seqNum.IsValid() || !seqNum.CanSet() {
 		return number
 	}
