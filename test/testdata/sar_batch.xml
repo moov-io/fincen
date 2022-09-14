@@ -212,12 +212,6 @@
         <ActivityAssociation SeqNum="2">
             <CorrectsAmendsPriorReportIndicator>Y</CorrectsAmendsPriorReportIndicator>
         </ActivityAssociation>
-        <ForeignAccountActivity SeqNum="1">
-            <ForeignAccountHeldQuantityText>31</ForeignAccountHeldQuantityText>
-            <LateFilingReasonCode>999</LateFilingReasonCode>
-            <ReportCalendarYearText>2016</ReportCalendarYearText>
-            <SignatureAuthoritiesQuantityText>52</SignatureAuthoritiesQuantityText>
-        </ForeignAccountActivity>
     </Activity>
     <FormTypeCode>SARX</FormTypeCode>
 </EFilingBatchXML>

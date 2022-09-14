@@ -322,6 +322,10 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
 }
 
+func (r EFilingBatchXML) GenerateSeqNumbers() error {
+	return fincen.GenerateSeqNumbers(&r)
+}
+
 type EFilingSubmissionXML struct {
 	XMLName            xml.Name             `xml:"EFilingSubmissionXML"`
 	SeqNum             fincen.SeqNumber     `xml:"SeqNum,attr"`
