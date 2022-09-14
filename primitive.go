@@ -222,9 +222,10 @@ func (r RestrictString20) Validate() error {
 // Must match the pattern ([0-1][0-9]|(2[0-3])):[0-5][0-9]:[0-5][0-9]|
 type ValidateTimeDataOrBlankType string
 
+var timeDataOrBlankTypeRegex = regexp.MustCompile(`([0-1][0-9]|(2[0-3])):[0-5][0-9]:[0-5][0-9]|`)
+
 func (r ValidateTimeDataOrBlankType) Validate() error {
-	reg := regexp.MustCompile(`([0-1][0-9]|(2[0-3])):[0-5][0-9]:[0-5][0-9]|`)
-	if !reg.MatchString(string(r)) {
+	if !timeDataOrBlankTypeRegex.MatchString(string(r)) {
 		return NewErrValueInvalid("ValidateTimeDataOrBlankType")
 	}
 	return nil
@@ -233,9 +234,10 @@ func (r ValidateTimeDataOrBlankType) Validate() error {
 // Must match the pattern (19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])|
 type DateYYYYMMDDOrBlankType string
 
+var dateYYYYMMDDOrBlankTypeRegex = regexp.MustCompile(`(19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])|`)
+
 func (r DateYYYYMMDDOrBlankType) Validate() error {
-	reg := regexp.MustCompile(`(19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])|`)
-	if !reg.MatchString(string(r)) {
+	if !dateYYYYMMDDOrBlankTypeRegex.MatchString(string(r)) {
 		return NewErrValueInvalid("DateYYYYMMDDOrBlankType")
 	}
 	return nil
@@ -244,9 +246,10 @@ func (r DateYYYYMMDDOrBlankType) Validate() error {
 // Must match the pattern (19|20)[0-9][0-9](0[0-9]|1[0-2])(0[0-9]|1[0-9]|2[0-9]|3[01])|
 type DateYYYYMMDDOrBlankTypeDOB string
 
+var dateYYYYMMDDOrBlankTypeDOBRegex = regexp.MustCompile(`(19|20)[0-9][0-9](0[0-9]|1[0-2])(0[0-9]|1[0-9]|2[0-9]|3[01])|`)
+
 func (r DateYYYYMMDDOrBlankTypeDOB) Validate() error {
-	reg := regexp.MustCompile(`(19|20)[0-9][0-9](0[0-9]|1[0-2])(0[0-9]|1[0-9]|2[0-9]|3[01])|`)
-	if !reg.MatchString(string(r)) {
+	if !dateYYYYMMDDOrBlankTypeDOBRegex.MatchString(string(r)) {
 		return NewErrValueInvalid("DateYYYYMMDDOrBlankTypeDOB")
 	}
 	return nil
@@ -255,10 +258,10 @@ func (r DateYYYYMMDDOrBlankTypeDOB) Validate() error {
 // Must match the pattern (19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])
 type DateYYYYMMDDType string
 
-func (r DateYYYYMMDDType) Validate() error {
-	reg := regexp.MustCompile(`(19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])`)
+var dateYYYYMMDDTypeRegex = regexp.MustCompile(`(19|20)[0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[01])`)
 
-	if !reg.MatchString(string(r)) {
+func (r DateYYYYMMDDType) Validate() error {
+	if !dateYYYYMMDDTypeRegex.MatchString(string(r)) {
 		return NewErrValueInvalid("DateYYYYMMDDType")
 	}
 	return nil
@@ -267,9 +270,10 @@ func (r DateYYYYMMDDType) Validate() error {
 // Must match the pattern (19|20)[0-9][0-9]
 type DateYYYYType string
 
+var dateYYYYTypeRegex = regexp.MustCompile(`(19|20)[0-9][0-9]`)
+
 func (r DateYYYYType) Validate() error {
-	reg := regexp.MustCompile(`(19|20)[0-9][0-9]`)
-	if !reg.MatchString(string(r)) {
+	if !dateYYYYTypeRegex.MatchString(string(r)) {
 		return NewErrValueInvalid("DateYYYYType")
 	}
 	return nil
@@ -567,9 +571,10 @@ func (r SeqNumber) Validate() error {
 
 type RestrictNumeric14 string
 
+var restrictNumeric14Regex = regexp.MustCompile(`[0-9]{14}`)
+
 func (r RestrictNumeric14) Validate() error {
-	reg := regexp.MustCompile(`[0-9]{14}`)
-	if !reg.MatchString(string(r)) {
+	if !restrictNumeric14Regex.MatchString(string(r)) {
 		return NewErrValueInvalid("RestrictNumeric14")
 	}
 	return nil
