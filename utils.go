@@ -14,6 +14,8 @@ import (
 
 var (
 	DefaultValidateFunction = "Validate"
+
+	dateTextRegex = regexp.MustCompile(`^\d{4}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$`)
 )
 
 // NumericStringField return number string with filling zero
@@ -112,8 +114,7 @@ func Validate(r interface{}, args ...string) error {
 
 // ValidateDateText check input string is date string (YYYYMMDD)
 func ValidateDateText(str string) bool {
-	reg := regexp.MustCompile(`^\d{4}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$`)
-	return !reg.MatchString(str)
+	return !dateTextRegex.MatchString(str)
 }
 
 // ValidateNumericCharacters check input string is numeric characters

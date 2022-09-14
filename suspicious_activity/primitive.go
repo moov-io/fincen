@@ -84,9 +84,10 @@ func (r ValidateFederalRegulatorCodeType) Validate() error {
 // 14-digit numeric
 type EFilingPriorDocumentNumberType string
 
+var eFilingPriorDocumentNumberTypeRegex = regexp.MustCompile(`[0-9]{14}`)
+
 func (r EFilingPriorDocumentNumberType) Validate() error {
-	reg := regexp.MustCompile(`[0-9]{14}`)
-	if !reg.MatchString(string(r)) {
+	if !eFilingPriorDocumentNumberTypeRegex.MatchString(string(r)) {
 		return fincen.NewErrValueInvalid("EFilingPriorDocumentNumber")
 	}
 	return nil
