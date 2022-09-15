@@ -61,10 +61,10 @@ func validateCallbackByValue(data reflect.Value, args ...string) error {
 				typeName := getTypeName(data.String())
 				if len(typeName) > 0 {
 					errStr := err.Interface().(error).Error()
-					if !strings.Contains(errStr, ")") {
-						errStr = errStr + " (" + typeName + ")"
-					} else {
+					if len(errStr) > 0 && string(errStr[len(errStr)-1:]) == ")" {
 						errStr = errStr[:len(errStr)-1] + ", " + typeName + ")"
+					} else {
+						errStr = errStr + " (" + typeName + ")"
 					}
 					return errors.New(errStr)
 				}

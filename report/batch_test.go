@@ -265,6 +265,9 @@ func TestAcknowledgement(t *testing.T) {
 
 func TestBatch(t *testing.T) {
 	samples := map[string]string{
+		"8300_batch.xml": "FinCEN 8300 XML Batch",
+		"ctr_batch.xml":  "FinCEN CTR XML Batch",
+		"doep_batch.xml": "FinCEN DOEP XML Batch",
 		"fbar_batch.xml": "FinCEN FBAR XML Batch",
 		"sar_batch.xml":  "FinCEN SAR XML Batch",
 	}
