@@ -15,6 +15,8 @@ import (
 var (
 	DefaultValidateFunction = "Validate"
 
+	SequenceFieldName = "SeqNum"
+
 	dateTextRegex = regexp.MustCompile(`^\d{4}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$`)
 )
 
@@ -59,10 +61,10 @@ func validateCallbackByValue(data reflect.Value, args ...string) error {
 				typeName := getTypeName(data.String())
 				if len(typeName) > 0 {
 					errStr := err.Interface().(error).Error()
-					if !strings.Contains(errStr, ")") {
-						errStr = errStr + " (" + typeName + ")"
-					} else {
+					if len(errStr) > 0 && string(errStr[len(errStr)-1:]) == ")" {
 						errStr = errStr[:len(errStr)-1] + ", " + typeName + ")"
+					} else {
+						errStr = errStr + " (" + typeName + ")"
 					}
 					return errors.New(errStr)
 				}
@@ -75,6 +77,23 @@ func validateCallbackByValue(data reflect.Value, args ...string) error {
 
 // Validate is trying to run Validate(...string) function of fields
 func Validate(r interface{}, args ...string) error {
+
+	seqMap := map[SeqNumber]bool{}
+	checkSeqNumber := func(data reflect.Value) error {
+		num := getSeqNum(data)
+		if num < 0 {
+			return nil
+		}
+
+		_, ok := seqMap[num]
+		if ok {
+			return fmt.Errorf("%s has dupulicated sequence number", getTypeName(data.String()))
+		}
+
+		seqMap[num] = true
+		return nil
+	}
+
 	var err error
 	fields := reflect.ValueOf(r).Elem()
 	for i := 0; i < fields.NumField(); i++ {
@@ -82,16 +101,24 @@ func Validate(r interface{}, args ...string) error {
 		kind := fieldData.Kind()
 		if kind == reflect.Slice {
 			for i := 0; i < fieldData.Len(); i++ {
-				err = validateCallbackByValue(fieldData.Index(i), args...)
+				elm := fieldData.Index(i)
+				err = validateCallbackByValue(elm, args...)
 				if err != nil {
 					return err
+				}
+				if seqErr := checkSeqNumber(elm); seqErr != nil {
+					return seqErr
 				}
 			}
 		} else if kind == reflect.Map {
 			for _, key := range fieldData.MapKeys() {
+				elm := fieldData.MapIndex(key)
 				err = validateCallbackByValue(fieldData.MapIndex(key), args...)
 				if err != nil {
 					return err
+				}
+				if seqErr := checkSeqNumber(elm); seqErr != nil {
+					return seqErr
 				}
 			}
 		} else if kind == reflect.Ptr {
@@ -100,11 +127,17 @@ func Validate(r interface{}, args ...string) error {
 				if err != nil {
 					return err
 				}
+				if seqErr := checkSeqNumber(fieldData); seqErr != nil {
+					return seqErr
+				}
 			}
 		} else {
 			err = validateCallbackByValue(fieldData, args...)
 			if err != nil {
 				return err
+			}
+			if seqErr := checkSeqNumber(fieldData); seqErr != nil {
+				return seqErr
 			}
 		}
 	}
@@ -131,4 +164,115 @@ func CheckInvolved(element string, elements ...string) bool {
 		}
 	}
 	return false
+}
+
+func getSeqNum(data reflect.Value) SeqNumber {
+
+	ignoreValue := SeqNumber(-1)
+
+	elm, ok := data.Interface().(Element)
+	if !ok || elm == nil {
+		return ignoreValue
+	}
+
+	kind := data.Kind()
+	if kind == reflect.Ptr {
+		data = reflect.Indirect(data)
+	} else if kind == reflect.Interface {
+		elm, ok = data.Interface().(ElementActivity)
+		if !ok || elm == nil {
+			return ignoreValue
+		}
+		data = reflect.Indirect(reflect.ValueOf(elm))
+	}
+
+	seqNum := data.FieldByName(SequenceFieldName)
+	if !seqNum.IsValid() {
+		return ignoreValue
+	}
+
+	return SeqNumber(seqNum.Int())
+
+}
+
+func setSeqNum(data reflect.Value, number SeqNumber) SeqNumber {
+
+	elm, ok := data.Interface().(Element)
+	if !ok || elm == nil {
+		return number
+	}
+
+	kind := data.Kind()
+	if kind == reflect.Interface {
+		elm, ok = data.Interface().(ElementActivity)
+		if !ok || elm == nil {
+			return number
+		}
+		data = reflect.Indirect(reflect.ValueOf(elm))
+	} else {
+		data = reflect.Indirect(reflect.ValueOf(data))
+	}
+
+	seqNum := data.FieldByName(SequenceFieldName)
+	if seqNum.Kind() != reflect.Int64 || !seqNum.IsValid() || !seqNum.CanSet() {
+		return number
+	}
+
+	seqNum.SetInt(int64(number))
+	return number + 1
+}
+
+// GenerateSeqNumbers generate unique sequence numbers
+func GenerateSeqNumbers(r interface{}) error {
+
+	seqNumber := SeqNumber(1)
+
+	var fields reflect.Value
+	if reflect.ValueOf(r).Kind() == reflect.Ptr {
+		fields = reflect.ValueOf(r).Elem()
+	} else {
+		fields = reflect.ValueOf(r)
+	}
+
+	if fields.Kind() == reflect.Struct {
+		fields = reflect.Indirect(reflect.ValueOf(r))
+	} else {
+		return nil
+	}
+
+	for i := 0; i < fields.NumField(); i++ {
+		fieldData := fields.Field(i)
+		kind := fieldData.Kind()
+		if kind == reflect.Slice {
+			for i := 0; i < fieldData.Len(); i++ {
+				elm := fieldData.Index(i)
+				seqNumber = setSeqNum(elm, seqNumber)
+				if err := GenerateSeqNumbers(elm.Interface()); err != nil {
+					return err
+				}
+			}
+		} else if kind == reflect.Map {
+			for _, key := range fieldData.MapKeys() {
+				elm := fieldData.MapIndex(key)
+				seqNumber = setSeqNum(elm, seqNumber)
+				if err := GenerateSeqNumbers(elm.Interface()); err != nil {
+					return err
+				}
+			}
+		} else if kind == reflect.Ptr {
+			if fieldData.Pointer() != 0 {
+				seqNumber = setSeqNum(fieldData, seqNumber)
+				if err := GenerateSeqNumbers(fieldData.Interface()); err != nil {
+					return err
+				}
+			}
+		} else if kind == reflect.Struct {
+			seqNumber = setSeqNum(fieldData, seqNumber)
+			if err := GenerateSeqNumbers(fieldData.Interface()); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }

@@ -264,9 +264,13 @@ func TestAcknowledgement(t *testing.T) {
 }
 
 func TestBatch(t *testing.T) {
-	samples := make(map[string]string)
-	//samples["fbar_batch.xml"] = "FinCEN FBAR XML Batch"
-	samples["sar_batch.xml"] = "FinCEN SAR XML Batch"
+	samples := map[string]string{
+		"8300_batch.xml": "FinCEN 8300 XML Batch",
+		"ctr_batch.xml":  "FinCEN CTR XML Batch",
+		"doep_batch.xml": "FinCEN DOEP XML Batch",
+		"fbar_batch.xml": "FinCEN FBAR XML Batch",
+		"sar_batch.xml":  "FinCEN SAR XML Batch",
+	}
 
 	for name, description := range samples {
 		t.Run(description, func(t *testing.T) {
@@ -275,6 +279,15 @@ func TestBatch(t *testing.T) {
 
 			batch := EFilingBatchXML{}
 			err = xml.Unmarshal(buf, &batch)
+			require.NoError(t, err)
+
+			err = batch.Validate()
+			require.NoError(t, err)
+
+			err = batch.GenerateAttrs()
+			require.NoError(t, err)
+
+			err = batch.GenerateSeqNumbers()
 			require.NoError(t, err)
 
 			err = batch.Validate()

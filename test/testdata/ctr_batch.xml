@@ -1,0 +1,214 @@
+<EFilingBatchXML ActivityCount="1" TotalAmount="47000" PartyCount="6" SeqNum="1"
+                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xmlns:fc2="www.fincen.gov/base">
+    <Activity SeqNum="1">
+        <Party SeqNum="3">
+            <ActivityPartyTypeCode>35</ActivityPartyTypeCode>
+            <EFilingCoverageBeginningDateText>20170101</EFilingCoverageBeginningDateText>
+            <EFilingCoverageEndDateText>20170131</EFilingCoverageEndDateText>
+            <PartyName SeqNum="4">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Transmitter Legal Name</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="5">
+                <RawCityText>Vienna</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>VA</RawStateCodeText>
+                <RawStreetAddress1Text>123 Address Road</RawStreetAddress1Text>
+                <RawZIPCode>22102</RawZIPCode>
+            </Address>
+            <PhoneNumber SeqNum="6">
+                <PhoneNumberText>7039991234</PhoneNumberText>
+            </PhoneNumber>
+            <PartyIdentification SeqNum="7">
+                <PartyIdentificationNumberText>547898569</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="8">
+                <PartyIdentificationNumberText>PTCC1234</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>28</PartyIdentificationTypeCode>
+            </PartyIdentification>
+        </Party>
+        <Party SeqNum="9">
+            <ActivityPartyTypeCode>37</ActivityPartyTypeCode>
+            <EFilingCoverageBeginningDateText>20170101</EFilingCoverageBeginningDateText>
+            <EFilingCoverageEndDateText>20170131</EFilingCoverageEndDateText>
+            <PartyName SeqNum="10">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Transmitter Contact Name</RawPartyFullName>
+            </PartyName>
+        </Party>
+        <Party SeqNum="11">
+            <ActivityPartyTypeCode>30</ActivityPartyTypeCode>
+            <PrimaryRegulatorTypeCode>9</PrimaryRegulatorTypeCode>
+            <PartyName SeqNum="12">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Filing Institution Legal Name</RawPartyFullName>
+            </PartyName>
+            <PartyName SeqNum="13">
+                <PartyNameTypeCode>DBA</PartyNameTypeCode>
+                <RawPartyFullName>Filing Institution Alternate DBA Name</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="14">
+                <RawCityText>Vienna</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>VA</RawStateCodeText>
+                <RawStreetAddress1Text>456 Address Way</RawStreetAddress1Text>
+                <RawZIPCode>554789985</RawZIPCode>
+            </Address>
+            <PartyIdentification SeqNum="15">
+                <PartyIdentificationNumberText>554785215</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="16">
+                <PartyIdentificationNumberText>15478564</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>10</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <OrganizationClassificationTypeSubtype SeqNum="17">
+                <OrganizationTypeID>2</OrganizationTypeID>
+            </OrganizationClassificationTypeSubtype>
+        </Party>
+        <Party SeqNum="18">
+            <ActivityPartyTypeCode>8</ActivityPartyTypeCode>
+            <PartyName SeqNum="19">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Contact Office Legal Name</RawPartyFullName>
+            </PartyName>
+            <PhoneNumber SeqNum="20">
+                <PhoneNumberExtensionText>2210</PhoneNumberExtensionText>
+                <PhoneNumberText>7039874589</PhoneNumberText>
+            </PhoneNumber>
+        </Party>
+        <Party SeqNum="21">
+            <ActivityPartyTypeCode>34</ActivityPartyTypeCode>
+            <IndividualEntityCashInAmountText>15000</IndividualEntityCashInAmountText>
+            <IndividualEntityCashOutAmountText></IndividualEntityCashOutAmountText>
+            <PrimaryRegulatorTypeCode>9</PrimaryRegulatorTypeCode>
+            <PartyName SeqNum="22">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Transaction Location Legal Name</RawPartyFullName>
+            </PartyName>
+            <PartyName SeqNum="23">
+                <PartyNameTypeCode>DBA</PartyNameTypeCode>
+                <RawPartyFullName>Location Alternate DBA Name</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="24">
+                <RawCityText>Vienna</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>VA</RawStateCodeText>
+                <RawStreetAddress1Text>789 Address Court</RawStreetAddress1Text>
+                <RawZIPCode>55478</RawZIPCode>
+            </Address>
+            <PartyIdentification SeqNum="25">
+                <PartyIdentificationNumberText>145878965</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="26">
+                <PartyIdentificationNumberText>45899856</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>11</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <OrganizationClassificationTypeSubtype SeqNum="27">
+                <OrganizationSubtypeID>1999</OrganizationSubtypeID>
+                <OrganizationTypeID>1</OrganizationTypeID>
+                <OtherOrganizationSubTypeText>Other casino</OtherOrganizationSubTypeText>
+            </OrganizationClassificationTypeSubtype>
+        </Party>
+        <Party SeqNum="28">
+            <ActivityPartyTypeCode>50</ActivityPartyTypeCode>
+            <FemaleGenderIndicator>Y</FemaleGenderIndicator>
+            <IndividualBirthDateText>19750120</IndividualBirthDateText>
+            <IndividualEntityCashInAmountText>20000</IndividualEntityCashInAmountText>
+            <MultipleTransactionsPersonsIndividualsIndicator>Y</MultipleTransactionsPersonsIndividualsIndicator>
+            <PartyName SeqNum="29">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawEntityIndividualLastName>Doe</RawEntityIndividualLastName>
+                <RawIndividualFirstName>John</RawIndividualFirstName>
+                <RawIndividualMiddleName>Johnson</RawIndividualMiddleName>
+                <RawIndividualNameSuffixText>Jr.</RawIndividualNameSuffixText>
+            </PartyName>
+            <PartyName SeqNum="30">
+                <PartyNameTypeCode>AKA</PartyNameTypeCode>
+                <RawEntityIndividualLastName>JJ</RawEntityIndividualLastName>
+            </PartyName>
+            <Address SeqNum="31">
+                <RawCityText>Vienna</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>VA</RawStateCodeText>
+                <StreetAddressUnknownIndicator>Y</StreetAddressUnknownIndicator>
+                <ZIPCodeUnknownIndicator>Y</ZIPCodeUnknownIndicator>
+            </Address>
+            <PhoneNumber SeqNum="32">
+                <PhoneNumberText>1458987456</PhoneNumberText>
+            </PhoneNumber>
+            <PartyIdentification SeqNum="33">
+                <TINUnknownIndicator>Y</TINUnknownIndicator>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="34">
+                <OtherIssuerCountryText>US</OtherIssuerCountryText>
+                <OtherIssuerStateText>TX</OtherIssuerStateText>
+                <PartyIdentificationNumberText>44589774512</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>5</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyOccupationBusiness SeqNum="35">
+                <NAICSCode>6214</NAICSCode>
+                <OccupationBusinessText>Outpatient Care Centers</OccupationBusinessText>
+            </PartyOccupationBusiness>
+            <ElectronicAddress SeqNum="36">
+                <ElectronicAddressText>email123@fincen.gov</ElectronicAddressText>
+            </ElectronicAddress>
+            <Account SeqNum="37">
+                <AccountNumberText>1115478569</AccountNumberText>
+                <PartyAccountAssociation SeqNum="38">
+                    <PartyAccountAssociationTypeCode>8</PartyAccountAssociationTypeCode>
+                </PartyAccountAssociation>
+            </Account>
+            <Account SeqNum="39">
+                <AccountNumberText>3365998541</AccountNumberText>
+                <PartyAccountAssociation SeqNum="40">
+                    <PartyAccountAssociationTypeCode>8</PartyAccountAssociationTypeCode>
+                </PartyAccountAssociation>
+            </Account>
+            <Account SeqNum="41">
+                <AccountNumberText>4857985691</AccountNumberText>
+                <PartyAccountAssociation SeqNum="42">
+                    <PartyAccountAssociationTypeCode>9</PartyAccountAssociationTypeCode>
+                </PartyAccountAssociation>
+            </Account>
+        </Party>
+        <FilingDateText>19801025</FilingDateText>
+        <ActivityAssociation SeqNum="2">
+            <CorrectsAmendsPriorReportIndicator>Y</CorrectsAmendsPriorReportIndicator>
+        </ActivityAssociation>
+        <CurrencyTransactionActivity SeqNum="1">
+            <AggregateTransactionIndicator>Y</AggregateTransactionIndicator>
+            <ArmoredCarServiceIndicator>Y</ArmoredCarServiceIndicator>
+            <ATMIndicator>Y</ATMIndicator>
+            <MailDepositShipmentIndicator>Y</MailDepositShipmentIndicator>
+            <NightDepositIndicator>Y</NightDepositIndicator>
+            <SharedBranchingIndicator>Y</SharedBranchingIndicator>
+            <TotalCashInReceiveAmountText>47000</TotalCashInReceiveAmountText>
+            <TotalCashOutAmountText/>
+            <TransactionDateText>20170115</TransactionDateText>
+            <CurrencyTransactionActivityDetail SeqNum="40">
+                <CurrencyTransactionActivityDetailTypeCode>55</CurrencyTransactionActivityDetailTypeCode>
+                <DetailTransactionAmountText>15000</DetailTransactionAmountText>
+                <OtherCurrencyTransactionActivityDetailText/>
+                <OtherForeignCurrencyCountryText/>
+            </CurrencyTransactionActivityDetail>
+            <CurrencyTransactionActivityDetail SeqNum="41">
+                <CurrencyTransactionActivityDetailTypeCode>46</CurrencyTransactionActivityDetailTypeCode>
+                <DetailTransactionAmountText>15000</DetailTransactionAmountText>
+                <OtherCurrencyTransactionActivityDetailText/>
+                <OtherForeignCurrencyCountryText/>
+            </CurrencyTransactionActivityDetail>
+            <CurrencyTransactionActivityDetail SeqNum="42">
+                <CurrencyTransactionActivityDetailTypeCode>23</CurrencyTransactionActivityDetailTypeCode>
+                <DetailTransactionAmountText>17000</DetailTransactionAmountText>
+                <OtherCurrencyTransactionActivityDetailText/>
+                <OtherForeignCurrencyCountryText/>
+            </CurrencyTransactionActivityDetail>
+        </CurrencyTransactionActivity>
+    </Activity>
+    <FormTypeCode>CTRX</FormTypeCode>
+</EFilingBatchXML>

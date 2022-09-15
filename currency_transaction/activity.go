@@ -579,12 +579,12 @@ func (r CurrencyTransactionActivityType) Validate(args ...string) error {
 }
 
 type CurrencyTransactionActivityDetailType struct {
-	XMLName                                    xml.Name                                                 `xml:"CurrencyTransactionActivityDetail"`
-	SeqNum                                     fincen.SeqNumber                                         `xml:"SeqNum,attr"`
-	CurrencyTransactionActivityDetailTypeCode  fincen.ValidateCurrencyTransactionActivityDetailCodeType `xml:"CurrencyTransactionActivityDetailTypeCode"`
-	DetailTransactionAmountText                fincen.RestrictString15                                  `xml:"DetailTransactionAmountText"`
-	OtherCurrencyTransactionActivityDetailText fincen.RestrictString50                                  `xml:"OtherCurrencyTransactionActivityDetailText"`
-	OtherForeignCurrencyCountryText            fincen.RestrictString2                                   `xml:"OtherForeignCurrencyCountryText"`
+	XMLName                                    xml.Name                                          `xml:"CurrencyTransactionActivityDetail"`
+	SeqNum                                     fincen.SeqNumber                                  `xml:"SeqNum,attr"`
+	CurrencyTransactionActivityDetailTypeCode  ValidateCurrencyTransactionActivityDetailCodeType `xml:"CurrencyTransactionActivityDetailTypeCode"`
+	DetailTransactionAmountText                fincen.RestrictString15                           `xml:"DetailTransactionAmountText"`
+	OtherCurrencyTransactionActivityDetailText fincen.RestrictString50                           `xml:"OtherCurrencyTransactionActivityDetailText"`
+	OtherForeignCurrencyCountryText            fincen.RestrictString2                            `xml:"OtherForeignCurrencyCountryText"`
 }
 
 func (r CurrencyTransactionActivityDetailType) Validate(args ...string) error {

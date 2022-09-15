@@ -1,0 +1,137 @@
+<EFilingBatchXML ActivityCount="1" TotalAmount="0" PartyCount="4" SeqNum="1"
+                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xmlns:fc2="www.fincen.gov/base">
+    <Activity SeqNum="1">
+        <Party SeqNum="3">
+            <ActivityPartyTypeCode>35</ActivityPartyTypeCode>
+            <PartyName SeqNum="4">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Transmitter Legal Name</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="5">
+                <RawCityText>McLean</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>VA</RawStateCodeText>
+                <RawStreetAddress1Text>123 Street</RawStreetAddress1Text>
+                <RawZIPCode>55478</RawZIPCode>
+            </Address>
+            <PhoneNumber SeqNum="6">
+                <PhoneNumberText>7031231234</PhoneNumberText>
+            </PhoneNumber>
+            <PartyIdentification SeqNum="7">
+                <PartyIdentificationNumberText>451898562</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
+            </PartyIdentification>
+        </Party>
+        <Party SeqNum="10">
+            <ActivityPartyTypeCode>37</ActivityPartyTypeCode>
+            <PartyName SeqNum="11">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawPartyFullName>Transmitter contact legal name</RawPartyFullName>
+            </PartyName>
+        </Party>
+        <Party SeqNum="95">
+            <ActivityPartyTypeCode>16</ActivityPartyTypeCode>
+            <IndividualBirthDateText>19750101</IndividualBirthDateText>
+            <PartyName SeqNum="96">
+                <RawEntityIndividualLastName>Williams</RawEntityIndividualLastName>
+                <RawIndividualFirstName>John</RawIndividualFirstName>
+                <RawIndividualMiddleName>Holmes</RawIndividualMiddleName>
+            </PartyName>
+            <Address SeqNum="97">
+                <RawCityText>Rockville</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>MD</RawStateCodeText>
+                <RawStreetAddress1Text>456 Street</RawStreetAddress1Text>
+                <RawZIPCode>254789841</RawZIPCode>
+            </Address>
+            <PartyIdentification SeqNum="98">
+                <PartyIdentificationNumberText>125489563</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>1</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="99">
+                <OtherIssuerStateText>FL</OtherIssuerStateText>
+                <PartyIdentificationNumberText>G459851234</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>5</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyOccupationBusiness SeqNum="100">
+                <OccupationBusinessText>Business description</OccupationBusinessText>
+            </PartyOccupationBusiness>
+        </Party>
+        <Party SeqNum="253">
+            <ActivityPartyTypeCode>23</ActivityPartyTypeCode>
+            <PartyTypeCode>O</PartyTypeCode>
+            <PartyName SeqNum="254">
+                <PartyNameTypeCode>L</PartyNameTypeCode>
+                <RawEntityIndividualLastName>Bob&#39;s Business</RawEntityIndividualLastName>
+            </PartyName>
+            <PartyName SeqNum="255">
+                <PartyNameTypeCode>DBA</PartyNameTypeCode>
+                <RawPartyFullName>Bobby&#39;s Business</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="256">
+                <RawCityText>Silver Spring</RawCityText>
+                <RawCountryCodeText>US</RawCountryCodeText>
+                <RawStateCodeText>MD</RawStateCodeText>
+                <RawStreetAddress1Text>789 Street</RawStreetAddress1Text>
+                <RawZIPCode>54789</RawZIPCode>
+            </Address>
+            <PartyIdentification SeqNum="257">
+                <PartyIdentificationNumberText>565898523</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>1</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="258">
+                <PartyIdentificationNumberText>554123985</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="259">
+                <OtherIssuerStateText>CA</OtherIssuerStateText>
+                <PartyIdentificationNumberText>5326547</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>999</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyOccupationBusiness SeqNum="260">
+                <OccupationBusinessText>Business description</OccupationBusinessText>
+            </PartyOccupationBusiness>
+        </Party>
+        <Party SeqNum="36">
+            <ActivityPartyTypeCode>4</ActivityPartyTypeCode>
+            <PartyName SeqNum="37">
+                <RawPartyFullName>Name of business that received cash</RawPartyFullName>
+            </PartyName>
+            <Address SeqNum="38">
+                <RawCityText>Richmond</RawCityText>
+                <RawStateCodeText>VA</RawStateCodeText>
+                <RawStreetAddress1Text>159 Street</RawStreetAddress1Text>
+                <RawZIPCode>66589</RawZIPCode>
+            </Address>
+            <PartyIdentification SeqNum="39">
+                <PartyIdentificationNumberText>565898523</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyIdentification SeqNum="40">
+                <PartyIdentificationNumberText>554123985</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>1</PartyIdentificationTypeCode>
+            </PartyIdentification>
+            <PartyOccupationBusiness SeqNum="41">
+                <OccupationBusinessText>Business description</OccupationBusinessText>
+            </PartyOccupationBusiness>
+        </Party>
+        <Party SeqNum="88">
+            <ActivityPartyTypeCode>3</ActivityPartyTypeCode>
+            <PartyName SeqNum="89">
+                <RawIndividualTitleText>Authorizing person title</RawIndividualTitleText>
+            </PartyName>
+        </Party>
+        <FilingDateText>19801025</FilingDateText>
+        <ActivityAssociation SeqNum="2">
+            <CorrectsAmendsPriorReportIndicator>Y</CorrectsAmendsPriorReportIndicator>
+        </ActivityAssociation>
+        <CurrencyTransactionActivity SeqNum="1">
+            <TransactionDateText>19801025</TransactionDateText>
+            <CurrencyTransactionActivityDetail SeqNum="1"></CurrencyTransactionActivityDetail>
+            <CurrencyTransactionActivityDetail SeqNum="2"></CurrencyTransactionActivityDetail>
+        </CurrencyTransactionActivity>
+    </Activity>
+    <FormTypeCode>8300X</FormTypeCode>
+</EFilingBatchXML>

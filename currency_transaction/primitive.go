@@ -79,3 +79,17 @@ func (r ValidatePartyAccountAssociationCodeType) Validate() error {
 	}
 	return fincen.NewErrValueInvalid("ValidatePartyAccountAssociationCode")
 }
+
+// May be one of "55", "46", "23", "12", "14", "49", "18", "21", "25", "997", "53",
+type ValidateCurrencyTransactionActivityDetailCodeType string
+
+func (r ValidateCurrencyTransactionActivityDetailCodeType) Validate() error {
+	for _, vv := range []string{
+		"55", "46", "23", "12", "14", "49", "18", "21", "25", "997", "53",
+	} {
+		if reflect.DeepEqual(string(r), vv) {
+			return nil
+		}
+	}
+	return fincen.NewErrValueInvalid("CurrencyTransactionActivityDetailCodeType")
+}
