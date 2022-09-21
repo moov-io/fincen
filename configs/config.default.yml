@@ -1,0 +1,10 @@
+# generated-from:a081c0e3a1df1ad293429bed3d66e640ec7e8c96d7dc7c0804f02a36d2752acb DO NOT REMOVE, DO UPDATE
+
+fincen:
+  Servers:
+    Public:
+      Bind:
+        Address: ":8206"
+    Admin:
+      Bind:
+        Address: ":8207"

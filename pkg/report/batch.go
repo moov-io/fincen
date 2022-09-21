@@ -5,15 +5,34 @@
 package batch
 
 import (
+	"encoding/json"
 	"encoding/xml"
+	"errors"
 
 	"github.com/moov-io/fincen"
-	"github.com/moov-io/fincen/cash_payments"
-	"github.com/moov-io/fincen/currency_transaction"
-	"github.com/moov-io/fincen/exempt_designation"
-	"github.com/moov-io/fincen/financial_accounts"
-	"github.com/moov-io/fincen/suspicious_activity"
+	"github.com/moov-io/fincen/pkg/cash_payments"
+	"github.com/moov-io/fincen/pkg/currency_transaction"
+	"github.com/moov-io/fincen/pkg/exempt_designation"
+	"github.com/moov-io/fincen/pkg/financial_accounts"
+	"github.com/moov-io/fincen/pkg/suspicious_activity"
 )
+
+func NewReport(buf []byte) (*EFilingBatchXML, error) {
+
+	reportXml := EFilingBatchXML{}
+
+	err := xml.Unmarshal(buf, &reportXml)
+	if err == nil {
+		return &reportXml, nil
+	}
+
+	err = json.Unmarshal(buf, &reportXml)
+	if err == nil {
+		return &reportXml, nil
+	}
+
+	return nil, errors.New("unable to create report, invalid input data")
+}
 
 type EFilingBatchXML struct {
 	XMLName                 xml.Name                 `xml:"EFilingBatchXML"`
@@ -152,7 +171,7 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		Name: xml.Name{
 			Local: "xsi:schemaLocation",
 		},
-		Value: "www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd",
+		Value: "www.server.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd",
 	})
 
 	a.Attrs = append(a.Attrs, xml.Attr{
@@ -166,7 +185,7 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		Name: xml.Name{
 			Local: "xsi:fc2",
 		},
-		Value: "www.fincen.gov/base",
+		Value: "www.server.gov/base",
 	})
 
 	return e.EncodeElement(&a, start)

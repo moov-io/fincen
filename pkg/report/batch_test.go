@@ -42,7 +42,7 @@ func (r *emptyElementActivity) PartyCount(args ...string) int64 {
 
 func TestAcknowledgement(t *testing.T) {
 	t.Run("FinCEN SAR XML Acknowledgement", func(t *testing.T) {
-		buf, err := os.ReadFile(path.Join("..", "test", "testdata", "sar_acknowledgement.xml"))
+		buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", "sar_acknowledgement.xml"))
 		require.NoError(t, err)
 
 		batch := EFilingBatchXML{}
@@ -86,7 +86,7 @@ func TestAcknowledgement(t *testing.T) {
 	})
 
 	t.Run("FinCEN CTR XML Acknowledgement", func(t *testing.T) {
-		buf, err := os.ReadFile(path.Join("..", "test", "testdata", "ctr_acknowledgement.xml"))
+		buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", "ctr_acknowledgement.xml"))
 		require.NoError(t, err)
 
 		batch := EFilingBatchXML{}
@@ -130,7 +130,7 @@ func TestAcknowledgement(t *testing.T) {
 	})
 
 	t.Run("FinCEN 8300 XML Acknowledgement", func(t *testing.T) {
-		buf, err := os.ReadFile(path.Join("..", "test", "testdata", "8300_acknowledgement.xml"))
+		buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", "8300_acknowledgement.xml"))
 		require.NoError(t, err)
 
 		batch := EFilingBatchXML{}
@@ -174,7 +174,7 @@ func TestAcknowledgement(t *testing.T) {
 	})
 
 	t.Run("FinCEN DOEP XML Acknowledgement", func(t *testing.T) {
-		buf, err := os.ReadFile(path.Join("..", "test", "testdata", "doep_acknowledgement.xml"))
+		buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", "doep_acknowledgement.xml"))
 		require.NoError(t, err)
 
 		batch := EFilingBatchXML{}
@@ -218,7 +218,7 @@ func TestAcknowledgement(t *testing.T) {
 	})
 
 	t.Run("FinCEN FBAR XML Acknowledgement", func(t *testing.T) {
-		buf, err := os.ReadFile(path.Join("..", "test", "testdata", "fbar_acknowledgement.xml"))
+		buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", "fbar_acknowledgement.xml"))
 		require.NoError(t, err)
 
 		batch := EFilingBatchXML{}
@@ -274,7 +274,7 @@ func TestBatch(t *testing.T) {
 
 	for name, description := range samples {
 		t.Run(description, func(t *testing.T) {
-			buf, err := os.ReadFile(path.Join("..", "test", "testdata", name))
+			buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", name))
 			require.NoError(t, err)
 
 			batch := EFilingBatchXML{}

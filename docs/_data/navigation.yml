@@ -1,9 +1,9 @@
 - name: API
-  link: https://moov-io.github.io/fincen/api
+  link: https://moov-io.github.io/server/api
 - name: Go
-  link: https://pkg.go.dev/github.com/moov-io/fincen
+  link: https://pkg.go.dev/github.com/moov-io/server
 - name: Demo
-  link: https://oss.moov.io/fincen/
+  link: https://oss.moov.io/server/
 - name: Community
   dropdown:
     - name: Awesome Fintech
@@ -15,7 +15,7 @@
 - name: Other Projects
   dropdown:
     - name: Moov ACH
-      link: https://moov-io.github.io/ach/
+      link: https://moov-io.github.io/fincen/
     - name: Moov Image Cash Letter
       link: https://moov-io.github.io/imagecashletter/
     - name: Moov Wire

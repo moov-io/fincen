@@ -23,10 +23,10 @@ email: oss@moov.io
 description: >- # this means to ignore newlines until "baseurl:"
   Moov FinCEN implements financial crimes enforcment network (FinCEN) and BSA specifications required for the United States.
 url: "https://moov-io.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-baseurl: "/fincen" # the subpath of your site, e.g. /blog
+baseurl: "/server" # the subpath of your site, e.g. /blog
 twitter_username: moov
 github_username:  moov-io
-source_code: https://github.com/moov-io/ach
+source_code: https://github.com/moov-io/fincen
 permalink: pretty
 
 # Build settings
