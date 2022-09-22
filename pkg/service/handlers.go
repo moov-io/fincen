@@ -9,7 +9,7 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	batch "github.com/moov-io/fincen/pkg/report"
+	batch "github.com/moov-io/fincen/pkg/batch"
 )
 
 const (
@@ -31,7 +31,7 @@ type Response struct {
 func ConfigureHandlers(r *mux.Router) error {
 	r.HandleFunc("/health", health).Methods("GET")
 	r.HandleFunc("/validator", validator).Methods("POST")
-	r.HandleFunc("/generate", generate).Methods("POST")
+	r.HandleFunc("/reformat", reformat).Methods("POST")
 	return nil
 }
 
@@ -68,7 +68,7 @@ func validator(w http.ResponseWriter, r *http.Request) {
 	write(w, Response{Code: http.StatusOK, Message: "valid file"})
 }
 
-func generate(w http.ResponseWriter, r *http.Request) {
+func reformat(w http.ResponseWriter, r *http.Request) {
 	buf, err := getInputFileFromRequest(r)
 	if err != nil {
 		write(w, Response{Code: http.StatusBadRequest, Message: err.Error()})

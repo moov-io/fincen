@@ -1,4 +1,6 @@
-// generated-from:f953aec60bb5d48612763d5ba805f8f394b4cbf292e11dd1942281ee9c8b166c DO NOT REMOVE, DO UPDATE
+// Copyright 2022 The Moov Authors
+// Use of this source code is governed by an Apache License
+// license that can be found in the LICENSE file.
 
 package main
 

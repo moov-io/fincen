@@ -108,9 +108,10 @@
 
     <div id="buttons">
         <label for="buttons">View above content as:</label><br>
-        <button type="submit" onclick="convertToJson(contentinput.value)">JSON</button>
+        <button type="button" onclick="convertToJson(contentinput.value)">JSON</button>
         <button type="button" onclick="convertToXml(contentinput.value)">XML</button>
-        <button type="button" onclick="generate(contentinput.value)">Generate Attributes</button>
+        <button type="button" onclick="generateReport(contentinput.value)">Generate Attrs</button>
+        <button type="button" onclick="validateReport(contentinput.value)">Validate</button>
         <button type="submit" onclick="clearForms()">Clear Form</button>
     </div>
 
@@ -122,19 +123,25 @@
 </body>
 <script>
     const convertToJson = function(input) {
-        contentoutput.value = parseJSON(input)
+        contentoutput.value = createJSON(input)
         contentoutput.setSelectionRange(0,0)
         contentoutput.focus()
     }
 
     const convertToXml = function(input) {
-        contentoutput.value = parseXml(input)
+        contentoutput.value = createXML(input)
         contentoutput.setSelectionRange(0,0)
         contentoutput.focus()
     }
 
-    const generate = function(input) {
+    const generateReport = function(input) {
         contentoutput.value = generateAttrs(input)
+        contentoutput.setSelectionRange(0,0)
+        contentoutput.focus()
+    }
+
+    const validateReport = function(input) {
+        contentoutput.value = validateForm(input)
         contentoutput.setSelectionRange(0,0)
         contentoutput.focus()
     }
@@ -156,14 +163,16 @@
         const input = event.target
         if ('files' in input && input.files.length > 0) {
             placeFileContent(
-                document.getElementById('contentoutput'),
+                document.getElementById('contentinput'),
                 input.files[0])
         }
     }
 
     function placeFileContent(target, file) {
         readFileContent(file).then(content => {
-            convertToJson(content)
+            contentinput.value = content
+            contentinput.setSelectionRange(0,0)
+            contentinput.focus()
         }).catch(error => console.log(error))
     }
 

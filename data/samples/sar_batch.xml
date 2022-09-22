@@ -1,4 +1,4 @@
-<EFilingBatchXML ActivityCount="1" PartyCount="1" AccountCount="102" JointlyOwnedOwnerCount="0"
+<EFilingBatchXML ActivityCount="1" PartyCount="1" AccountCount="0" JointlyOwnedOwnerCount="0"
                      NoFIOwnerCount="0" ConsolidatedOwnerCount="0" SeqNum="1"
                      xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

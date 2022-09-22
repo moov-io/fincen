@@ -37,7 +37,7 @@ test/fuzz-reader/fuzzreader-fuzz.zip
 test/fuzz-reader/corpus/*.tar.gz
 
 # wasm build
-/cmd/webui/assets/wire.wasm
+/cmd/webui/assets/fincen.wasm
 
 # GoLand
 /.idea/*

@@ -1,36 +1,17 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
-	"strings"
 	"syscall/js"
 
-	"github.com/moov-io/ach"
+	"github.com/moov-io/fincen"
+	"github.com/moov-io/fincen/pkg/batch"
 )
 
-func parseFile(input string) (string, error) {
-	r := strings.NewReader(input)
-	file, err := ach.NewReader(r).Read()
-	if err != nil {
-		return "", err
-	}
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(file); err != nil {
-		return "", err
-	}
-	return buf.String(), nil
-}
-
-func prettyJson(input string) (string, error) {
-	var raw interface{}
-	if err := json.Unmarshal([]byte(input), &raw); err != nil {
-		return "", err
-	}
-	pretty, err := json.MarshalIndent(raw, "", "  ")
+func prettyJson(input *batch.EFilingBatchXML) (string, error) {
+	pretty, err := json.MarshalIndent(input, "", "  ")
 	if err != nil {
 		return "", err
 	}
@@ -43,17 +24,13 @@ func prettyPrintJSON() js.Func {
 			return "Invalid number of arguments passed"
 		}
 
-		if json.Valid([]byte(args[0].String())) {
-			return args[0].String()
+		r, err := batch.NewReport([]byte(args[0].String()))
+		if err != nil {
+			fmt.Println(err)
+			return "Unable to parse report file"
 		}
 
-		parsed, err := parseFile(args[0].String())
-		if err != nil {
-			msg := fmt.Sprintf("unable to parse fincen file: %v", err)
-			fmt.Println(msg)
-			return msg
-		}
-		pretty, err := prettyJson(parsed)
+		pretty, err := prettyJson(r)
 		if err != nil {
 			fmt.Printf("unable to convert fincen file to json %s\n", err)
 			return "There was an error converting the json"
@@ -63,12 +40,8 @@ func prettyPrintJSON() js.Func {
 	})
 }
 
-func prettyXml(input string) (string, error) {
-	var raw interface{}
-	if err := xml.Unmarshal([]byte(input), &raw); err != nil {
-		return "", err
-	}
-	pretty, err := xml.MarshalIndent(raw, "", "  ")
+func prettyXml(input *batch.EFilingBatchXML) (string, error) {
+	pretty, err := xml.MarshalIndent(input, "", "  ")
 	if err != nil {
 		return "", err
 	}
@@ -81,20 +54,16 @@ func prettyPrintXML() js.Func {
 			return "Invalid number of arguments passed"
 		}
 
-		if json.Valid([]byte(args[0].String())) {
-			return args[0].String()
+		r, err := batch.NewReport([]byte(args[0].String()))
+		if err != nil {
+			fmt.Println(err)
+			return "Unable to parse report file"
 		}
 
-		parsed, err := parseFile(args[0].String())
+		pretty, err := prettyXml(r)
 		if err != nil {
-			msg := fmt.Sprintf("unable to parse fincen file: %v", err)
-			fmt.Println(msg)
-			return msg
-		}
-		pretty, err := prettyXml(parsed)
-		if err != nil {
-			fmt.Printf("unable to convert fincen file to json %s\n", err)
-			return "There was an error converting the json"
+			fmt.Printf("unable to convert fincen file to xml %s\n", err)
+			return "There was an error converting the xml"
 		}
 
 		return pretty
@@ -107,32 +76,65 @@ func generateAttrs() js.Func {
 			return "Invalid number of arguments passed"
 		}
 
-		file, err := parseFile(args[0].String())
+		r, err := batch.NewReport([]byte(args[0].String()))
 		if err != nil {
-			msg := fmt.Sprintf("unable to parse fincen file: %v", err)
-			fmt.Println(msg)
-			return msg
+			fmt.Println(err)
+			return "Unable to parse report file"
 		}
 
-		parsed, err := parseReadable(file)
+		err = r.GenerateAttrs()
 		if err != nil {
-			fmt.Printf("unable to convert fincen file to human-readable format %s\n", err)
-			return "There was an error formatting the output"
+			fmt.Println(err)
+			return "Unable to generate report attributes"
+		}
+		err = r.GenerateSeqNumbers()
+		if err != nil {
+			fmt.Println(err)
+			return "Unable to generate sequence numbers"
 		}
 
-		return parsed
+		pretty, err := prettyXml(r)
+		if err != nil {
+			fmt.Printf("unable to convert fincen file to xml %s\n", err)
+			return "There was an error converting the xml"
+		}
+
+		return pretty
+	})
+}
+
+func validateForm() js.Func {
+	return js.FuncOf(func(_ js.Value, args []js.Value) interface{} {
+		if len(args) != 1 {
+			return "Invalid number of arguments passed"
+		}
+
+		r, err := batch.NewReport([]byte(args[0].String()))
+		if err != nil {
+			fmt.Println(err)
+			return "Unable to parse report file"
+		}
+
+		err = r.Validate()
+		if err != nil {
+			fmt.Println(err)
+			return fmt.Sprintf("The report form is invalid\n %s\n", err.Error())
+		}
+
+		return "The report form is valid"
 	})
 }
 
 func writeVersion() {
 	span := js.Global().Get("document").Call("querySelector", "#version")
-	span.Set("innerHTML", fmt.Sprintf("Version: %s", ach.Version))
+	span.Set("innerHTML", fmt.Sprintf("Version: %s", fincen.Version))
 }
 
 func main() {
-	js.Global().Set("parseXML", prettyPrintJSON())
-	js.Global().Set("parseJSON", prettyPrintXML())
+	js.Global().Set("createXML", prettyPrintXML())
+	js.Global().Set("createJSON", prettyPrintJSON())
 	js.Global().Set("generateAttrs", generateAttrs())
+	js.Global().Set("validateForm", validateForm())
 
 	writeVersion()
 
