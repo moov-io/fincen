@@ -306,7 +306,6 @@ func (r *EFilingBatchXML) validateAttrs() error {
 	}
 
 	if r.AccountCount != s.AccountCount {
-		fmt.Println(r.AccountCount, s.AccountCount)
 		return fincen.NewErrValueInvalid("AccountCount")
 	}
 
