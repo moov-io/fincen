@@ -1,0 +1,8 @@
+# generated-from:7e26f6e93478003c95a27ac567603b7ccaa22c0df74e3c783aac56019daf74f2 DO NOT REMOVE, DO UPDATE
+
+# This is a comment.
+# Each line is a file pattern followed by one or more owners.
+
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+*             @moov-io/team

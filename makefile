@@ -7,9 +7,9 @@ build:
 	CGO_ENABLED=0 go build -o ./bin/server github.com/moov-io/fincen/cmd/server
 
 build-webui:
-#	cp $(shell go env GOROOT)/misc/wasm/wasm_exec.js ./cmd/webui/assets/wasm_exec.js
-#	GOOS=js GOARCH=wasm go build -o ./cmd/webui/assets/fincen.wasm github.com/moov-io/fincen/cmd/webui/fincen/
-#	CGO_ENABLED=0 go build -o ./bin/webui ./cmd/webui
+	cp $(shell go env GOROOT)/misc/wasm/wasm_exec.js ./cmd/webui/assets/wasm_exec.js
+	GOOS=js GOARCH=wasm go build -o ./cmd/webui/assets/fincen.wasm github.com/moov-io/fincen/cmd/webui/fincen/
+	CGO_ENABLED=0 go build -o ./bin/webui ./cmd/webui
 
 .PHONY: check
 check:

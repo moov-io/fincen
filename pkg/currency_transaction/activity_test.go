@@ -174,7 +174,7 @@ func mocParties() map[string][]byte {
 		<OccupationBusinessText>Outpatient Care Centers</OccupationBusinessText>
 	</PartyOccupationBusiness>
 	<ElectronicAddress SeqNum="36">
-		<ElectronicAddressText>email123@fincen.gov</ElectronicAddressText>
+		<ElectronicAddressText>email123@server.gov</ElectronicAddressText>
 	</ElectronicAddress>
 	<Account SeqNum="37">
 		<AccountNumberText>1115478569</AccountNumberText>
@@ -237,7 +237,7 @@ func mocParties() map[string][]byte {
 		<OccupationBusinessText>Outpatient Care Centers</OccupationBusinessText>
 	</PartyOccupationBusiness>
 	<ElectronicAddress SeqNum="36">
-		<ElectronicAddressText>email123@fincen.gov</ElectronicAddressText>
+		<ElectronicAddressText>email123@server.gov</ElectronicAddressText>
 	</ElectronicAddress>
 	<Account SeqNum="37">
 		<AccountNumberText>1115478569</AccountNumberText>
@@ -300,7 +300,7 @@ func mocParties() map[string][]byte {
 		<OccupationBusinessText>Outpatient Care Centers</OccupationBusinessText>
 	</PartyOccupationBusiness>
 	<ElectronicAddress SeqNum="36">
-		<ElectronicAddressText>email123@fincen.gov</ElectronicAddressText>
+		<ElectronicAddressText>email123@server.gov</ElectronicAddressText>
 	</ElectronicAddress>
 	<Account SeqNum="37">
 		<AccountNumberText>1115478569</AccountNumberText>
@@ -363,7 +363,7 @@ func mocParties() map[string][]byte {
 		<OccupationBusinessText>Outpatient Care Centers</OccupationBusinessText>
 	</PartyOccupationBusiness>
 	<ElectronicAddress SeqNum="36">
-		<ElectronicAddressText>email123@fincen.gov</ElectronicAddressText>
+		<ElectronicAddressText>email123@server.gov</ElectronicAddressText>
 	</ElectronicAddress>
 	<Account SeqNum="37">
 		<AccountNumberText>1115478569</AccountNumberText>
@@ -650,7 +650,7 @@ func TestParty(t *testing.T) {
 
 		eAddress := party.ElectronicAddress
 		require.Equal(t, eAddress.SeqNum, fincen.SeqNumber(36))
-		require.Equal(t, *eAddress.ElectronicAddressText, fincen.RestrictString517("email123@fincen.gov"))
+		require.Equal(t, *eAddress.ElectronicAddressText, fincen.RestrictString517("email123@server.gov"))
 
 		acc := party.Account[0]
 		require.Equal(t, acc.SeqNum, fincen.SeqNumber(37))
@@ -737,7 +737,7 @@ func TestParty(t *testing.T) {
 
 		eAddress := party.ElectronicAddress
 		require.Equal(t, eAddress.SeqNum, fincen.SeqNumber(36))
-		require.Equal(t, *eAddress.ElectronicAddressText, fincen.RestrictString517("email123@fincen.gov"))
+		require.Equal(t, *eAddress.ElectronicAddressText, fincen.RestrictString517("email123@server.gov"))
 
 		acc := party.Account[0]
 		require.Equal(t, acc.SeqNum, fincen.SeqNumber(37))
@@ -824,7 +824,7 @@ func TestParty(t *testing.T) {
 
 		eAddress := party.ElectronicAddress
 		require.Equal(t, eAddress.SeqNum, fincen.SeqNumber(36))
-		require.Equal(t, *eAddress.ElectronicAddressText, fincen.RestrictString517("email123@fincen.gov"))
+		require.Equal(t, *eAddress.ElectronicAddressText, fincen.RestrictString517("email123@server.gov"))
 
 		acc := party.Account[0]
 		require.Equal(t, acc.SeqNum, fincen.SeqNumber(37))
@@ -911,7 +911,7 @@ func TestParty(t *testing.T) {
 
 		eAddress := party.ElectronicAddress
 		require.Equal(t, eAddress.SeqNum, fincen.SeqNumber(36))
-		require.Equal(t, *eAddress.ElectronicAddressText, fincen.RestrictString517("email123@fincen.gov"))
+		require.Equal(t, *eAddress.ElectronicAddressText, fincen.RestrictString517("email123@server.gov"))
 
 		acc := party.Account[0]
 		require.Equal(t, acc.SeqNum, fincen.SeqNumber(37))

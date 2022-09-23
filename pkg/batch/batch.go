@@ -5,15 +5,50 @@
 package batch
 
 import (
+	"encoding/json"
 	"encoding/xml"
+	"errors"
+	"fmt"
+	"os"
 
 	"github.com/moov-io/fincen"
-	"github.com/moov-io/fincen/cash_payments"
-	"github.com/moov-io/fincen/currency_transaction"
-	"github.com/moov-io/fincen/exempt_designation"
-	"github.com/moov-io/fincen/financial_accounts"
-	"github.com/moov-io/fincen/suspicious_activity"
+	"github.com/moov-io/fincen/pkg/cash_payments"
+	"github.com/moov-io/fincen/pkg/currency_transaction"
+	"github.com/moov-io/fincen/pkg/exempt_designation"
+	"github.com/moov-io/fincen/pkg/financial_accounts"
+	"github.com/moov-io/fincen/pkg/suspicious_activity"
 )
+
+func NewReport(buf []byte) (*EFilingBatchXML, error) {
+
+	reportXml := EFilingBatchXML{}
+
+	err := xml.Unmarshal(buf, &reportXml)
+	if err == nil {
+		return &reportXml, nil
+	}
+
+	err = json.Unmarshal(buf, &reportXml)
+	if err == nil {
+		return &reportXml, nil
+	}
+
+	return nil, errors.New("unable to create batch, invalid input data")
+}
+
+func CreateReportFromFile(path string) (*EFilingBatchXML, error) {
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("opening file %s: %w", path, err)
+	}
+
+	r, err := NewReport(raw)
+	if err != nil {
+		return nil, fmt.Errorf("unable to parse file: %w", err)
+	}
+
+	return r, nil
+}
 
 type EFilingBatchXML struct {
 	XMLName                 xml.Name                 `xml:"EFilingBatchXML"`
@@ -22,6 +57,7 @@ type EFilingBatchXML struct {
 	TotalAmount             float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
 	PartyCount              int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
 	ActivityCount           int64                    `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
+	AccountCount            int64                    `xml:"AccountCount,attr,omitempty" json:",omitempty"`
 	ActivityAttachmentCount int64                    `xml:"ActivityAttachmentCount,attr,omitempty" json:",omitempty"`
 	AttachmentCount         int64                    `xml:"AttachmentCount,attr,omitempty" json:",omitempty"`
 	JointlyOwnedOwnerCount  int64                    `xml:"JointlyOwnedOwnerCount,attr,omitempty" json:",omitempty"`
@@ -48,6 +84,7 @@ type batchDummy struct {
 	TotalAmount             float64               `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
 	PartyCount              int64                 `xml:"PartyCount,attr,omitempty" json:",omitempty"`
 	ActivityCount           int64                 `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
+	AccountCount            int64                 `xml:"AccountCount,attr,omitempty" json:",omitempty"`
 	ActivityAttachmentCount int64                 `xml:"ActivityAttachmentCount,attr,omitempty" json:",omitempty"`
 	AttachmentCount         int64                 `xml:"AttachmentCount,attr,omitempty" json:",omitempty"`
 	JointlyOwnedOwnerCount  int64                 `xml:"JointlyOwnedOwnerCount,attr,omitempty" json:",omitempty"`
@@ -63,6 +100,7 @@ type batchAttr struct {
 	TotalAmount             float64
 	PartyCount              int64
 	ActivityCount           int64
+	AccountCount            int64
 	ActivityAttachmentCount int64
 	AttachmentCount         int64
 	JointlyOwnedOwnerCount  int64
@@ -79,6 +117,7 @@ func (r *EFilingBatchXML) copy(org batchDummy) {
 	r.TotalAmount = org.TotalAmount
 	r.PartyCount = org.PartyCount
 	r.ActivityCount = org.ActivityCount
+	r.AccountCount = org.AccountCount
 	r.ActivityAttachmentCount = org.ActivityAttachmentCount
 	r.AttachmentCount = org.AttachmentCount
 	r.JointlyOwnedOwnerCount = org.JointlyOwnedOwnerCount
@@ -129,6 +168,7 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		TotalAmount             float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
 		PartyCount              int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
 		ActivityCount           int64                    `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
+		AccountCount            int64                    `xml:"AccountCount,attr,omitempty" json:",omitempty"`
 		ActivityAttachmentCount int64                    `xml:"ActivityAttachmentCount,attr,omitempty" json:",omitempty"`
 		AttachmentCount         int64                    `xml:"AttachmentCount,attr,omitempty" json:",omitempty"`
 		JointlyOwnedOwnerCount  int64                    `xml:"JointlyOwnedOwnerCount,attr,omitempty" json:",omitempty"`
@@ -152,7 +192,7 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		Name: xml.Name{
 			Local: "xsi:schemaLocation",
 		},
-		Value: "www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd",
+		Value: "www.server.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd",
 	})
 
 	a.Attrs = append(a.Attrs, xml.Attr{
@@ -166,7 +206,7 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		Name: xml.Name{
 			Local: "xsi:fc2",
 		},
-		Value: "www.fincen.gov/base",
+		Value: "www.server.gov/base",
 	})
 
 	return e.EncodeElement(&a, start)
@@ -214,6 +254,15 @@ func (r EFilingBatchXML) generateAttrs() batchAttr {
 			// <ActivityPartyTypeCode> is equal to “33” (Subject)
 			s.PartyCount += activity.PartyCount("33")
 
+		case "FBARX":
+			// The total count of <Party> elements where the <ActivityPartyTypeCode> element is equal to “41”
+			s.PartyCount += activity.PartyCount("41")
+
+			// AccountCount. The total count of all <Account> elements recorded in the batch file.
+			if elm, ok := activity.(*financial_accounts.ActivityType); ok {
+				s.AccountCount = int64(len(elm.Account))
+			}
+
 			// The total count of <Party> elements where the <ActivityPartyTypeCode>
 			// element is equal to “42”
 			s.JointlyOwnedOwnerCount += activity.PartyCount("42")
@@ -225,10 +274,6 @@ func (r EFilingBatchXML) generateAttrs() batchAttr {
 			// The total count of <Party> elements where the <ActivityPartyTypeCode>
 			// equal to “44”
 			s.NoFIOwnerCount += activity.PartyCount("44")
-
-		case "FBARX":
-			// The total count of <Party> elements where the <ActivityPartyTypeCode> element is equal to “41”
-			s.PartyCount += activity.PartyCount("41")
 		}
 
 	}
@@ -258,6 +303,10 @@ func (r *EFilingBatchXML) validateAttrs() error {
 
 	if r.ActivityCount != s.ActivityCount {
 		return fincen.NewErrValueInvalid("ActivityCount")
+	}
+
+	if r.AccountCount != s.AccountCount {
+		return fincen.NewErrValueInvalid("AccountCount")
 	}
 
 	if r.TotalAmount != s.TotalAmount {

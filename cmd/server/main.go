@@ -5,11 +5,35 @@
 package main
 
 import (
-	"log"
+	"os"
+
+	"github.com/moov-io/base/log"
 
 	"github.com/moov-io/fincen"
+	"github.com/moov-io/fincen/pkg/service"
 )
 
 func main() {
-	log.Printf("starting fincen version %s", fincen.Version)
+	logger := log.NewDefaultLogger().
+		Set("app", log.String("server")).
+		Set("version", log.String(fincen.Version))
+
+	env := &service.Environment{
+		Logger: logger,
+	}
+
+	_, err := service.NewEnvironment(env)
+	if err != nil {
+		logger.Fatal().LogErrorf("Error loading up environment: %v", err)
+		os.Exit(1)
+	}
+
+	termListener := service.NewTerminationListener()
+
+	stopServers := env.RunServers(termListener)
+
+	service.AwaitTermination(env.Logger, termListener)
+
+	stopServers()
+	env.Shutdown()
 }
