@@ -94,17 +94,6 @@ jobs:
         asset_name: fincen-linux-amd64
         asset_content_type: application/octet-stream
 
-    - name: Upload Linux fincencli Binary
-      if: runner.os == 'Linux'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-        asset_path: ./bin/fincencli-linux-amd64
-        asset_name: fincencli-linux-amd64
-        asset_content_type: application/octet-stream
-
     - name: Upload macOS Server Binary
       if: runner.os == 'macOS'
       uses: actions/upload-release-asset@v1
@@ -116,17 +105,6 @@ jobs:
         asset_name: fincen-darwin-amd64
         asset_content_type: application/octet-stream
 
-    - name: Upload macOS fincencli Binary
-      if: runner.os == 'macOS'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-        asset_path: ./bin/fincencli-darwin-amd64
-        asset_name: fincencli-darwin-amd64
-        asset_content_type: application/octet-stream
-
     - name: Upload Windows Server Binary
       if: runner.os == 'Windows'
       uses: actions/upload-release-asset@v1
@@ -136,17 +114,6 @@ jobs:
         upload_url: ${{ steps.get_release_info.outputs.upload_url }}
         asset_path: ./bin/fincen.exe
         asset_name: fincen.exe
-        asset_content_type: application/octet-stream
-
-    - name: Upload Windows fincencli Binary
-      if: runner.os == 'Windows'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.get_release_info.outputs.upload_url }}
-        asset_path: ./bin/fincencli.exe
-        asset_name: fincencli.exe
         asset_content_type: application/octet-stream
 
   docker:
