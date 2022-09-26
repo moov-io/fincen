@@ -53,10 +53,6 @@ docker-openshift:
 	docker build --pull -t quay.io/moov/fincen:$(VERSION) -f Dockerfile.openshift --build-arg VERSION=$(VERSION) .
 	docker tag quay.io/moov/fincen:$(VERSION) quay.io/moov/fincen:latest
 
-docker-fuzz:
-	docker build --pull -t moov/fincenfuzz:$(VERSION) . -f Dockerfile.fuzz
-	docker tag moov/fincenfuzz:$(VERSION) moov/fincenfuzz:latest
-
 docker-webui:
 	docker build --pull -t moov/fincen-webui:$(VERSION) -f Dockerfile.webui .
 	docker tag moov/fincen-webui:$(VERSION) moov/fincen-webui:latest
@@ -80,7 +76,6 @@ release: docker AUTHORS
 release-push:
 	docker push moov/fincen:$(VERSION)
 	docker push moov/fincen:latest
-	docker push moov/fincenfuzz:$(VERSION)
 	docker push moov/fincen-webui:$(VERSION)
 
 quay-push:
