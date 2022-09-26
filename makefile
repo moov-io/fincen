@@ -36,7 +36,7 @@ client:
 clean:
 	@rm -rf ./bin/ ./tmp/ coverage.txt misspell* staticcheck lint-project.sh
 
-dist: clean client build
+dist: clean build
 ifeq ($(OS),Windows_NT)
 	CGO_ENABLED=1 GOOS=windows go build -o bin/fincen.exe github.com/moov-io/fincen/cmd/server
 else
