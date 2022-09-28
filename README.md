@@ -46,7 +46,6 @@ The HTTP server is available in a Docker image and the Go package github.com/moo
         - [Docker](#docker)
         - [Google Cloud](#google-cloud-run-button)
         - [HTTP API](#http-api)
-        - [Data persistence](#data-persistence)
     - [As a Go module](#go-library)
       - [Build report form](#build-report-form)
     - [As a command line tool](#command-line)
@@ -148,10 +147,6 @@ You should get this response:
 ```
 null
 ```
-
-### Data persistence
-
-By design, Fincen  **does not persist** (save) any data about the files or entry details created. The only storage occurs in memory of the process and upon restart Fincen will have no files or data saved. Also, no in-memory encryption of the data is performed.
 
 ### Go library
 
