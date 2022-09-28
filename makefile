@@ -29,7 +29,6 @@ client:
 	OPENAPI_GENERATOR_VERSION=4.2.0 ./openapi-generator generate -i openapi.yaml -g go -o ./client
 	rm -f client/go.mod client/go.sum ./client/.travis.yml
 	go fmt ./...
-	go get github.com/antihax/optional
 	go build github.com/moov-io/fincen/client
 	go test ./client
 

@@ -235,7 +235,7 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	return e.EncodeElement(&a, start)
 }
 
-func (r EFilingBatchXML) AppendActivity(act fincen.ElementActivity) error {
+func (r *EFilingBatchXML) AppendActivity(act fincen.ElementActivity) error {
 	if act == nil {
 		return errors.New("invalid activity")
 	}
