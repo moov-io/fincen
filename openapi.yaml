@@ -1,0 +1,243 @@
+openapi: 3.0.2
+info:
+  description: Moov's fincen project implements a reader, writer, and validator for Fincen BSA forms in an HTTP server and Go library. Fincen (Financial crimes enforcment network) BSA data transmission methods for the the BSA E-Filing System.
+  version: v1
+  title: FINCEN API
+  contact:
+    url: https://github.com/moov-io/fincen
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: http://localhost:8080
+    description: Local development
+
+tags:
+  - name: 'fincen report'
+    description: |
+       Fincen is a financial reporting for the United States. There are many fincen BSA forms. 
+
+paths:
+  /ping:
+    get:
+      tags: ['fincen report']
+      summary: Ping fincen service
+      description: Check if the fincen service is running.
+      operationId: ping
+      responses:
+        '200':
+          description: Service is running properly
+  /validator:
+    post:
+      tags: ['fincen report']
+      summary: Validate fincen report
+      description: Validating fincen xml batch report.
+      operationId: validator
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                disable_attrs:
+                  type: boolean
+                  description: Disable to validate attributes
+                  default: false
+                input:
+                  type: string
+                  description: xml report form
+                  format: binary
+                  example:
+                    <?xml version="1.0" encoding="UTF-8"?>
+                      <EFilingBatchXML SeqNum="1" StatusCode="A">
+                          <EFilingSubmissionXML SeqNum="1" StatusCode="A">
+                              <EFilingActivityXML SeqNum="1">
+                                  <BSAID>31000055053784</BSAID>
+                                  <EFilingActivityErrorXML SeqNum="1">
+                                      <ErrorContextText>EFilingBatchXML/Activity[1]/Party[25]/PartyIdentification[49]/PartyIdentificationNumberText</ErrorContextText>
+                                      <ErrorElementNameText>PartyIdentificationNumberText</ErrorElementNameText>
+                                      <ErrorLevelText>WARN</ErrorLevelText>
+                                      <ErrorText>The value recorded for the EIN or SSN/ITIN is an invalid number string.</ErrorText>
+                                      <ErrorTypeCode>C21</ErrorTypeCode>
+                                  </EFilingActivityErrorXML>
+                                  <EFilingActivityErrorXML SeqNum="2">
+                                      <ErrorContextText>EFilingBatchXML/Activity[1]/Party[78]/PartyName[84]/RawIndividualFirstName</ErrorContextText>
+                                      <ErrorElementNameText>RawIndividualFirstName</ErrorElementNameText>
+                                      <ErrorLevelText>WARN</ErrorLevelText>
+                                      <ErrorText>The element is not recorded or does not contain a value for an individual Subject and unknown is not indicated.</ErrorText>
+                                      <ErrorTypeCode>C4</ErrorTypeCode>
+                                  </EFilingActivityErrorXML>
+                              </EFilingActivityXML>
+                              <EFilingActivityXML SeqNum="2">
+                                  <BSAID>31000055053785</BSAID>
+                                  <EFilingActivityErrorXML SeqNum="1"/>
+                              </EFilingActivityXML>
+                              <EFilingActivityXML SeqNum="3">
+                                  <BSAID>31000055053786</BSAID>
+                                  <EFilingActivityErrorXML SeqNum="1"/>
+                              </EFilingActivityXML>
+                          </EFilingSubmissionXML>
+                      </EFilingBatchXML>
+            encoding:
+              file:
+                contentType: text/plain
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '501':
+          description: failed operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /reformat:
+    post:
+      tags: ['fincen report']
+      summary: Convert fincen report
+      description: Reformat fincen xml batch report.
+      operationId: reformat
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                format:
+                  type: string
+                  description: refomat report type
+                  default: xml
+                  example: xml
+                  enum:
+                    - json
+                    - xml
+                generate_attrs:
+                  type: boolean
+                  description: Enable to generate attributes
+                  default: false
+                input:
+                  type: string
+                  description: fincen report
+                  format: binary
+                  example:
+                    <?xml version="1.0" encoding="UTF-8"?>
+                      <EFilingBatchXML SeqNum="1" StatusCode="A">
+                          <EFilingSubmissionXML SeqNum="1" StatusCode="A">
+                              <EFilingActivityXML SeqNum="1">
+                                  <BSAID>31000055053784</BSAID>
+                                  <EFilingActivityErrorXML SeqNum="1">
+                                      <ErrorContextText>EFilingBatchXML/Activity[1]/Party[25]/PartyIdentification[49]/PartyIdentificationNumberText</ErrorContextText>
+                                      <ErrorElementNameText>PartyIdentificationNumberText</ErrorElementNameText>
+                                      <ErrorLevelText>WARN</ErrorLevelText>
+                                      <ErrorText>The value recorded for the EIN or SSN/ITIN is an invalid number string.</ErrorText>
+                                      <ErrorTypeCode>C21</ErrorTypeCode>
+                                  </EFilingActivityErrorXML>
+                                  <EFilingActivityErrorXML SeqNum="2">
+                                      <ErrorContextText>EFilingBatchXML/Activity[1]/Party[78]/PartyName[84]/RawIndividualFirstName</ErrorContextText>
+                                      <ErrorElementNameText>RawIndividualFirstName</ErrorElementNameText>
+                                      <ErrorLevelText>WARN</ErrorLevelText>
+                                      <ErrorText>The element is not recorded or does not contain a value for an individual Subject and unknown is not indicated.</ErrorText>
+                                      <ErrorTypeCode>C4</ErrorTypeCode>
+                                  </EFilingActivityErrorXML>
+                              </EFilingActivityXML>
+                              <EFilingActivityXML SeqNum="2">
+                                  <BSAID>31000055053785</BSAID>
+                                  <EFilingActivityErrorXML SeqNum="1"/>
+                              </EFilingActivityXML>
+                              <EFilingActivityXML SeqNum="3">
+                                  <BSAID>31000055053786</BSAID>
+                                  <EFilingActivityErrorXML SeqNum="1"/>
+                              </EFilingActivityXML>
+                          </EFilingSubmissionXML>
+                      </EFilingBatchXML>
+            encoding:
+              file:
+                contentType: text/plain
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                description: fincen report
+                format: binary
+                example:
+                    <?xml version="1.0" encoding="UTF-8"?>
+                      <EFilingBatchXML SeqNum="1" StatusCode="A">
+                          <EFilingSubmissionXML SeqNum="1" StatusCode="A">
+                              <EFilingActivityXML SeqNum="1">
+                                  <BSAID>31000055053784</BSAID>
+                                  <EFilingActivityErrorXML SeqNum="1">
+                                      <ErrorContextText>EFilingBatchXML/Activity[1]/Party[25]/PartyIdentification[49]/PartyIdentificationNumberText</ErrorContextText>
+                                      <ErrorElementNameText>PartyIdentificationNumberText</ErrorElementNameText>
+                                      <ErrorLevelText>WARN</ErrorLevelText>
+                                      <ErrorText>The value recorded for the EIN or SSN/ITIN is an invalid number string.</ErrorText>
+                                      <ErrorTypeCode>C21</ErrorTypeCode>
+                                  </EFilingActivityErrorXML>
+                                  <EFilingActivityErrorXML SeqNum="2">
+                                      <ErrorContextText>EFilingBatchXML/Activity[1]/Party[78]/PartyName[84]/RawIndividualFirstName</ErrorContextText>
+                                      <ErrorElementNameText>RawIndividualFirstName</ErrorElementNameText>
+                                      <ErrorLevelText>WARN</ErrorLevelText>
+                                      <ErrorText>The element is not recorded or does not contain a value for an individual Subject and unknown is not indicated.</ErrorText>
+                                      <ErrorTypeCode>C4</ErrorTypeCode>
+                                  </EFilingActivityErrorXML>
+                              </EFilingActivityXML>
+                              <EFilingActivityXML SeqNum="2">
+                                  <BSAID>31000055053785</BSAID>
+                                  <EFilingActivityErrorXML SeqNum="1"/>
+                              </EFilingActivityXML>
+                              <EFilingActivityXML SeqNum="3">
+                                  <BSAID>31000055053786</BSAID>
+                                  <EFilingActivityErrorXML SeqNum="1"/>
+                              </EFilingActivityXML>
+                          </EFilingSubmissionXML>
+                      </EFilingBatchXML>
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchReport'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BatchReport'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '501':
+          description: failed operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    BatchReport:
+      properties:
+        XMLName:
+          type: string
+        SeqNum:
+          type: integer
+        Activity:
+          type: object
+        EFilingSubmissionXML:
+          type: object
+      description: "https://bsaefiling.fincen.treas.gov/FilingInformation.html"
+    Error:
+      properties:
+        error:
+          type: string
+    Success:
+      properties:
+        status:
+          type: string

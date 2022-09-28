@@ -407,42 +407,42 @@ func TestParty(t *testing.T) {
 func TestElements(t *testing.T) {
 
 	t.Run("ActivityType", func(t *testing.T) {
-		var sample ActivityType
+		activity := NewActivity()
 
-		require.Equal(t, "FBARX", sample.FormTypeCode())
-		require.Equal(t, "The Party has invalid min & max range", sample.Validate().Error())
+		require.Equal(t, "FBARX", activity.FormTypeCode())
+		require.Equal(t, "The Party has invalid min & max range", activity.Validate().Error())
 
 		for i := 0; i < 3; i++ {
-			sample.Party = append(sample.Party, PartyType{})
+			activity.Party = append(activity.Party, PartyType{})
 		}
-		require.Equal(t, "The Party(type 35) is a required field", sample.Validate().Error())
+		require.Equal(t, "The Party(type 35) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
-		require.Equal(t, "The Party(type 37) is a required field", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 37) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
-		require.Equal(t, "The Party(type 15) is a required field", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 15) is a required field", activity.Validate().Error())
 
-		sample.Party = nil
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "15"})
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
-		require.Equal(t, "The Party(type 37) has invalid min & max range", sample.Validate().Error())
+		activity.Party = nil
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "15"})
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 37) has invalid min & max range", activity.Validate().Error())
 
-		sample.Party = nil
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "15"})
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "15"})
-		require.Equal(t, "The Party(type 15) has invalid min & max range", sample.Validate().Error())
+		activity.Party = nil
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "15"})
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "15"})
+		require.Equal(t, "The Party(type 15) has invalid min & max range", activity.Validate().Error())
 
-		sample.Party = nil
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "15"})
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
-		require.Equal(t, "The Party(type 35) has invalid min & max range", sample.Validate().Error())
+		activity.Party = nil
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "15"})
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 35) has invalid min & max range", activity.Validate().Error())
 	})
 
 	t.Run("PartyType", func(t *testing.T) {

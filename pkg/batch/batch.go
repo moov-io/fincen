@@ -19,7 +19,30 @@ import (
 	"github.com/moov-io/fincen/pkg/suspicious_activity"
 )
 
-func NewReport(buf []byte) (*EFilingBatchXML, error) {
+const (
+	ReportTypeSubmission = "SUBMISSION"
+)
+
+func NewReport(args ...string) *EFilingBatchXML {
+
+	reportXml := EFilingBatchXML{}
+
+	rType := "UNKNOWN"
+	if len(args) > 0 {
+		rType = args[0]
+	}
+	if rType == ReportTypeSubmission {
+		reportXml.StatusCode = "A"
+	} else {
+		if !fincen.CheckInvolved(rType, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") {
+			reportXml.FormTypeCode = rType
+		}
+	}
+
+	return &reportXml
+}
+
+func CreateReportWithBuffer(buf []byte) (*EFilingBatchXML, error) {
 
 	reportXml := EFilingBatchXML{}
 
@@ -36,13 +59,13 @@ func NewReport(buf []byte) (*EFilingBatchXML, error) {
 	return nil, errors.New("unable to create batch, invalid input data")
 }
 
-func CreateReportFromFile(path string) (*EFilingBatchXML, error) {
+func CreateReportWithFile(path string) (*EFilingBatchXML, error) {
 	raw, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("opening file %s: %w", path, err)
 	}
 
-	r, err := NewReport(raw)
+	r, err := CreateReportWithBuffer(raw)
 	if err != nil {
 		return nil, fmt.Errorf("unable to parse file: %w", err)
 	}
@@ -210,6 +233,21 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	})
 
 	return e.EncodeElement(&a, start)
+}
+
+func (r EFilingBatchXML) AppendActivity(act fincen.ElementActivity) error {
+	if act == nil {
+		return errors.New("invalid activity")
+	}
+
+	if !fincen.CheckInvolved(r.FormTypeCode, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") ||
+		r.FormTypeCode != act.FormTypeCode() {
+		return errors.New("invalid form type")
+	}
+
+	r.Activity = append(r.Activity, act)
+
+	return nil
 }
 
 func (r *EFilingBatchXML) fieldInclusionReport() error {

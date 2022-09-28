@@ -23,7 +23,7 @@ func generateAttrs() js.Func {
 			return "Invalid number of arguments passed"
 		}
 
-		r, err := batch.NewReport([]byte(args[0].String()))
+		r, err := batch.CreateReportWithBuffer([]byte(args[0].String()))
 		if err != nil {
 			fmt.Println(err)
 			return "Unable to parse report file"
@@ -56,7 +56,7 @@ func validateForm() js.Func {
 			return "Invalid number of arguments passed"
 		}
 
-		r, err := batch.NewReport([]byte(args[0].String()))
+		r, err := batch.CreateReportWithBuffer([]byte(args[0].String()))
 		if err != nil {
 			fmt.Println(err)
 			return "Unable to parse report file"

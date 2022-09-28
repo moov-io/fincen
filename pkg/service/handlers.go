@@ -29,16 +29,16 @@ type Response struct {
 
 // configure handlers
 func ConfigureHandlers(r *mux.Router) error {
-	r.HandleFunc("/health", health).Methods("GET")
+	r.HandleFunc("/ping", ping).Methods("GET")
 	r.HandleFunc("/validator", validator).Methods("POST")
 	r.HandleFunc("/reformat", reformat).Methods("POST")
 	return nil
 }
 
 // health - health check
-func health(w http.ResponseWriter, r *http.Request) {
+func ping(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
-	w.Write([]byte("Alive"))
+	w.Write([]byte("PONG"))
 }
 
 func validator(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +48,7 @@ func validator(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	reportXml, err := batch.NewReport(buf)
+	reportXml, err := batch.CreateReportWithBuffer(buf)
 	if err != nil {
 		write(w, Response{Code: http.StatusNotImplemented, Message: err.Error()})
 		return
@@ -75,7 +75,7 @@ func reformat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	reportXml, err := batch.NewReport(buf)
+	reportXml, err := batch.CreateReportWithBuffer(buf)
 	if err != nil {
 		write(w, Response{Code: http.StatusNotImplemented, Message: err.Error()})
 		return

@@ -16,7 +16,7 @@ import (
 
 func Reformat(paths []string, generate bool, newType string) ([]byte, error) {
 	fmt.Fprintf(os.Stdout, "\nFormating report file...\n")
-	r, err := batch.CreateReportFromFile(paths[0])
+	r, err := batch.CreateReportWithFile(paths[0])
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "Failed to create report from file: %v\n", err)
 		return nil, err
@@ -44,7 +44,7 @@ func Reformat(paths []string, generate bool, newType string) ([]byte, error) {
 
 func Validate(paths []string) error {
 	fmt.Fprintf(os.Stdout, "\nValidating report file...\n")
-	r, err := batch.CreateReportFromFile(paths[0])
+	r, err := batch.CreateReportWithFile(paths[0])
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "Failed to create report from file: %v\n", err)
 		return err
@@ -66,7 +66,7 @@ func Summary(paths []string) error {
 
 func summaryForm(path string) error {
 
-	r, err := batch.CreateReportFromFile(path)
+	r, err := batch.CreateReportWithFile(path)
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "Failed to create report from file: %v\n", err)
 		fmt.Fprintf(os.Stdout, "Trying to summary file anyway...\n")

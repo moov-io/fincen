@@ -44,3 +44,7 @@ test/fuzz-reader/corpus/*.tar.gz
 
 # Gitleaks
 gitleaks.tar.gz
+
+#openapi
+openapi-generator*.jar
+/client/

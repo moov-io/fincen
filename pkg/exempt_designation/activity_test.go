@@ -379,27 +379,27 @@ func TestParty(t *testing.T) {
 func TestElements(t *testing.T) {
 
 	t.Run("ActivityType", func(t *testing.T) {
-		var sample ActivityType
+		activity := NewActivity()
 
-		require.Equal(t, "DOEPX", sample.FormTypeCode())
-		require.Equal(t, "The Party has invalid min & max range", sample.Validate().Error())
+		require.Equal(t, "DOEPX", activity.FormTypeCode())
+		require.Equal(t, "The Party has invalid min & max range", activity.Validate().Error())
 
 		for i := 0; i < 6; i++ {
-			sample.Party = append(sample.Party, PartyType{})
+			activity.Party = append(activity.Party, PartyType{})
 		}
-		require.Equal(t, "The Party(type 35) is a required field", sample.Validate().Error())
+		require.Equal(t, "The Party(type 35) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
-		require.Equal(t, "The Party(type 37) is a required field", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 37) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
-		require.Equal(t, "The Party(type 11) is a required field", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 11) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "11"})
-		require.Equal(t, "The Party(type 45) is a required field", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "11"})
+		require.Equal(t, "The Party(type 45) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "45"})
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "45"})
+		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", activity.Validate().Error())
 	})
 
 	t.Run("ActivityAssociationType", func(t *testing.T) {
