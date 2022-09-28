@@ -9,7 +9,9 @@ menubar: docs-menu
 # Docker
 
 We publish a [public Docker image `moov/fincen`](https://hub.docker.com/r/moov/fincen/) from Docker Hub or use this repository.  
+<!--
 We also have Docker images for [OpenShift](https://quay.io/repository/moov/fincen?tab=tags) published as `quay.io/moov/fincen`.
+-->
 
 Pull & start the Docker image:
 ```
