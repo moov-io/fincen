@@ -82,7 +82,9 @@ The Fincen project implements an HTTP server and [Go library](https://pkg.go.dev
 ### Docker
 
 We publish a [public Docker image `moov/fincen`](https://hub.docker.com/r/moov/fincen/tags) on Docker Hub with every tagged release of Fincen.
+<!--
 We also have Docker images for [OpenShift](https://quay.io/repository/moov/fincen?tab=tags) published as `quay.io/moov/fincen`.
+-->
 
 Pull & start the Docker image:
 ```
