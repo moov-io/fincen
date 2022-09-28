@@ -13,6 +13,10 @@ import (
 	"github.com/moov-io/fincen"
 )
 
+func NewActivity() *ActivityType {
+	return &ActivityType{}
+}
+
 type ActivityType struct {
 	XMLName                       xml.Name                           `xml:"Activity"`
 	SeqNum                        fincen.SeqNumber                   `xml:"SeqNum,attr"`

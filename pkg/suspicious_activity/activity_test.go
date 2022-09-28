@@ -589,41 +589,41 @@ func TestParty(t *testing.T) {
 func TestElements(t *testing.T) {
 
 	t.Run("ActivityType", func(t *testing.T) {
-		var sample ActivityType
+		activity := NewActivity()
 
-		require.Equal(t, "SARX", sample.FormTypeCode())
-		require.Equal(t, "The Party has invalid min & max range", sample.Validate().Error())
+		require.Equal(t, "SARX", activity.FormTypeCode())
+		require.Equal(t, "The Party has invalid min & max range", activity.Validate().Error())
 
 		indicator := fincen.ValidateIndicatorType("Y")
 
-		sample.EFilingPriorDocumentNumber = nil
-		sample.ActivityAssociation.CorrectsAmendsPriorReportIndicator = &indicator
-		require.Equal(t, "The EFilingPriorDocumentNumber is a required field", sample.Validate().Error())
+		activity.EFilingPriorDocumentNumber = nil
+		activity.ActivityAssociation.CorrectsAmendsPriorReportIndicator = &indicator
+		require.Equal(t, "The EFilingPriorDocumentNumber is a required field", activity.Validate().Error())
 
 		number := EFilingPriorDocumentNumberType("00000000000000")
-		sample.EFilingPriorDocumentNumber = &number
-		sample.ActivityAssociation.CorrectsAmendsPriorReportIndicator = nil
-		require.Equal(t, "The EFilingPriorDocumentNumber has invalid value", sample.Validate().Error())
+		activity.EFilingPriorDocumentNumber = &number
+		activity.ActivityAssociation.CorrectsAmendsPriorReportIndicator = nil
+		require.Equal(t, "The EFilingPriorDocumentNumber has invalid value", activity.Validate().Error())
 
-		sample.EFilingPriorDocumentNumber = nil
-		sample.ActivityAssociation.CorrectsAmendsPriorReportIndicator = nil
+		activity.EFilingPriorDocumentNumber = nil
+		activity.ActivityAssociation.CorrectsAmendsPriorReportIndicator = nil
 
 		for i := 0; i < 6; i++ {
-			sample.Party = append(sample.Party, PartyType{})
+			activity.Party = append(activity.Party, PartyType{})
 		}
-		require.Equal(t, "The Party(type 35) is a required field", sample.Validate().Error())
+		require.Equal(t, "The Party(type 35) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "35"})
-		require.Equal(t, "The Party(type 37) is a required field", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		require.Equal(t, "The Party(type 37) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "37"})
-		require.Equal(t, "The Party(type 30) is a required field", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		require.Equal(t, "The Party(type 30) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "30"})
-		require.Equal(t, "The Party(type 8) is a required field", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "30"})
+		require.Equal(t, "The Party(type 8) is a required field", activity.Validate().Error())
 
-		sample.Party = append(sample.Party, PartyType{ActivityPartyTypeCode: "8"})
-		require.Equal(t, "The Party(type 34) is a required field", sample.Validate().Error())
+		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "8"})
+		require.Equal(t, "The Party(type 34) is a required field", activity.Validate().Error())
 	})
 
 	t.Run("ActivityAssociationType", func(t *testing.T) {

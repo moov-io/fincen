@@ -277,7 +277,7 @@ func TestBatch(t *testing.T) {
 			buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", name))
 			require.NoError(t, err)
 
-			batch := EFilingBatchXML{}
+			batch := NewReport()
 			err = xml.Unmarshal(buf, &batch)
 			require.NoError(t, err)
 

@@ -18,6 +18,7 @@ coverage.html
 
 # OpenAPITools/openapi-generator
 openapi-generator-cli-*.jar
+/client/
 
 # macOS
 .DS_Store
