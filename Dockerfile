@@ -11,6 +11,7 @@ LABEL maintainer="Moov <oss@moov.io>"
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=builder /go/src/github.com/moov-io/fincen/bin/server /bin/server
+COPY --from=builder /go/src/github.com/moov-io/fincen/configs/config.default.yml /configs/config.default.yml
 COPY --from=builder /etc/passwd /etc/passwd
 
 USER moov
