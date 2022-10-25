@@ -590,6 +590,8 @@ func TestElements(t *testing.T) {
 
 	t.Run("ActivityType", func(t *testing.T) {
 		activity := NewActivity()
+		activity.ActivityAssociation = &ActivityAssociationType{}
+		activity.SuspiciousActivity = &SuspiciousActivityType{}
 
 		require.Equal(t, "SARX", activity.FormTypeCode())
 		require.Equal(t, "The Party has invalid min & max range", activity.Validate().Error())
@@ -609,20 +611,20 @@ func TestElements(t *testing.T) {
 		activity.ActivityAssociation.CorrectsAmendsPriorReportIndicator = nil
 
 		for i := 0; i < 6; i++ {
-			activity.Party = append(activity.Party, PartyType{})
+			activity.Party = append(activity.Party, &PartyType{})
 		}
 		require.Equal(t, "The Party(type 35) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "35"})
 		require.Equal(t, "The Party(type 37) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "37"})
 		require.Equal(t, "The Party(type 30) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "30"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "30"})
 		require.Equal(t, "The Party(type 8) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "8"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "8"})
 		require.Equal(t, "The Party(type 34) is a required field", activity.Validate().Error())
 	})
 
@@ -692,7 +694,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
 		for i := 0; i < 100; i++ {
-			sample.Party = append(sample.Party, AssociationParty{})
+			sample.Party = append(sample.Party, &AssociationParty{})
 		}
 		require.Equal(t, "The Party has invalid min & max range", sample.Validate("34").Error())
 	})
@@ -715,7 +717,7 @@ func TestElements(t *testing.T) {
 		var sample SuspiciousActivityType
 		require.Equal(t, "The SuspiciousActivity has invalid min & max range", sample.Validate().Error())
 
-		sample.SuspiciousActivityClassification = append(sample.SuspiciousActivityClassification, SuspiciousActivityClassificationType{})
+		sample.SuspiciousActivityClassification = append(sample.SuspiciousActivityClassification, &SuspiciousActivityClassificationType{})
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
 	})
 }

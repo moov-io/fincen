@@ -385,20 +385,23 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The Party has invalid min & max range", activity.Validate().Error())
 
 		for i := 0; i < 6; i++ {
-			activity.Party = append(activity.Party, PartyType{})
+			activity.Party = append(activity.Party, &PartyType{})
 		}
+		activity.ActivityAssociation = &ActivityAssociationType{}
+		activity.DesignationExemptActivity = &DesignationExemptActivityType{}
+
 		require.Equal(t, "The Party(type 35) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "35"})
 		require.Equal(t, "The Party(type 37) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "37"})
 		require.Equal(t, "The Party(type 11) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "11"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "11"})
 		require.Equal(t, "The Party(type 45) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "45"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "45"})
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", activity.Validate().Error())
 	})
 
@@ -423,7 +426,7 @@ func TestElements(t *testing.T) {
 		sample = PartyType{ActivityPartyTypeCode: "35"}
 
 		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
-		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		sample.PartyName = append(sample.PartyName, &PartyNameType{})
 		require.Equal(t, "The Address is a required field", sample.Validate().Error())
 		sample.Address = &AddressType{}
 		require.Equal(t, "The PhoneNumber is a required field", sample.Validate().Error())
@@ -438,7 +441,7 @@ func TestElements(t *testing.T) {
 
 		sample.PartyName = nil
 		require.Equal(t, "The PartyName has invalid min & max range", sample.Validate().Error())
-		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		sample.PartyName = append(sample.PartyName, &PartyNameType{})
 		require.Equal(t, "The Address is a required field", sample.Validate().Error())
 		sample.Address = &AddressType{}
 		require.Equal(t, "The PartyIdentification is a required field", sample.Validate().Error())
@@ -446,7 +449,7 @@ func TestElements(t *testing.T) {
 		sample = PartyType{ActivityPartyTypeCode: "45"}
 
 		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
-		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		sample.PartyName = append(sample.PartyName, &PartyNameType{})
 		require.Equal(t, "The PrimaryRegulatorTypeCode is a required field", sample.Validate().Error())
 		rType := ValidateFederalRegulatorCodeType("1")
 		sample.PrimaryRegulatorTypeCode = &rType
