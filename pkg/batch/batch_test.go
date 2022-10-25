@@ -327,6 +327,9 @@ func TestGenerateSeqNumbers(t *testing.T) {
 	act1 := currency_transaction.NewActivity()
 	require.NotNil(t, act1)
 
+	act1.ActivityAssociation = &currency_transaction.ActivityAssociationType{}
+	act1.CurrencyTransactionActivity = &currency_transaction.CurrencyTransactionActivityType{}
+
 	require.Nil(t, report.AppendActivity(act1))
 	require.Equal(t, fincen.SeqNumber(0), act1.SeqNum)
 
