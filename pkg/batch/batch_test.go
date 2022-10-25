@@ -6,6 +6,8 @@ package batch
 
 import (
 	"encoding/xml"
+	"fmt"
+	"github.com/moov-io/fincen/pkg/currency_transaction"
 	"os"
 	"path"
 	"testing"
@@ -25,6 +27,10 @@ var (
 type emptyElementActivity struct{}
 
 func (r *emptyElementActivity) Validate(args ...string) error {
+	return nil
+}
+
+func (r *emptyElementActivity) SetSeqNumber(number fincen.SeqNumber) error {
 	return nil
 }
 
@@ -51,7 +57,6 @@ func TestAcknowledgement(t *testing.T) {
 		require.NotNil(t, batch.EFilingSubmissionXML)
 		require.Equal(t, 3, len(batch.EFilingSubmissionXML.EFilingActivityXML))
 
-		require.Equal(t, fincen.SeqNumber(1), batch.SeqNum)
 		require.Equal(t, "A", batch.StatusCode)
 
 		require.Equal(t, fincen.SeqNumber(1), batch.EFilingSubmissionXML.SeqNum)
@@ -95,7 +100,6 @@ func TestAcknowledgement(t *testing.T) {
 		require.NotNil(t, batch.EFilingSubmissionXML)
 		require.Equal(t, 3, len(batch.EFilingSubmissionXML.EFilingActivityXML))
 
-		require.Equal(t, fincen.SeqNumber(1), batch.SeqNum)
 		require.Equal(t, "A", batch.StatusCode)
 
 		require.Equal(t, fincen.SeqNumber(1), batch.EFilingSubmissionXML.SeqNum)
@@ -139,7 +143,6 @@ func TestAcknowledgement(t *testing.T) {
 		require.NotNil(t, batch.EFilingSubmissionXML)
 		require.Equal(t, 3, len(batch.EFilingSubmissionXML.EFilingActivityXML))
 
-		require.Equal(t, fincen.SeqNumber(1), batch.SeqNum)
 		require.Equal(t, "A", batch.StatusCode)
 
 		require.Equal(t, fincen.SeqNumber(1), batch.EFilingSubmissionXML.SeqNum)
@@ -183,7 +186,6 @@ func TestAcknowledgement(t *testing.T) {
 		require.NotNil(t, batch.EFilingSubmissionXML)
 		require.Equal(t, 3, len(batch.EFilingSubmissionXML.EFilingActivityXML))
 
-		require.Equal(t, fincen.SeqNumber(1), batch.SeqNum)
 		require.Equal(t, "A", batch.StatusCode)
 
 		require.Equal(t, fincen.SeqNumber(1), batch.EFilingSubmissionXML.SeqNum)
@@ -227,7 +229,6 @@ func TestAcknowledgement(t *testing.T) {
 		require.NotNil(t, batch.EFilingSubmissionXML)
 		require.Equal(t, 3, len(batch.EFilingSubmissionXML.EFilingActivityXML))
 
-		require.Equal(t, fincen.SeqNumber(1), batch.SeqNum)
 		require.Equal(t, "A", batch.StatusCode)
 
 		require.Equal(t, fincen.SeqNumber(1), batch.EFilingSubmissionXML.SeqNum)
@@ -291,6 +292,7 @@ func TestBatch(t *testing.T) {
 			require.NoError(t, err)
 
 			err = batch.Validate()
+			fmt.Println(err)
 			require.NoError(t, err)
 		})
 	}
@@ -311,10 +313,26 @@ func TestElements(t *testing.T) {
 		sample.Activity = append(sample.Activity, emptyActivity)
 		sample.ActivityCount = 1
 
-		require.NotNil(t, sample.Validate())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Nil(t, sample.Validate())
 
 		sample.StatusCode = "A"
 		require.Equal(t, "The EFilingSubmissionXML has invalid value", sample.Validate().Error())
 	})
+}
+
+func TestGenerateSeqNumbers(t *testing.T) {
+	report := NewReport("CTRX")
+	require.NotNil(t, report)
+
+	act1 := currency_transaction.NewActivity()
+	require.NotNil(t, act1)
+
+	require.Nil(t, report.AppendActivity(act1))
+	require.Equal(t, fincen.SeqNumber(0), act1.SeqNum)
+
+	report.GenerateSeqNumbers()
+
+	require.Equal(t, fincen.SeqNumber(1), act1.SeqNum)
+	require.Equal(t, fincen.SeqNumber(2), act1.ActivityAssociation.SeqNum)
+	require.Equal(t, fincen.SeqNumber(3), act1.CurrencyTransactionActivity.SeqNum)
 }

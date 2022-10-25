@@ -186,6 +186,10 @@ func getSeqNum(data reflect.Value) SeqNumber {
 		data = reflect.Indirect(reflect.ValueOf(elm))
 	}
 
+	if !data.IsValid() {
+		return ignoreValue
+	}
+
 	seqNum := data.FieldByName(SequenceFieldName)
 	if !seqNum.IsValid() {
 		return ignoreValue
@@ -197,20 +201,14 @@ func getSeqNum(data reflect.Value) SeqNumber {
 
 func setSeqNum(data reflect.Value, number SeqNumber) SeqNumber {
 
-	elm, ok := data.Interface().(Element)
-	if !ok || elm == nil {
-		return number
-	}
-
 	kind := data.Kind()
-	if kind == reflect.Interface {
-		elm, ok = data.Interface().(ElementActivity)
+	if kind == reflect.Interface || kind == reflect.Ptr {
+		elm, ok := data.Interface().(Element)
 		if !ok || elm == nil {
 			return number
 		}
 		data = reflect.Indirect(reflect.ValueOf(elm))
-	} else {
-		data = reflect.Indirect(reflect.ValueOf(data))
+
 	}
 
 	seqNum := data.FieldByName(SequenceFieldName)
@@ -219,13 +217,13 @@ func setSeqNum(data reflect.Value, number SeqNumber) SeqNumber {
 	}
 
 	seqNum.SetInt(int64(number))
+
+	fmt.Println(data.Type(), data.Kind(), number)
 	return number + 1
 }
 
 // GenerateSeqNumbers generate unique sequence numbers
-func GenerateSeqNumbers(r interface{}) error {
-
-	seqNumber := SeqNumber(1)
+func GenerateSeqNumbers(r interface{}, seqNumber *SeqNumber) error {
 
 	var fields reflect.Value
 	if reflect.ValueOf(r).Kind() == reflect.Ptr {
@@ -242,33 +240,34 @@ func GenerateSeqNumbers(r interface{}) error {
 
 	for i := 0; i < fields.NumField(); i++ {
 		fieldData := fields.Field(i)
+
 		kind := fieldData.Kind()
 		if kind == reflect.Slice {
 			for i := 0; i < fieldData.Len(); i++ {
 				elm := fieldData.Index(i)
-				seqNumber = setSeqNum(elm, seqNumber)
-				if err := GenerateSeqNumbers(elm.Interface()); err != nil {
+				*seqNumber = setSeqNum(elm, *seqNumber)
+				if err := GenerateSeqNumbers(elm.Interface(), seqNumber); err != nil {
 					return err
 				}
 			}
 		} else if kind == reflect.Map {
 			for _, key := range fieldData.MapKeys() {
 				elm := fieldData.MapIndex(key)
-				seqNumber = setSeqNum(elm, seqNumber)
-				if err := GenerateSeqNumbers(elm.Interface()); err != nil {
+				*seqNumber = setSeqNum(elm, *seqNumber)
+				if err := GenerateSeqNumbers(elm.Interface(), seqNumber); err != nil {
 					return err
 				}
 			}
 		} else if kind == reflect.Ptr {
 			if fieldData.Pointer() != 0 {
-				seqNumber = setSeqNum(fieldData, seqNumber)
-				if err := GenerateSeqNumbers(fieldData.Interface()); err != nil {
+				*seqNumber = setSeqNum(fieldData, *seqNumber)
+				if err := GenerateSeqNumbers(fieldData.Interface(), seqNumber); err != nil {
 					return err
 				}
 			}
 		} else if kind == reflect.Struct {
-			seqNumber = setSeqNum(fieldData, seqNumber)
-			if err := GenerateSeqNumbers(fieldData.Interface()); err != nil {
+			*seqNumber = setSeqNum(fieldData, *seqNumber)
+			if err := GenerateSeqNumbers(fieldData.Interface(), seqNumber); err != nil {
 				return err
 			}
 		}
