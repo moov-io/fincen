@@ -412,36 +412,38 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "FBARX", activity.FormTypeCode())
 		require.Equal(t, "The Party has invalid min & max range", activity.Validate().Error())
 
+		activity.ActivityAssociation = &ActivityAssociationType{}
+		activity.ForeignAccountActivity = &ForeignAccountActivityType{}
 		for i := 0; i < 3; i++ {
-			activity.Party = append(activity.Party, PartyType{})
+			activity.Party = append(activity.Party, &PartyType{})
 		}
 		require.Equal(t, "The Party(type 35) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "35"})
 		require.Equal(t, "The Party(type 37) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "37"})
 		require.Equal(t, "The Party(type 15) is a required field", activity.Validate().Error())
 
 		activity.Party = nil
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "15"})
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "15"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "37"})
 		require.Equal(t, "The Party(type 37) has invalid min & max range", activity.Validate().Error())
 
 		activity.Party = nil
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "15"})
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "15"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "15"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "15"})
 		require.Equal(t, "The Party(type 15) has invalid min & max range", activity.Validate().Error())
 
 		activity.Party = nil
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "15"})
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "15"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "35"})
 		require.Equal(t, "The Party(type 35) has invalid min & max range", activity.Validate().Error())
 	})
 
@@ -449,6 +451,7 @@ func TestElements(t *testing.T) {
 		var sample PartyType
 		indicatorYN := fincen.ValidateIndicatorYNType("Y")
 		indicator := fincen.ValidateIndicatorType("Y")
+		sample.PartyName = &PartyNameType{}
 
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
 
@@ -496,7 +499,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The IndividualBirthDateText has invalid value", sample.Validate().Error())
 		sample.IndividualBirthDateText = nil
 		for i := 0; i < 3; i++ {
-			sample.PartyIdentification = append(sample.PartyIdentification, PartyIdentificationType{})
+			sample.PartyIdentification = append(sample.PartyIdentification, &PartyIdentificationType{})
 		}
 		require.Equal(t, "The PartyIdentification has invalid min & max range", sample.Validate().Error())
 	})
@@ -531,6 +534,8 @@ func TestElements(t *testing.T) {
 	t.Run("AccountPartyType", func(t *testing.T) {
 		var sample AccountPartyType
 		indicator := fincen.ValidateIndicatorType("Y")
+		sample.PartyName = &AccountPartyNameType{}
+		sample.Address = &AccountAddressType{}
 
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
 

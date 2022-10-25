@@ -26,8 +26,8 @@ type ActivityType struct {
 	SuspiciousTransactionIndicator              *fincen.ValidateIndicatorType     `xml:"SuspiciousTransactionIndicator,omitempty" json:",omitempty"`
 	TransactionOnBehalfMultiplePersonsIndicator *fincen.ValidateIndicatorType     `xml:"TransactionOnBehalfMultiplePersonsIndicator,omitempty" json:",omitempty"`
 	ActivityAssociation                         *ActivityAssociationType          `xml:"ActivityAssociation"`
-	Party                                       []PartyType                       `xml:"Party"`
-	CurrencyTransactionActivity                 CurrencyTransactionActivityType   `xml:"CurrencyTransactionActivity"`
+	Party                                       []*PartyType                      `xml:"Party"`
+	CurrencyTransactionActivity                 *CurrencyTransactionActivityType  `xml:"CurrencyTransactionActivity"`
 	ActivityNarrativeInformation                *ActivityNarrativeInformationType `xml:"ActivityNarrativeInformation,omitempty" json:",omitempty"`
 }
 
@@ -68,6 +68,10 @@ func (r ActivityType) PartyCount(args ...string) int64 {
 func (r ActivityType) fieldInclusion() error {
 	if len(r.Party) < 4 || len(r.Party) > 203 {
 		return fincen.NewErrMinMaxRange("Party")
+	}
+
+	if r.CurrencyTransactionActivity == nil {
+		return fincen.NewErrFieldRequired("CurrencyTransactionActivity")
 	}
 
 	return nil
@@ -134,10 +138,10 @@ type PartyType struct {
 	ActivityPartyTypeCode   ValidateActivityPartyCodeType   `xml:"ActivityPartyTypeCode"`
 	IndividualBirthDateText *fincen.DateYYYYMMDDOrBlankType `xml:"IndividualBirthDateText,omitempty" json:",omitempty"`
 	PartyTypeCode           *fincen.ValidatePartyTypeCode   `xml:"PartyTypeCode,omitempty" json:",omitempty"`
-	PartyName               []PartyNameType                 `xml:"PartyName,omitempty" json:",omitempty"`
+	PartyName               []*PartyNameType                `xml:"PartyName,omitempty" json:",omitempty"`
 	Address                 *AddressType                    `xml:"Address,omitempty" json:",omitempty"`
 	PhoneNumber             *PhoneNumberType                `xml:"PhoneNumber,omitempty" json:",omitempty"`
-	PartyIdentification     []PartyIdentificationType       `xml:"PartyIdentification,omitempty" json:",omitempty"`
+	PartyIdentification     []*PartyIdentificationType      `xml:"PartyIdentification,omitempty" json:",omitempty"`
 	PartyOccupationBusiness *PartyOccupationBusinessType    `xml:"PartyOccupationBusiness,omitempty" json:",omitempty"`
 }
 
@@ -400,14 +404,14 @@ func (r PartyOccupationBusinessType) Validate(args ...string) error {
 }
 
 type CurrencyTransactionActivityType struct {
-	XMLName                           xml.Name                                `xml:"CurrencyTransactionActivity"`
-	SeqNum                            fincen.SeqNumber                        `xml:"SeqNum,attr"`
-	InstallmentPaymentOtherIndicator  *fincen.ValidateIndicatorType           `xml:"InstallmentPaymentOtherIndicator,omitempty" json:",omitempty"`
-	Total100DollarBillInAmountText    string                                  `xml:"Total100DollarBillInAmountText,omitempty" json:",omitempty"`
-	TotalCashInReceiveAmountText      string                                  `xml:"TotalCashInReceiveAmountText"`
-	TotalPriceAmountText              string                                  `xml:"TotalPriceAmountText,omitempty" json:",omitempty"`
-	TransactionDateText               fincen.DateYYYYMMDDType                 `xml:"TransactionDateText"`
-	CurrencyTransactionActivityDetail []CurrencyTransactionActivityDetailType `xml:"CurrencyTransactionActivityDetail"`
+	XMLName                           xml.Name                                 `xml:"CurrencyTransactionActivity"`
+	SeqNum                            fincen.SeqNumber                         `xml:"SeqNum,attr"`
+	InstallmentPaymentOtherIndicator  *fincen.ValidateIndicatorType            `xml:"InstallmentPaymentOtherIndicator,omitempty" json:",omitempty"`
+	Total100DollarBillInAmountText    string                                   `xml:"Total100DollarBillInAmountText,omitempty" json:",omitempty"`
+	TotalCashInReceiveAmountText      string                                   `xml:"TotalCashInReceiveAmountText"`
+	TotalPriceAmountText              string                                   `xml:"TotalPriceAmountText,omitempty" json:",omitempty"`
+	TransactionDateText               fincen.DateYYYYMMDDType                  `xml:"TransactionDateText"`
+	CurrencyTransactionActivityDetail []*CurrencyTransactionActivityDetailType `xml:"CurrencyTransactionActivityDetail"`
 }
 
 func (r CurrencyTransactionActivityType) fieldInclusion() error {
