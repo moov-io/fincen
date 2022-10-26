@@ -1,3 +1,16 @@
+## v0.2.5 (Released 2022-10-26)
+
+IMPROVEMENTS
+
+- fix: modified unique suquence number checker and samples
+- fix: updated logic for generating sequence numbers
+
+BUILD
+
+- fix(deps): update module github.com/moov-io/base to v0.36.1
+- fix(deps): update module github.com/stretchr/testify to v1.8.1
+- fix(deps): update module golang.org/x/oauth2 to v0.1.0
+
 ## v0.2.4 (Released 2022-10-17)
 
 IMPROVEMENTS
