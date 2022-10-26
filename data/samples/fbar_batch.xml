@@ -1,5 +1,5 @@
 <EFilingBatchXML ActivityCount="1" PartyCount="0" AccountCount="0" JointlyOwnedOwnerCount="0"
-                     NoFIOwnerCount="0" ConsolidatedOwnerCount="0" SeqNum="1"
+                     NoFIOwnerCount="0" ConsolidatedOwnerCount="0"
                      xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                      xmlns:fc2="www.fincen.gov/base">
@@ -67,10 +67,10 @@
             </PartyIdentification>
         </Party>
         <ApprovalOfficialSignatureDateText>19801025</ApprovalOfficialSignatureDateText>
-        <ActivityAssociation SeqNum="2">
+        <ActivityAssociation SeqNum="100">
             <CorrectsAmendsPriorReportIndicator>Y</CorrectsAmendsPriorReportIndicator>
         </ActivityAssociation>
-        <ForeignAccountActivity SeqNum="1">
+        <ForeignAccountActivity SeqNum="101">
             <ForeignAccountHeldQuantityText>31</ForeignAccountHeldQuantityText>
             <LateFilingReasonCode>999</LateFilingReasonCode>
             <ReportCalendarYearText>2016</ReportCalendarYearText>

@@ -18,13 +18,13 @@ func NewActivity() *ActivityType {
 }
 
 type ActivityType struct {
-	XMLName                     xml.Name                        `xml:"Activity"`
-	SeqNum                      fincen.SeqNumber                `xml:"SeqNum,attr"`
-	EFilingPriorDocumentNumber  int64                           `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
-	FilingDateText              fincen.DateYYYYMMDDType         `xml:"FilingDateText"`
-	ActivityAssociation         ActivityAssociationType         `xml:"ActivityAssociation"`
-	Party                       []PartyType                     `xml:"Party"`
-	CurrencyTransactionActivity CurrencyTransactionActivityType `xml:"CurrencyTransactionActivity"`
+	XMLName                     xml.Name                         `xml:"Activity"`
+	SeqNum                      fincen.SeqNumber                 `xml:"SeqNum,attr"`
+	EFilingPriorDocumentNumber  int64                            `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
+	FilingDateText              fincen.DateYYYYMMDDType          `xml:"FilingDateText"`
+	ActivityAssociation         *ActivityAssociationType         `xml:"ActivityAssociation"`
+	Party                       []*PartyType                     `xml:"Party"`
+	CurrencyTransactionActivity *CurrencyTransactionActivityType `xml:"CurrencyTransactionActivity"`
 }
 
 func (r ActivityType) FormTypeCode() string {
@@ -51,6 +51,14 @@ func (r ActivityType) PartyCount(args ...string) int64 {
 func (r ActivityType) fieldInclusion() error {
 	if len(r.Party) < 6 || len(r.Party) > 2002 {
 		return fincen.NewErrMinMaxRange("Party")
+	}
+
+	if r.ActivityAssociation == nil {
+		return fincen.NewErrFieldRequired("ActivityAssociation")
+	}
+
+	if r.CurrencyTransactionActivity == nil {
+		return fincen.NewErrFieldRequired("CurrencyTransactionActivity")
 	}
 
 	return nil
@@ -139,14 +147,14 @@ type PartyType struct {
 	PartyAsEntityOrganizationIndicator              *fincen.ValidateIndicatorType              `xml:"PartyAsEntityOrganizationIndicator,omitempty" json:",omitempty"`
 	PrimaryRegulatorTypeCode                        *ValidateFederalRegulatorCodeType          `xml:"PrimaryRegulatorTypeCode,omitempty" json:",omitempty"`
 	UnknownGenderIndicator                          *fincen.ValidateIndicatorType              `xml:"UnknownGenderIndicator,omitempty" json:",omitempty"`
-	PartyName                                       []PartyNameType                            `xml:"PartyName"`
+	PartyName                                       []*PartyNameType                           `xml:"PartyName"`
 	Address                                         *AddressType                               `xml:"Address,omitempty" json:",omitempty"`
 	PhoneNumber                                     *PhoneNumberType                           `xml:"PhoneNumber,omitempty" json:",omitempty"`
 	PartyIdentification                             []PartyIdentificationType                  `xml:"PartyIdentification,omitempty" json:",omitempty"`
 	OrganizationClassificationTypeSubtype           *OrganizationClassificationTypeSubtypeType `xml:"OrganizationClassificationTypeSubtype,omitempty" json:",omitempty"`
 	PartyOccupationBusiness                         *PartyOccupationBusinessType               `xml:"PartyOccupationBusiness,omitempty" json:",omitempty"`
 	ElectronicAddress                               *ElectronicAddressType                     `xml:"ElectronicAddress,omitempty" json:",omitempty"`
-	Account                                         []AccountType                              `xml:"Account,omitempty" json:",omitempty"`
+	Account                                         []*AccountType                             `xml:"Account,omitempty" json:",omitempty"`
 }
 
 func (r PartyType) fieldInclusion() error {
@@ -532,13 +540,18 @@ func (r ElectronicAddressType) Validate(args ...string) error {
 }
 
 type AccountType struct {
-	XMLName                 xml.Name                    `xml:"Account"`
-	SeqNum                  fincen.SeqNumber            `xml:"SeqNum,attr"`
-	AccountNumberText       *fincen.RestrictString40    `xml:"AccountNumberText,omitempty" json:",omitempty"`
-	PartyAccountAssociation PartyAccountAssociationType `xml:"PartyAccountAssociation"`
+	XMLName                 xml.Name                     `xml:"Account"`
+	SeqNum                  fincen.SeqNumber             `xml:"SeqNum,attr"`
+	AccountNumberText       *fincen.RestrictString40     `xml:"AccountNumberText,omitempty" json:",omitempty"`
+	PartyAccountAssociation *PartyAccountAssociationType `xml:"PartyAccountAssociation"`
 }
 
 func (r AccountType) Validate(args ...string) error {
+
+	if r.PartyAccountAssociation == nil {
+		return fincen.NewErrFieldRequired("PartyAccountAssociation")
+	}
+
 	return fincen.Validate(&r, args...)
 }
 
@@ -553,18 +566,18 @@ func (r PartyAccountAssociationType) Validate(args ...string) error {
 }
 
 type CurrencyTransactionActivityType struct {
-	XMLName                           xml.Name                                `xml:"CurrencyTransactionActivity"`
-	SeqNum                            fincen.SeqNumber                        `xml:"SeqNum,attr"`
-	AggregateTransactionIndicator     fincen.ValidateIndicatorType            `xml:"AggregateTransactionIndicator"`
-	ArmoredCarServiceIndicator        fincen.ValidateIndicatorType            `xml:"ArmoredCarServiceIndicator"`
-	ATMIndicator                      fincen.ValidateIndicatorType            `xml:"ATMIndicator"`
-	MailDepositShipmentIndicator      fincen.ValidateIndicatorType            `xml:"MailDepositShipmentIndicator"`
-	NightDepositIndicator             fincen.ValidateIndicatorType            `xml:"NightDepositIndicator"`
-	SharedBranchingIndicator          fincen.ValidateIndicatorType            `xml:"SharedBranchingIndicator"`
-	TotalCashInReceiveAmountText      fincen.RestrictString15                 `xml:"TotalCashInReceiveAmountText"`
-	TotalCashOutAmountText            fincen.RestrictString15                 `xml:"TotalCashOutAmountText"`
-	TransactionDateText               fincen.DateYYYYMMDDType                 `xml:"TransactionDateText"`
-	CurrencyTransactionActivityDetail []CurrencyTransactionActivityDetailType `xml:"CurrencyTransactionActivityDetail"`
+	XMLName                           xml.Name                                 `xml:"CurrencyTransactionActivity"`
+	SeqNum                            fincen.SeqNumber                         `xml:"SeqNum,attr"`
+	AggregateTransactionIndicator     fincen.ValidateIndicatorType             `xml:"AggregateTransactionIndicator"`
+	ArmoredCarServiceIndicator        fincen.ValidateIndicatorType             `xml:"ArmoredCarServiceIndicator"`
+	ATMIndicator                      fincen.ValidateIndicatorType             `xml:"ATMIndicator"`
+	MailDepositShipmentIndicator      fincen.ValidateIndicatorType             `xml:"MailDepositShipmentIndicator"`
+	NightDepositIndicator             fincen.ValidateIndicatorType             `xml:"NightDepositIndicator"`
+	SharedBranchingIndicator          fincen.ValidateIndicatorType             `xml:"SharedBranchingIndicator"`
+	TotalCashInReceiveAmountText      fincen.RestrictString15                  `xml:"TotalCashInReceiveAmountText"`
+	TotalCashOutAmountText            fincen.RestrictString15                  `xml:"TotalCashOutAmountText"`
+	TransactionDateText               fincen.DateYYYYMMDDType                  `xml:"TransactionDateText"`
+	CurrencyTransactionActivityDetail []*CurrencyTransactionActivityDetailType `xml:"CurrencyTransactionActivityDetail"`
 }
 
 func (r CurrencyTransactionActivityType) fieldInclusion() error {

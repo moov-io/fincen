@@ -22,9 +22,9 @@ type ActivityType struct {
 	DesignatedMoreThanOneBankIndicator *fincen.ValidateIndicatorType   `xml:"DesignatedMoreThanOneBankIndicator,omitempty" json:",omitempty"`
 	EFilingPriorDocumentNumber         *EFilingPriorDocumentNumberType `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
 	FilingDateText                     fincen.DateYYYYMMDDType         `xml:"FilingDateText"`
-	ActivityAssociation                ActivityAssociationType         `xml:"ActivityAssociation"`
-	Party                              []PartyType                     `xml:"Party"`
-	DesignationExemptActivity          DesignationExemptActivityType   `xml:"DesignationExemptActivity"`
+	ActivityAssociation                *ActivityAssociationType        `xml:"ActivityAssociation"`
+	Party                              []*PartyType                    `xml:"Party"`
+	DesignationExemptActivity          *DesignationExemptActivityType  `xml:"DesignationExemptActivity"`
 }
 
 func (r ActivityType) FormTypeCode() string {
@@ -51,6 +51,14 @@ func (r ActivityType) PartyCount(args ...string) int64 {
 func (r ActivityType) fieldInclusion() error {
 	if len(r.Party) < 4 || len(r.Party) > 104 {
 		return fincen.NewErrMinMaxRange("Party")
+	}
+
+	if r.ActivityAssociation == nil {
+		return fincen.NewErrFieldRequired("ActivityAssociation")
+	}
+
+	if r.DesignationExemptActivity == nil {
+		return fincen.NewErrFieldRequired("DesignationExemptActivity")
 	}
 
 	return nil
@@ -128,10 +136,10 @@ type PartyType struct {
 	ActivityPartyTypeCode              ValidateActivityPartyCodeType     `xml:"ActivityPartyTypeCode"`
 	PartyAsEntityOrganizationIndicator *fincen.ValidateIndicatorType     `xml:"PartyAsEntityOrganizationIndicator,omitempty" json:",omitempty"`
 	PrimaryRegulatorTypeCode           *ValidateFederalRegulatorCodeType `xml:"PrimaryRegulatorTypeCode,omitempty" json:",omitempty"`
-	PartyName                          []PartyNameType                   `xml:"PartyName,omitempty" json:",omitempty"`
+	PartyName                          []*PartyNameType                  `xml:"PartyName,omitempty" json:",omitempty"`
 	Address                            *AddressType                      `xml:"Address,omitempty" json:",omitempty"`
 	PhoneNumber                        *PhoneNumberType                  `xml:"PhoneNumber,omitempty" json:",omitempty"`
-	PartyIdentification                []PartyIdentificationType         `xml:"PartyIdentification,omitempty" json:",omitempty"`
+	PartyIdentification                []*PartyIdentificationType        `xml:"PartyIdentification,omitempty" json:",omitempty"`
 	PartyOccupationBusiness            *PartyOccupationBusinessType      `xml:"PartyOccupationBusiness,omitempty" json:",omitempty"`
 	ElectronicAddress                  *ElectronicAddressType            `xml:"ElectronicAddress,omitempty" json:",omitempty"`
 }

@@ -200,16 +200,16 @@
                 <PartyAccountAssociationTypeCode>7</PartyAccountAssociationTypeCode>
             </PartyAccountAssociation>
         </Party>
-        <SuspiciousActivity SeqNum="3">
+        <SuspiciousActivity SeqNum="79">
             <SuspiciousActivityFromDateText>19801025</SuspiciousActivityFromDateText>
-            <SuspiciousActivityClassification SeqNum="4">
+            <SuspiciousActivityClassification SeqNum="80">
                 <SuspiciousActivitySubtypeID>106</SuspiciousActivitySubtypeID>
                 <SuspiciousActivityTypeID>1</SuspiciousActivityTypeID>
             </SuspiciousActivityClassification>
         </SuspiciousActivity>
         <EFilingPriorDocumentNumber>00000000000001</EFilingPriorDocumentNumber>
         <FilingDateText>19801025</FilingDateText>
-        <ActivityAssociation SeqNum="2">
+        <ActivityAssociation SeqNum="81">
             <CorrectsAmendsPriorReportIndicator>Y</CorrectsAmendsPriorReportIndicator>
         </ActivityAssociation>
     </Activity>

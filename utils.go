@@ -78,22 +78,6 @@ func validateCallbackByValue(data reflect.Value, args ...string) error {
 // Validate is trying to run Validate(...string) function of fields
 func Validate(r interface{}, args ...string) error {
 
-	seqMap := map[SeqNumber]bool{}
-	checkSeqNumber := func(data reflect.Value) error {
-		num := getSeqNum(data)
-		if num < 0 {
-			return nil
-		}
-
-		_, ok := seqMap[num]
-		if ok {
-			return fmt.Errorf("%s has dupulicated sequence number", getTypeName(data.String()))
-		}
-
-		seqMap[num] = true
-		return nil
-	}
-
 	var err error
 	fields := reflect.ValueOf(r).Elem()
 	for i := 0; i < fields.NumField(); i++ {
@@ -106,19 +90,13 @@ func Validate(r interface{}, args ...string) error {
 				if err != nil {
 					return err
 				}
-				if seqErr := checkSeqNumber(elm); seqErr != nil {
-					return seqErr
-				}
 			}
 		} else if kind == reflect.Map {
 			for _, key := range fieldData.MapKeys() {
 				elm := fieldData.MapIndex(key)
-				err = validateCallbackByValue(fieldData.MapIndex(key), args...)
+				err = validateCallbackByValue(elm, args...)
 				if err != nil {
 					return err
-				}
-				if seqErr := checkSeqNumber(elm); seqErr != nil {
-					return seqErr
 				}
 			}
 		} else if kind == reflect.Ptr {
@@ -127,17 +105,11 @@ func Validate(r interface{}, args ...string) error {
 				if err != nil {
 					return err
 				}
-				if seqErr := checkSeqNumber(fieldData); seqErr != nil {
-					return seqErr
-				}
 			}
 		} else {
 			err = validateCallbackByValue(fieldData, args...)
 			if err != nil {
 				return err
-			}
-			if seqErr := checkSeqNumber(fieldData); seqErr != nil {
-				return seqErr
 			}
 		}
 	}
@@ -186,6 +158,10 @@ func getSeqNum(data reflect.Value) SeqNumber {
 		data = reflect.Indirect(reflect.ValueOf(elm))
 	}
 
+	if !data.IsValid() {
+		return ignoreValue
+	}
+
 	seqNum := data.FieldByName(SequenceFieldName)
 	if !seqNum.IsValid() {
 		return ignoreValue
@@ -197,20 +173,14 @@ func getSeqNum(data reflect.Value) SeqNumber {
 
 func setSeqNum(data reflect.Value, number SeqNumber) SeqNumber {
 
-	elm, ok := data.Interface().(Element)
-	if !ok || elm == nil {
-		return number
-	}
-
 	kind := data.Kind()
-	if kind == reflect.Interface {
-		elm, ok = data.Interface().(ElementActivity)
+	if kind == reflect.Interface || kind == reflect.Ptr {
+		elm, ok := data.Interface().(Element)
 		if !ok || elm == nil {
 			return number
 		}
 		data = reflect.Indirect(reflect.ValueOf(elm))
-	} else {
-		data = reflect.Indirect(reflect.ValueOf(data))
+
 	}
 
 	seqNum := data.FieldByName(SequenceFieldName)
@@ -219,13 +189,13 @@ func setSeqNum(data reflect.Value, number SeqNumber) SeqNumber {
 	}
 
 	seqNum.SetInt(int64(number))
+
+	fmt.Println(data.Type(), data.Kind(), number)
 	return number + 1
 }
 
 // GenerateSeqNumbers generate unique sequence numbers
-func GenerateSeqNumbers(r interface{}) error {
-
-	seqNumber := SeqNumber(1)
+func GenerateSeqNumbers(r interface{}, seqNumber *SeqNumber) error {
 
 	var fields reflect.Value
 	if reflect.ValueOf(r).Kind() == reflect.Ptr {
@@ -242,37 +212,136 @@ func GenerateSeqNumbers(r interface{}) error {
 
 	for i := 0; i < fields.NumField(); i++ {
 		fieldData := fields.Field(i)
+
 		kind := fieldData.Kind()
 		if kind == reflect.Slice {
 			for i := 0; i < fieldData.Len(); i++ {
 				elm := fieldData.Index(i)
-				seqNumber = setSeqNum(elm, seqNumber)
-				if err := GenerateSeqNumbers(elm.Interface()); err != nil {
+				*seqNumber = setSeqNum(elm, *seqNumber)
+				if err := GenerateSeqNumbers(elm.Interface(), seqNumber); err != nil {
 					return err
 				}
 			}
 		} else if kind == reflect.Map {
 			for _, key := range fieldData.MapKeys() {
 				elm := fieldData.MapIndex(key)
-				seqNumber = setSeqNum(elm, seqNumber)
-				if err := GenerateSeqNumbers(elm.Interface()); err != nil {
+				*seqNumber = setSeqNum(elm, *seqNumber)
+				if err := GenerateSeqNumbers(elm.Interface(), seqNumber); err != nil {
 					return err
 				}
 			}
 		} else if kind == reflect.Ptr {
 			if fieldData.Pointer() != 0 {
-				seqNumber = setSeqNum(fieldData, seqNumber)
-				if err := GenerateSeqNumbers(fieldData.Interface()); err != nil {
+				*seqNumber = setSeqNum(fieldData, *seqNumber)
+				if err := GenerateSeqNumbers(fieldData.Interface(), seqNumber); err != nil {
 					return err
 				}
 			}
 		} else if kind == reflect.Struct {
-			seqNumber = setSeqNum(fieldData, seqNumber)
-			if err := GenerateSeqNumbers(fieldData.Interface()); err != nil {
+			*seqNumber = setSeqNum(fieldData, *seqNumber)
+			if err := GenerateSeqNumbers(fieldData.Interface(), seqNumber); err != nil {
 				return err
 			}
 		}
 	}
 
 	return nil
+}
+
+// ValidateSeqNumbers verify unique sequence numbers
+func ValidateSeqNumbers(r interface{}) (map[SeqNumber]bool, error) {
+
+	seqMap := map[SeqNumber]bool{}
+
+	checkFunc := func(elm reflect.Value, seqMap, sub map[SeqNumber]bool) (map[SeqNumber]bool, error) {
+
+		seq := getSeqNum(elm)
+
+		ret := seqMap
+		for key := range sub {
+			if _, ok := ret[key]; ok {
+				return nil, fmt.Errorf("exist duplicated sequence number %d", seq)
+			}
+			ret[key] = true
+		}
+
+		if seq > SeqNumber(-1) {
+			if _, ok := ret[seq]; ok {
+				return nil, fmt.Errorf("exist duplicated sequence number %d", seq)
+			} else {
+				ret[seq] = true
+			}
+		}
+
+		return ret, nil
+	}
+
+	var fields reflect.Value
+	if reflect.ValueOf(r).Kind() == reflect.Ptr {
+		fields = reflect.ValueOf(r).Elem()
+	} else {
+		fields = reflect.ValueOf(r)
+	}
+
+	if fields.Kind() == reflect.Struct {
+		fields = reflect.Indirect(reflect.ValueOf(r))
+	} else {
+		return nil, nil
+	}
+
+	for i := 0; i < fields.NumField(); i++ {
+		fieldData := fields.Field(i)
+
+		kind := fieldData.Kind()
+		if kind == reflect.Slice {
+			for i := 0; i < fieldData.Len(); i++ {
+				elm := fieldData.Index(i)
+
+				sub, err := ValidateSeqNumbers(elm.Interface())
+				if err != nil {
+					return nil, err
+				}
+
+				if seqMap, err = checkFunc(elm, seqMap, sub); err != nil {
+					return nil, err
+				}
+			}
+		} else if kind == reflect.Map {
+			for _, key := range fieldData.MapKeys() {
+
+				elm := fieldData.MapIndex(key)
+
+				sub, err := ValidateSeqNumbers(elm.Interface())
+				if err != nil {
+					return nil, err
+				}
+
+				if seqMap, err = checkFunc(elm, seqMap, sub); err != nil {
+					return nil, err
+				}
+			}
+		} else if kind == reflect.Ptr {
+			if fieldData.Pointer() != 0 {
+				sub, err := ValidateSeqNumbers(fieldData.Interface())
+				if err != nil {
+					return nil, err
+				}
+
+				if seqMap, err = checkFunc(fieldData, seqMap, sub); err != nil {
+					return nil, err
+				}
+			}
+		} else if kind == reflect.Struct {
+			sub, err := ValidateSeqNumbers(fieldData.Interface())
+			if err != nil {
+				return nil, err
+			}
+
+			if seqMap, err = checkFunc(fieldData, seqMap, sub); err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	return seqMap, nil
 }

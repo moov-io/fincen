@@ -177,10 +177,10 @@
             </Account>
         </Party>
         <FilingDateText>19801025</FilingDateText>
-        <ActivityAssociation SeqNum="2">
+        <ActivityAssociation SeqNum="43">
             <CorrectsAmendsPriorReportIndicator>Y</CorrectsAmendsPriorReportIndicator>
         </ActivityAssociation>
-        <CurrencyTransactionActivity SeqNum="1">
+        <CurrencyTransactionActivity SeqNum="44">
             <AggregateTransactionIndicator>Y</AggregateTransactionIndicator>
             <ArmoredCarServiceIndicator>Y</ArmoredCarServiceIndicator>
             <ATMIndicator>Y</ATMIndicator>
@@ -190,19 +190,19 @@
             <TotalCashInReceiveAmountText>47000</TotalCashInReceiveAmountText>
             <TotalCashOutAmountText/>
             <TransactionDateText>20170115</TransactionDateText>
-            <CurrencyTransactionActivityDetail SeqNum="40">
+            <CurrencyTransactionActivityDetail SeqNum="45">
                 <CurrencyTransactionActivityDetailTypeCode>55</CurrencyTransactionActivityDetailTypeCode>
                 <DetailTransactionAmountText>15000</DetailTransactionAmountText>
                 <OtherCurrencyTransactionActivityDetailText/>
                 <OtherForeignCurrencyCountryText/>
             </CurrencyTransactionActivityDetail>
-            <CurrencyTransactionActivityDetail SeqNum="41">
+            <CurrencyTransactionActivityDetail SeqNum="46">
                 <CurrencyTransactionActivityDetailTypeCode>46</CurrencyTransactionActivityDetailTypeCode>
                 <DetailTransactionAmountText>15000</DetailTransactionAmountText>
                 <OtherCurrencyTransactionActivityDetailText/>
                 <OtherForeignCurrencyCountryText/>
             </CurrencyTransactionActivityDetail>
-            <CurrencyTransactionActivityDetail SeqNum="42">
+            <CurrencyTransactionActivityDetail SeqNum="47">
                 <CurrencyTransactionActivityDetailTypeCode>23</CurrencyTransactionActivityDetailTypeCode>
                 <DetailTransactionAmountText>17000</DetailTransactionAmountText>
                 <OtherCurrencyTransactionActivityDetailText/>

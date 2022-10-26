@@ -23,10 +23,10 @@ type ActivityType struct {
 	EFilingPriorDocumentNumber        int64                             `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
 	PreparerFilingSignatureIndicator  *fincen.ValidateIndicatorType     `xml:"PreparerFilingSignatureIndicator,omitempty" json:",omitempty"`
 	ThirdPartyPreparerIndicator       *fincen.ValidateIndicatorType     `xml:"ThirdPartyPreparerIndicator,omitempty" json:",omitempty"`
-	ActivityAssociation               ActivityAssociationType           `xml:"ActivityAssociation"`
-	Party                             []PartyType                       `xml:"Party"`
-	Account                           []AccountType                     `xml:"Account,omitempty" json:",omitempty"`
-	ForeignAccountActivity            ForeignAccountActivityType        `xml:"ForeignAccountActivity"`
+	ActivityAssociation               *ActivityAssociationType          `xml:"ActivityAssociation"`
+	Party                             []*PartyType                      `xml:"Party"`
+	Account                           []*AccountType                    `xml:"Account,omitempty" json:",omitempty"`
+	ForeignAccountActivity            *ForeignAccountActivityType       `xml:"ForeignAccountActivity"`
 	ActivityNarrativeInformation      *ActivityNarrativeInformationType `xml:"ActivityNarrativeInformation,omitempty" json:",omitempty"`
 }
 
@@ -52,12 +52,21 @@ func (r ActivityType) PartyCount(args ...string) int64 {
 }
 
 func (r ActivityType) fieldInclusion() error {
+
 	if len(r.Party) < 3 || len(r.Party) > 5 {
 		return fincen.NewErrMinMaxRange("Party")
 	}
 
 	if len(r.Account) > 9999 {
 		return fincen.NewErrMinMaxRange("Account")
+	}
+
+	if r.ActivityAssociation == nil {
+		return fincen.NewErrFieldRequired("ActivityAssociation")
+	}
+
+	if r.ForeignAccountActivity == nil {
+		return fincen.NewErrFieldRequired("ForeignAccountActivity")
 	}
 
 	return nil
@@ -124,10 +133,10 @@ type PartyType struct {
 	IndividualBirthDateText                         *fincen.DateYYYYMMDDOrBlankType `xml:"IndividualBirthDateText,omitempty" json:",omitempty"`
 	SelfEmployedIndicator                           *fincen.ValidateIndicatorType   `xml:"SelfEmployedIndicator,omitempty" json:",omitempty"`
 	SignatureAuthoritiesIndicator                   *fincen.ValidateIndicatorYNType `xml:"SignatureAuthoritiesIndicator,omitempty" json:",omitempty"`
-	PartyName                                       PartyNameType                   `xml:"PartyName"`
+	PartyName                                       *PartyNameType                  `xml:"PartyName"`
 	Address                                         *AddressType                    `xml:"Address,omitempty" json:",omitempty"`
 	PhoneNumber                                     *PhoneNumberType                `xml:"PhoneNumber,omitempty" json:",omitempty"`
-	PartyIdentification                             []PartyIdentificationType       `xml:"PartyIdentification,omitempty" json:",omitempty"`
+	PartyIdentification                             []*PartyIdentificationType      `xml:"PartyIdentification,omitempty" json:",omitempty"`
 }
 
 func (r PartyType) fieldInclusion() error {
@@ -187,6 +196,10 @@ func (r PartyType) fieldInclusion() error {
 		return fincen.NewErrMinMaxRange("PartyIdentification")
 	}
 
+	if r.PartyName == nil {
+		return fincen.NewErrFieldRequired("PartyName")
+	}
+
 	return nil
 }
 
@@ -212,7 +225,7 @@ type AccountType struct {
 	JointOwnerQuantityText        *fincen.RestrictString3                   `xml:"JointOwnerQuantityText,omitempty" json:",omitempty"`
 	OtherAccountTypeText          *fincen.RestrictString50                  `xml:"OtherAccountTypeText,omitempty" json:",omitempty"`
 	UnknownMaximumValueIndicator  *fincen.ValidateIndicatorType             `xml:"UnknownMaximumValueIndicator,omitempty" json:",omitempty"`
-	Party                         []AccountPartyType                        `xml:"Party"`
+	Party                         []*AccountPartyType                       `xml:"Party"`
 }
 
 func (r AccountType) Validate(args ...string) error {
@@ -286,8 +299,8 @@ type AccountPartyType struct {
 	SeqNum                             fincen.SeqNumber                `xml:"SeqNum,attr"`
 	ActivityPartyTypeCode              ValidateAccountPartyCodeType    `xml:"ActivityPartyTypeCode"`
 	PartyAsEntityOrganizationIndicator *fincen.ValidateIndicatorType   `xml:"PartyAsEntityOrganizationIndicator,omitempty" json:",omitempty"`
-	PartyName                          AccountPartyNameType            `xml:"PartyName"`
-	Address                            AccountAddressType              `xml:"Address"`
+	PartyName                          *AccountPartyNameType           `xml:"PartyName"`
+	Address                            *AccountAddressType             `xml:"Address"`
 	PartyIdentification                *AccountPartyIdentificationType `xml:"PartyIdentification,omitempty" json:",omitempty"`
 }
 
@@ -300,6 +313,14 @@ func (r AccountPartyType) fieldInclusion() error {
 
 	if typeCode == "41" && r.PartyIdentification != nil {
 		return fincen.NewErrFiledOmitted("PartyIdentification")
+	}
+
+	if r.PartyName == nil {
+		return fincen.NewErrFieldRequired("PartyName")
+	}
+
+	if r.Address == nil {
+		return fincen.NewErrFieldRequired("Address")
 	}
 
 	return nil

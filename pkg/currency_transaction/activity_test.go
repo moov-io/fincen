@@ -950,20 +950,23 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The Party has invalid min & max range", activity.Validate().Error())
 
 		for i := 0; i < 6; i++ {
-			activity.Party = append(activity.Party, PartyType{})
+			activity.Party = append(activity.Party, &PartyType{})
 		}
+		activity.ActivityAssociation = &ActivityAssociationType{}
+		activity.CurrencyTransactionActivity = &CurrencyTransactionActivityType{}
+
 		require.Equal(t, "The Party(type 35) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "35"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "35"})
 		require.Equal(t, "The Party(type 37) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "37"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "37"})
 		require.Equal(t, "The Party(type 30) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "30"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "30"})
 		require.Equal(t, "The Party(type 8) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, PartyType{ActivityPartyTypeCode: "8"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "8"})
 		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", activity.Validate().Error())
 	})
 
@@ -1041,7 +1044,7 @@ func TestElements(t *testing.T) {
 		sample.PrimaryRegulatorTypeCode = nil
 		require.Equal(t, "The PartyName has invalid min & max range", sample.Validate().Error())
 
-		sample.PartyName = append(sample.PartyName, PartyNameType{})
+		sample.PartyName = append(sample.PartyName, &PartyNameType{})
 		a1 := AddressType{}
 		sample.Address = &a1
 		require.Equal(t, "The Address should be omitted", sample.Validate().Error())
@@ -1068,7 +1071,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The ElectronicAddress should be omitted", sample.Validate().Error())
 
 		sample.ElectronicAddress = nil
-		sample.Account = append(sample.Account, AccountType{})
+		sample.Account = append(sample.Account, &AccountType{})
 		require.Equal(t, "The Account should be omitted", sample.Validate("35").Error())
 
 		sample.Account = nil

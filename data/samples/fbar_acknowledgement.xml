@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<EFilingBatchXML StatusCode="A" SeqNum="1">
+<EFilingBatchXML StatusCode="A">
     <EFilingSubmissionXML StatusCode="A" SeqNum="1">
-        <EFilingActivityXML SeqNum="1">
+        <EFilingActivityXML SeqNum="2">
             <BSAID>31000000000001</BSAID>
-            <EFilingActivityErrorXML SeqNum="1">
+            <EFilingActivityErrorXML SeqNum="3">
                 <ErrorContextText>EFilingBatchXML/Activity[1]/Party[3]/Address[1]/RawStateCodeText</ErrorContextText>
                 <ErrorElementNameText>RawStateCodeText</ErrorElementNameText>
                 <ErrorLevelText>WARN</ErrorLevelText>
@@ -11,13 +11,13 @@
                 <ErrorTypeCode>C33</ErrorTypeCode>
             </EFilingActivityErrorXML>
         </EFilingActivityXML>
-        <EFilingActivityXML SeqNum="2">
+        <EFilingActivityXML SeqNum="4">
             <BSAID>31000000000002</BSAID>
-            <EFilingActivityErrorXML SeqNum="1"/>
+            <EFilingActivityErrorXML SeqNum="5"/>
         </EFilingActivityXML>
-        <EFilingActivityXML SeqNum="3">
+        <EFilingActivityXML SeqNum="6">
             <BSAID>31000000000003</BSAID>
-            <EFilingActivityErrorXML SeqNum="1">
+            <EFilingActivityErrorXML SeqNum="7">
                 <ErrorContextText>EFilingBatchXML/Activity[3]/Account[3]/Party[1]/PartyIdentification[1]/
                     PartyIdentificationNumberText</ErrorContextText>
                 <ErrorElementNameText>PartyIdentificationNumberText</ErrorElementNameText>
@@ -25,7 +25,7 @@
                 <ErrorText>The TIN contains formatting such as spaces, hyphens, or periods.</ErrorText>
                 <ErrorTypeCode>E33</ErrorTypeCode>
             </EFilingActivityErrorXML>
-            <EFilingActivityErrorXML SeqNum="2">
+            <EFilingActivityErrorXML SeqNum="8">
                 <ErrorContextText>EFilingBatchXML/Activity[3]/Account[9]/Party[2]/Address[1]/
                     RawCountryCodeText</ErrorContextText>
                 <ErrorElementNameText>RawCountryCodeText</ErrorElementNameText>

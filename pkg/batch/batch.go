@@ -31,10 +31,11 @@ func NewReport(args ...string) *EFilingBatchXML {
 	if len(args) > 0 {
 		rType = args[0]
 	}
+
 	if rType == ReportTypeSubmission {
 		reportXml.StatusCode = "A"
 	} else {
-		if !fincen.CheckInvolved(rType, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") {
+		if fincen.CheckInvolved(rType, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") {
 			reportXml.FormTypeCode = rType
 		}
 	}
@@ -75,7 +76,6 @@ func CreateReportWithFile(path string) (*EFilingBatchXML, error) {
 
 type EFilingBatchXML struct {
 	XMLName                 xml.Name                 `xml:"EFilingBatchXML"`
-	SeqNum                  fincen.SeqNumber         `xml:"SeqNum,attr"`
 	StatusCode              string                   `xml:"StatusCode,attr,omitempty" json:",omitempty"`
 	TotalAmount             float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
 	PartyCount              int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
@@ -102,7 +102,6 @@ type dummyXML struct {
 
 type batchDummy struct {
 	XMLName                 xml.Name              `xml:"EFilingBatchXML"`
-	SeqNum                  fincen.SeqNumber      `xml:"SeqNum,attr"`
 	StatusCode              string                `xml:"StatusCode,attr,omitempty" json:",omitempty"`
 	TotalAmount             float64               `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
 	PartyCount              int64                 `xml:"PartyCount,attr,omitempty" json:",omitempty"`
@@ -135,7 +134,6 @@ func (r *EFilingBatchXML) copy(org batchDummy) {
 	// copy object
 	r.XMLName = org.XMLName
 	r.Attrs = org.Attrs
-	r.SeqNum = org.SeqNum
 	r.StatusCode = org.StatusCode
 	r.TotalAmount = org.TotalAmount
 	r.PartyCount = org.PartyCount
@@ -186,7 +184,6 @@ func (r *EFilingBatchXML) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	a := struct {
 		XMLName                 xml.Name                 `xml:"EFilingBatchXML"`
-		SeqNum                  fincen.SeqNumber         `xml:"SeqNum,attr"`
 		StatusCode              string                   `xml:"StatusCode,attr,omitempty" json:",omitempty"`
 		TotalAmount             float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
 		PartyCount              int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
@@ -400,6 +397,10 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 		}
 	}
 
+	if _, err := fincen.ValidateSeqNumbers(&r); err != nil {
+		return err
+	}
+
 	if len(args) == 0 {
 		if err := r.validateAttrs(); err != nil {
 			return err
@@ -409,8 +410,16 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
 }
 
-func (r EFilingBatchXML) GenerateSeqNumbers() error {
-	return fincen.GenerateSeqNumbers(&r)
+func (r EFilingBatchXML) GenerateSeqNumbers(args ...int) error {
+	seqNum := fincen.SeqNumber(1)
+	if len(args) > 0 {
+		seqNum = fincen.SeqNumber(args[0])
+	}
+	return fincen.GenerateSeqNumbers(&r, &seqNum)
+}
+
+func (r *EFilingBatchXML) SetSeqNumber(number fincen.SeqNumber) error {
+	return errors.New("unsupported sequence number")
 }
 
 type EFilingSubmissionXML struct {
@@ -424,6 +433,11 @@ func (r EFilingSubmissionXML) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
 }
 
+func (r *EFilingSubmissionXML) SetSeqNumber(number fincen.SeqNumber) error {
+	r.SeqNum = number
+	return nil
+}
+
 type EFilingActivityXML struct {
 	XMLName                 xml.Name                  `xml:"EFilingActivityXML"`
 	SeqNum                  fincen.SeqNumber          `xml:"SeqNum,attr"`
@@ -433,6 +447,11 @@ type EFilingActivityXML struct {
 
 func (r EFilingActivityXML) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
+}
+
+func (r *EFilingActivityXML) SetSeqNumber(number fincen.SeqNumber) error {
+	r.SeqNum = number
+	return nil
 }
 
 type EFilingActivityErrorXML struct {
@@ -447,6 +466,11 @@ type EFilingActivityErrorXML struct {
 
 func (r EFilingActivityErrorXML) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
+}
+
+func (r *EFilingActivityErrorXML) SetSeqNumber(number fincen.SeqNumber) error {
+	r.SeqNum = number
+	return nil
 }
 
 type constructorFunc func() fincen.ElementActivity
