@@ -199,7 +199,7 @@ func (r PartyType) fieldInclusion() error {
 	if r.PartyName == nil {
 		return fincen.NewErrFieldRequired("PartyName")
 	}
-	
+
 	return nil
 }
 
