@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<EFilingBatchXML SeqNum="1" StatusCode="A">
+<EFilingBatchXML StatusCode="A">
     <EFilingSubmissionXML SeqNum="1" StatusCode="A">
-        <EFilingActivityXML SeqNum="1">
+        <EFilingActivityXML SeqNum="2">
             <BSAID>31000055053784</BSAID>
-            <EFilingActivityErrorXML SeqNum="1">
+            <EFilingActivityErrorXML SeqNum="3">
                 <ErrorContextText>EFilingBatchXML/Activity[1]/Party[25]/PartyIdentification[49]/PartyIdentificationNumberText</ErrorContextText>
                 <ErrorElementNameText>PartyIdentificationNumberText</ErrorElementNameText>
                 <ErrorLevelText>WARN</ErrorLevelText>
                 <ErrorText>The value recorded for the EIN or SSN/ITIN is an invalid number string.</ErrorText>
                 <ErrorTypeCode>C21</ErrorTypeCode>
             </EFilingActivityErrorXML>
-            <EFilingActivityErrorXML SeqNum="2">
+            <EFilingActivityErrorXML SeqNum="4">
                 <ErrorContextText>EFilingBatchXML/Activity[1]/Party[78]/PartyName[84]/RawIndividualFirstName</ErrorContextText>
                 <ErrorElementNameText>RawIndividualFirstName</ErrorElementNameText>
                 <ErrorLevelText>WARN</ErrorLevelText>
@@ -18,13 +18,13 @@
                 <ErrorTypeCode>C4</ErrorTypeCode>
             </EFilingActivityErrorXML>
         </EFilingActivityXML>
-        <EFilingActivityXML SeqNum="2">
+        <EFilingActivityXML SeqNum="5">
             <BSAID>31000055053785</BSAID>
-            <EFilingActivityErrorXML SeqNum="1"/>
+            <EFilingActivityErrorXML SeqNum="6"/>
         </EFilingActivityXML>
-        <EFilingActivityXML SeqNum="3">
+        <EFilingActivityXML SeqNum="7">
             <BSAID>31000055053786</BSAID>
-            <EFilingActivityErrorXML SeqNum="1"/>
+            <EFilingActivityErrorXML SeqNum="8"/>
         </EFilingActivityXML>
     </EFilingSubmissionXML>
 </EFilingBatchXML>

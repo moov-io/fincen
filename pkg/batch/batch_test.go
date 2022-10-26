@@ -64,7 +64,7 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity := batch.EFilingSubmissionXML.EFilingActivityXML[0]
 
-		require.Equal(t, fincen.SeqNumber(1), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000055053784"), activity.BSAID)
 		require.Equal(t, 2, len(activity.EFilingActivityErrorXML))
 
@@ -77,13 +77,13 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[1]
 
-		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(5), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000055053785"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[2]
 
-		require.Equal(t, fincen.SeqNumber(3), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(7), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000055053786"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
@@ -107,7 +107,7 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity := batch.EFilingSubmissionXML.EFilingActivityXML[0]
 
-		require.Equal(t, fincen.SeqNumber(1), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000000000001"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
@@ -120,13 +120,13 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[1]
 
-		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(4), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000000000002"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[2]
 
-		require.Equal(t, fincen.SeqNumber(3), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(6), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000000000003"), activity.BSAID)
 		require.Equal(t, 2, len(activity.EFilingActivityErrorXML))
 
@@ -150,7 +150,7 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity := batch.EFilingSubmissionXML.EFilingActivityXML[0]
 
-		require.Equal(t, fincen.SeqNumber(1), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000055053784"), activity.BSAID)
 		require.Equal(t, 2, len(activity.EFilingActivityErrorXML))
 
@@ -163,13 +163,13 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[1]
 
-		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(5), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000055053785"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[2]
 
-		require.Equal(t, fincen.SeqNumber(3), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(7), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000055053786"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
@@ -193,7 +193,7 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity := batch.EFilingSubmissionXML.EFilingActivityXML[0]
 
-		require.Equal(t, fincen.SeqNumber(1), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000055053784"), activity.BSAID)
 		require.Equal(t, 2, len(activity.EFilingActivityErrorXML))
 
@@ -206,13 +206,13 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[1]
 
-		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(5), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000055053785"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[2]
 
-		require.Equal(t, fincen.SeqNumber(3), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(7), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000055053786"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
@@ -236,7 +236,7 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity := batch.EFilingSubmissionXML.EFilingActivityXML[0]
 
-		require.Equal(t, fincen.SeqNumber(1), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000000000001"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
@@ -249,13 +249,13 @@ func TestAcknowledgement(t *testing.T) {
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[1]
 
-		require.Equal(t, fincen.SeqNumber(2), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(4), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000000000002"), activity.BSAID)
 		require.Equal(t, 1, len(activity.EFilingActivityErrorXML))
 
 		activity = batch.EFilingSubmissionXML.EFilingActivityXML[2]
 
-		require.Equal(t, fincen.SeqNumber(3), activity.SeqNum)
+		require.Equal(t, fincen.SeqNumber(6), activity.SeqNum)
 		require.Equal(t, fincen.RestrictNumeric14("31000000000003"), activity.BSAID)
 		require.Equal(t, 2, len(activity.EFilingActivityErrorXML))
 

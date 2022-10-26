@@ -3,7 +3,7 @@
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                      xmlns:fc2="www.fincen.gov/base">
     <Activity SeqNum="1">
-        <Party SeqNum="1">
+        <Party SeqNum="2">
             <ActivityPartyTypeCode>35</ActivityPartyTypeCode>
             <PartyName SeqNum="5">
                 <PartyNameTypeCode>L</PartyNameTypeCode>
@@ -24,72 +24,72 @@
                 <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
             </PartyIdentification>
         </Party>
-        <Party SeqNum="2">
+        <Party SeqNum="9">
             <ActivityPartyTypeCode>37</ActivityPartyTypeCode>
             <PartyName SeqNum="11">
                 <PartyNameTypeCode>L</PartyNameTypeCode>
                 <RawPartyFullName>Transmitter contact legal name</RawPartyFullName>
             </PartyName>
         </Party>
-        <Party SeqNum="3">
+        <Party SeqNum="12">
             <ActivityPartyTypeCode>11</ActivityPartyTypeCode>
             <PartyAsEntityOrganizationIndicator>Y</PartyAsEntityOrganizationIndicator>
-            <PartyName SeqNum="24">
+            <PartyName SeqNum="13">
                 <PartyNameTypeCode>L</PartyNameTypeCode>
                 <RawEntityIndividualLastName>Johnson Wedding Company</RawEntityIndividualLastName>
             </PartyName>
-            <PartyName SeqNum="25">
+            <PartyName SeqNum="14">
                 <PartyNameTypeCode>DBA</PartyNameTypeCode>
                 <RawPartyFullName>JWC</RawPartyFullName>
             </PartyName>
-            <Address SeqNum="26">
+            <Address SeqNum="15">
                 <RawCityText>Rockcreek</RawCityText>
                 <RawStateCodeText>NY</RawStateCodeText>
                 <RawStreetAddress1Text>987 Flint Street</RawStreetAddress1Text>
                 <RawZIPCode>21121</RawZIPCode>
             </Address>
-            <PhoneNumber SeqNum="27">
+            <PhoneNumber SeqNum="16">
                 <PhoneNumberExtensionText>4412</PhoneNumberExtensionText>
                 <PhoneNumberText>3659855214</PhoneNumberText>
             </PhoneNumber>
-            <PartyIdentification SeqNum="28">
+            <PartyIdentification SeqNum="17">
                 <PartyIdentificationNumberText>212121211</PartyIdentificationNumberText>
                 <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
             </PartyIdentification>
-            <PartyOccupationBusiness SeqNum="29">
+            <PartyOccupationBusiness SeqNum="18">
                 <NAICSCode>554</NAICSCode>
                 <OccupationBusinessText>Wedding Planner</OccupationBusinessText>
             </PartyOccupationBusiness>
-            <ElectronicAddress SeqNum="30">
+            <ElectronicAddress SeqNum="19">
                 <ElectronicAddressText>johnson@wedding.org</ElectronicAddressText>
             </ElectronicAddress>
         </Party>
-        <Party SeqNum="4">
+        <Party SeqNum="20">
             <ActivityPartyTypeCode>45</ActivityPartyTypeCode>
             <PrimaryRegulatorTypeCode>1</PrimaryRegulatorTypeCode>
-            <PartyName SeqNum="31">
+            <PartyName SeqNum="21">
                 <RawPartyFullName>Bank of the West</RawPartyFullName>
             </PartyName>
-            <Address SeqNum="32">
+            <Address SeqNum="22">
                 <RawCityText>Cityville</RawCityText>
                 <RawStateCodeText>AZ</RawStateCodeText>
                 <RawStreetAddress1Text>555 Rolling Creek Way</RawStreetAddress1Text>
                 <RawZIPCode>554478985</RawZIPCode>
             </Address>
-            <PartyIdentification SeqNum="33">
+            <PartyIdentification SeqNum="23">
                 <PartyIdentificationNumberText>318181818</PartyIdentificationNumberText>
                 <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
             </PartyIdentification>
-            <PartyIdentification SeqNum="34">
+            <PartyIdentification SeqNum="24">
                 <PartyIdentificationNumberText>445581258</PartyIdentificationNumberText>
                 <PartyIdentificationTypeCode>14</PartyIdentificationTypeCode>
             </PartyIdentification>
         </Party>
         <FilingDateText>19801025</FilingDateText>
-        <ActivityAssociation SeqNum="5">
+        <ActivityAssociation SeqNum="25">
             <InitialDesignationIndicator>Y</InitialDesignationIndicator>
         </ActivityAssociation>
-        <DesignationExemptActivity SeqNum="6">
+        <DesignationExemptActivity SeqNum="26">
             <ExemptBasisTypeCode>C</ExemptBasisTypeCode>
             <ExemptEffectiveBeginDateText>20190208</ExemptEffectiveBeginDateText>
         </DesignationExemptActivity>

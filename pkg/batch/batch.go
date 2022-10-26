@@ -397,6 +397,10 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 		}
 	}
 
+	if _, err := fincen.ValidateSeqNumbers(&r); err != nil {
+		return err
+	}
+
 	if len(args) == 0 {
 		if err := r.validateAttrs(); err != nil {
 			return err

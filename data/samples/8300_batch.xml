@@ -1,4 +1,4 @@
-<EFilingBatchXML ActivityCount="1" TotalAmount="0" PartyCount="4" SeqNum="1"
+<EFilingBatchXML ActivityCount="1" TotalAmount="0" PartyCount="4"
                      xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                      xmlns:fc2="www.fincen.gov/base">
@@ -124,13 +124,13 @@
             </PartyName>
         </Party>
         <FilingDateText>19801025</FilingDateText>
-        <ActivityAssociation SeqNum="2">
+        <ActivityAssociation SeqNum="200">
             <CorrectsAmendsPriorReportIndicator>Y</CorrectsAmendsPriorReportIndicator>
         </ActivityAssociation>
-        <CurrencyTransactionActivity SeqNum="1">
+        <CurrencyTransactionActivity SeqNum="201">
             <TransactionDateText>19801025</TransactionDateText>
-            <CurrencyTransactionActivityDetail SeqNum="1"></CurrencyTransactionActivityDetail>
-            <CurrencyTransactionActivityDetail SeqNum="2"></CurrencyTransactionActivityDetail>
+            <CurrencyTransactionActivityDetail SeqNum="202"></CurrencyTransactionActivityDetail>
+            <CurrencyTransactionActivityDetail SeqNum="203"></CurrencyTransactionActivityDetail>
         </CurrencyTransactionActivity>
     </Activity>
     <FormTypeCode>8300X</FormTypeCode>
