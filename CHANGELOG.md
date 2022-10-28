@@ -1,3 +1,9 @@
+## v0.2.6 (Released 2022-10-28)
+
+IMPROVEMENTS
+
+- fix: use specified xsi:schemaLocation attributes
+
 ## v0.2.5 (Released 2022-10-26)
 
 IMPROVEMENTS
