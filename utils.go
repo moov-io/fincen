@@ -190,7 +190,6 @@ func setSeqNum(data reflect.Value, number SeqNumber) SeqNumber {
 
 	seqNum.SetInt(int64(number))
 
-	fmt.Println(data.Type(), data.Kind(), number)
 	return number + 1
 }
 
