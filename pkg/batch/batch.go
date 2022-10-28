@@ -208,12 +208,43 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		}
 	}
 
-	a.Attrs = append(a.Attrs, xml.Attr{
-		Name: xml.Name{
-			Local: "xsi:schemaLocation",
-		},
-		Value: "www.server.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd",
-	})
+	switch a.FormTypeCode {
+	case "8300X":
+		a.Attrs = append(a.Attrs, xml.Attr{
+			Name: xml.Name{
+				Local: "xsi:schemaLocation",
+			},
+			Value: "www.server.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd",
+		})
+	case "DOEPX":
+		a.Attrs = append(a.Attrs, xml.Attr{
+			Name: xml.Name{
+				Local: "xsi:schemaLocation",
+			},
+			Value: "www.fincen.gov/base https://www.fincen.gov/base/EFL_DOEPXBatchSchema.xsd",
+		})
+	case "CTRX":
+		a.Attrs = append(a.Attrs, xml.Attr{
+			Name: xml.Name{
+				Local: "xsi:schemaLocation",
+			},
+			Value: "www.fincen.gov/base https://www.fincen.gov/sites/default/files/schema/base/EFL_CTRXBatchSchema.xsd",
+		})
+	case "SARX":
+		a.Attrs = append(a.Attrs, xml.Attr{
+			Name: xml.Name{
+				Local: "xsi:schemaLocation",
+			},
+			Value: "www.fincen.gov/base https://www.fincen.gov/base/EFL_FinCENSARXBatchSchema.xsd",
+		})
+	case "FBARX":
+		a.Attrs = append(a.Attrs, xml.Attr{
+			Name: xml.Name{
+				Local: "xsi:schemaLocation",
+			},
+			Value: "www.fincen.gov/base/EFL_FBARXBatchSchema.xsd",
+		})
+	}
 
 	a.Attrs = append(a.Attrs, xml.Attr{
 		Name: xml.Name{

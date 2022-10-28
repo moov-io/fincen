@@ -3,7 +3,6 @@
 package service_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/moov-io/base/config"
@@ -19,6 +18,5 @@ func Test_ConfigLoading(t *testing.T) {
 
 	gc := &service.GlobalConfig{}
 	err := ConfigService.Load(gc)
-	fmt.Println(err)
 	require.Nil(t, err)
 }

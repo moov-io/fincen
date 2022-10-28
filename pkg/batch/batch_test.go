@@ -6,13 +6,12 @@ package batch
 
 import (
 	"encoding/xml"
-	"fmt"
-	"github.com/moov-io/fincen/pkg/currency_transaction"
 	"os"
 	"path"
 	"testing"
 
 	"github.com/moov-io/fincen"
+	"github.com/moov-io/fincen/pkg/currency_transaction"
 	"github.com/stretchr/testify/require"
 )
 
@@ -292,7 +291,6 @@ func TestBatch(t *testing.T) {
 			require.NoError(t, err)
 
 			err = batch.Validate()
-			fmt.Println(err)
 			require.NoError(t, err)
 		})
 	}
