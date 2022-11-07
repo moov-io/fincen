@@ -174,7 +174,7 @@ func main() {
 	party5.PartyAssociation = []*PartyAssociationType{
 		{
 			Party: []*AssociationParty{
-				&AssociationParty{
+				{
 					ActivityPartyTypeCode: ValidateActivityPartyCodeType("46"),
 					Address:               &AddressType{},
 				},
