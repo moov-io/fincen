@@ -251,7 +251,7 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 	a.Attrs = append(a.Attrs, xml.Attr{
 		Name: xml.Name{
-			Local: "xsi:fc2",
+			Local: "xmlns:fc2",
 		},
 		Value: "www.server.gov/base",
 	})
