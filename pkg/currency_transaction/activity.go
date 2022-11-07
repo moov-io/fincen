@@ -28,7 +28,7 @@ type ActivityType struct {
 }
 
 func (r ActivityType) FormTypeCode() string {
-	return "CTRX"
+	return fincen.Report112
 }
 
 func (r ActivityType) TotalAmount() float64 {
@@ -150,7 +150,7 @@ type PartyType struct {
 	PartyName                                       []*PartyNameType                           `xml:"PartyName"`
 	Address                                         *AddressType                               `xml:"Address,omitempty" json:",omitempty"`
 	PhoneNumber                                     *PhoneNumberType                           `xml:"PhoneNumber,omitempty" json:",omitempty"`
-	PartyIdentification                             []PartyIdentificationType                  `xml:"PartyIdentification,omitempty" json:",omitempty"`
+	PartyIdentification                             []*PartyIdentificationType                 `xml:"PartyIdentification,omitempty" json:",omitempty"`
 	OrganizationClassificationTypeSubtype           *OrganizationClassificationTypeSubtypeType `xml:"OrganizationClassificationTypeSubtype,omitempty" json:",omitempty"`
 	PartyOccupationBusiness                         *PartyOccupationBusinessType               `xml:"PartyOccupationBusiness,omitempty" json:",omitempty"`
 	ElectronicAddress                               *ElectronicAddressType                     `xml:"ElectronicAddress,omitempty" json:",omitempty"`

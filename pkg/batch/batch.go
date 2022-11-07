@@ -19,10 +19,6 @@ import (
 	"github.com/moov-io/fincen/pkg/suspicious_activity"
 )
 
-const (
-	ReportTypeSubmission = "SUBMISSION"
-)
-
 func NewReport(args ...string) *EFilingBatchXML {
 
 	reportXml := EFilingBatchXML{}
@@ -32,10 +28,10 @@ func NewReport(args ...string) *EFilingBatchXML {
 		rType = args[0]
 	}
 
-	if rType == ReportTypeSubmission {
+	if rType == fincen.ReportSubmission {
 		reportXml.StatusCode = "A"
 	} else {
-		if fincen.CheckInvolved(rType, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") {
+		if fincen.CheckInvolved(rType, fincen.Report112, fincen.Report111, fincen.Report110, fincen.Report114, fincen.Form8300) {
 			reportXml.FormTypeCode = rType
 		}
 	}
@@ -209,35 +205,35 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 
 	switch a.FormTypeCode {
-	case "8300X":
+	case fincen.Form8300:
 		a.Attrs = append(a.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
 			Value: "www.server.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd",
 		})
-	case "DOEPX":
+	case fincen.Report110:
 		a.Attrs = append(a.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
 			Value: "www.fincen.gov/base https://www.fincen.gov/base/EFL_DOEPXBatchSchema.xsd",
 		})
-	case "CTRX":
+	case fincen.Report112:
 		a.Attrs = append(a.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
 			Value: "www.fincen.gov/base https://www.fincen.gov/sites/default/files/schema/base/EFL_CTRXBatchSchema.xsd",
 		})
-	case "SARX":
+	case fincen.Report111:
 		a.Attrs = append(a.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
 			Value: "www.fincen.gov/base https://www.fincen.gov/base/EFL_FinCENSARXBatchSchema.xsd",
 		})
-	case "FBARX":
+	case fincen.Report114:
 		a.Attrs = append(a.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
@@ -268,7 +264,7 @@ func (r *EFilingBatchXML) AppendActivity(act fincen.ElementActivity) error {
 		return errors.New("invalid activity")
 	}
 
-	if !fincen.CheckInvolved(r.FormTypeCode, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") ||
+	if !fincen.CheckInvolved(r.FormTypeCode, fincen.Report112, fincen.Report111, fincen.Report110, fincen.Report114, fincen.Form8300) ||
 		r.FormTypeCode != act.FormTypeCode() {
 		return errors.New("invalid form type")
 	}
@@ -304,23 +300,23 @@ func (r EFilingBatchXML) generateAttrs() batchAttr {
 		s.TotalAmount += activity.TotalAmount()
 
 		switch r.FormTypeCode {
-		case "8300X":
+		case fincen.Form8300:
 			// The count of all <Party> elements in the batch where the
 			// <ActivityPartyTypeCode> is equal to 16, 23, 4, 3, and 8 (combined)
 			s.PartyCount += activity.PartyCount("16", "23", "4", "3", "8")
-		case "DOEPX":
+		case fincen.Report110:
 			// The count of all <Party> elements in the batch where the
 			//<ActivityPartyTypeCode> is equal to 3, 11, 12, and 45 (combined)
 			s.PartyCount += activity.PartyCount("3", "11", "12", "45")
-		case "CTRX":
+		case fincen.Report112:
 			// The total count of all <Party> elements recorded in the batch file.
 			s.PartyCount += activity.PartyCount()
-		case "SARX":
+		case fincen.Report111:
 			// The count of all <Party> elements in the batch where the
 			// <ActivityPartyTypeCode> is equal to “33” (Subject)
 			s.PartyCount += activity.PartyCount("33")
 
-		case "FBARX":
+		case fincen.Report114:
 			// The total count of <Party> elements where the <ActivityPartyTypeCode> element is equal to “41”
 			s.PartyCount += activity.PartyCount("41")
 
@@ -419,7 +415,7 @@ func (r EFilingBatchXML) Validate(args ...string) error {
 	} else {
 
 		// FinCEN XML Batch Reporting
-		if !fincen.CheckInvolved(r.FormTypeCode, "CTRX", "SARX", "DOEPX", "FBARX", "8300X") {
+		if !fincen.CheckInvolved(r.FormTypeCode, fincen.Report112, fincen.Report111, fincen.Report110, fincen.Report114, fincen.Form8300) {
 			return fincen.NewErrValueInvalid("FormTypeCode")
 		}
 
@@ -508,10 +504,10 @@ type constructorFunc func() fincen.ElementActivity
 
 var (
 	activityConstructor = map[string]constructorFunc{
-		"CTRX":  func() fincen.ElementActivity { return &currency_transaction.ActivityType{} },
-		"SARX":  func() fincen.ElementActivity { return &suspicious_activity.ActivityType{} },
-		"DOEPX": func() fincen.ElementActivity { return &exempt_designation.ActivityType{} },
-		"FBARX": func() fincen.ElementActivity { return &financial_accounts.ActivityType{} },
-		"8300X": func() fincen.ElementActivity { return &cash_payments.ActivityType{} },
+		fincen.Report112: func() fincen.ElementActivity { return &currency_transaction.ActivityType{} },
+		fincen.Report111: func() fincen.ElementActivity { return &suspicious_activity.ActivityType{} },
+		fincen.Report110: func() fincen.ElementActivity { return &exempt_designation.ActivityType{} },
+		fincen.Report114: func() fincen.ElementActivity { return &financial_accounts.ActivityType{} },
+		fincen.Form8300:  func() fincen.ElementActivity { return &cash_payments.ActivityType{} },
 	}
 )

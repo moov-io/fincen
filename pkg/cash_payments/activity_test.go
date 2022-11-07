@@ -439,7 +439,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The Party(type 4) is a required field", activity.Validate().Error())
 
 		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "4"})
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", activity.Validate().Error())
+		require.Equal(t, "The DateYYYYMMDDType has invalid value", activity.Validate().Error())
 
 		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "4"})
 		require.Equal(t, "The Party(type 4) has invalid min & max range", activity.Validate().Error())
@@ -452,7 +452,7 @@ func TestElements(t *testing.T) {
 	t.Run("PartyType", func(t *testing.T) {
 		var sample PartyType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The ActivityPartyCode has invalid value", sample.Validate().Error())
 
 		sample.ActivityPartyTypeCode = "35"
 		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
@@ -509,8 +509,8 @@ func TestElements(t *testing.T) {
 	t.Run("PartyNameType", func(t *testing.T) {
 		var sample PartyNameType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("4").Error())
 		require.Equal(t, "The RawIndividualTitleText is a required field", sample.Validate("3").Error())
 		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("8").Error())
@@ -526,8 +526,8 @@ func TestElements(t *testing.T) {
 	t.Run("AddressType", func(t *testing.T) {
 		var sample AddressType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 		require.Equal(t, "The RawCityText is a required field", sample.Validate("35").Error())
 
 		v50 := fincen.RestrictString50("SAMPLE")
@@ -548,22 +548,22 @@ func TestElements(t *testing.T) {
 
 		v9 := fincen.RestrictString9("SA")
 		sample.RawZIPCode = &v9
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("35").Error())
+		require.NoError(t, sample.Validate("35"))
 	})
 
 	t.Run("PhoneNumberType", func(t *testing.T) {
 		var sample PhoneNumberType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("35").Error())
 	})
 
 	t.Run("PartyIdentificationType", func(t *testing.T) {
 		var sample PartyIdentificationType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PartyIdentificationCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The PartyIdentificationCode has invalid value", sample.Validate("INVALID").Error())
 		require.Equal(t, "The PartyIdentificationNumberText is a required field", sample.Validate("4").Error())
 		require.Equal(t, "The PartyIdentificationNumberText is a required field", sample.Validate("35").Error())
 		n := fincen.RestrictString25("SAMPLE")

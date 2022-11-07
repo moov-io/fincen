@@ -402,7 +402,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The Party(type 45) is a required field", activity.Validate().Error())
 
 		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "45"})
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", activity.Validate().Error())
+		require.Equal(t, "The DateYYYYMMDDType has invalid value", activity.Validate().Error())
 	})
 
 	t.Run("ActivityAssociationType", func(t *testing.T) {
@@ -421,7 +421,7 @@ func TestElements(t *testing.T) {
 	t.Run("PartyType", func(t *testing.T) {
 		var sample PartyType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The ActivityPartyCode has invalid value", sample.Validate().Error())
 
 		sample = PartyType{ActivityPartyTypeCode: "35"}
 
@@ -461,13 +461,13 @@ func TestElements(t *testing.T) {
 	t.Run("PartyNameType", func(t *testing.T) {
 		var sample PartyNameType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 		require.Equal(t, "The PartyNameTypeCode is a required field", sample.Validate("35").Error())
 
 		nameType := ValidatePartyNameCodeType("")
 		sample.PartyNameTypeCode = &nameType
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("35").Error())
+		require.Equal(t, "The PartyNameCode has invalid value (ValidatePartyNameCodeType)", sample.Validate("35").Error())
 		nameType = "L"
 		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("35").Error())
 
@@ -483,8 +483,8 @@ func TestElements(t *testing.T) {
 	t.Run("AddressType", func(t *testing.T) {
 		var sample AddressType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("11").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("11"))
 		require.Equal(t, "The RawCountryCodeText is a required field", sample.Validate("35").Error())
 		require.Equal(t, "The Address should be omitted", sample.Validate("INVALID").Error())
 
@@ -493,8 +493,8 @@ func TestElements(t *testing.T) {
 	t.Run("ElectronicAddressType", func(t *testing.T) {
 		var sample ElectronicAddressType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("11").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("11"))
 		require.Equal(t, "The ElectronicAddress should be omitted", sample.Validate("INVALID").Error())
 
 	})
@@ -502,8 +502,8 @@ func TestElements(t *testing.T) {
 	t.Run("PartyIdentificationType", func(t *testing.T) {
 		var sample PartyIdentificationType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("11").Error())
+		require.Equal(t, "The PartyIdentificationCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The PartyIdentificationCode has invalid value", sample.Validate("11").Error())
 		require.Equal(t, "The PartyIdentification should be omitted", sample.Validate("INVALID").Error())
 
 	})
@@ -511,8 +511,8 @@ func TestElements(t *testing.T) {
 	t.Run("PartyOccupationBusinessType", func(t *testing.T) {
 		var sample PartyOccupationBusinessType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("11").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("11"))
 		require.Equal(t, "The PartyOccupationBusiness should be omitted", sample.Validate("INVALID").Error())
 
 	})
@@ -520,7 +520,7 @@ func TestElements(t *testing.T) {
 	t.Run("PhoneNumberType", func(t *testing.T) {
 		var sample PhoneNumberType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.NoError(t, sample.Validate())
 		require.Equal(t, "The PhoneNumber should be omitted", sample.Validate("INVALID").Error())
 		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("35").Error())
 		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("11").Error())

@@ -24,6 +24,10 @@
                 <PartyIdentificationNumberText>458985215</PartyIdentificationNumberText>
                 <PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
             </PartyIdentification>
+            <PartyIdentification SeqNum="9">
+                <PartyIdentificationNumberText>458985215</PartyIdentificationNumberText>
+                <PartyIdentificationTypeCode>28</PartyIdentificationTypeCode>
+            </PartyIdentification>
         </Party>
         <Party SeqNum="10">
             <ActivityPartyTypeCode>37</ActivityPartyTypeCode>
@@ -60,7 +64,7 @@
             </PartyIdentification>
             <PartyIdentification SeqNum="18">
                 <PartyIdentificationNumberText>451256558</PartyIdentificationNumberText>
-                <PartyIdentificationTypeCode>29</PartyIdentificationTypeCode>
+                <PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
             </PartyIdentification>
             <OrganizationClassificationTypeSubtype SeqNum="19">
                 <OrganizationSubtypeID>535</OrganizationSubtypeID>
@@ -105,7 +109,7 @@
             </Address>
             <PartyIdentification SeqNum="33">
                 <PartyIdentificationNumberText>458789856</PartyIdentificationNumberText>
-                <PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
+                <PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
             </PartyIdentification>
             <PartyIdentification SeqNum="34">
                 <PartyIdentificationNumberText>5589887789</PartyIdentificationNumberText>

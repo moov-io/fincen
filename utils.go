@@ -12,12 +12,19 @@ import (
 	"strings"
 )
 
+const (
+	ReportSubmission = "SUBMISSION"
+	Report112        = "CTRX"
+	Report111        = "SARX"
+	Report110        = "DOEPX"
+	Report114        = "FBARX"
+	Form8300         = "8300X"
+)
+
 var (
 	DefaultValidateFunction = "Validate"
-
-	SequenceFieldName = "SeqNum"
-
-	dateTextRegex = regexp.MustCompile(`^\d{4}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$`)
+	SequenceFieldName       = "SeqNum"
+	dateTextRegex           = regexp.MustCompile(`^\d{4}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$`)
 )
 
 // NumericStringField return number string with filling zero
@@ -343,4 +350,8 @@ func ValidateSeqNumbers(r interface{}) (map[SeqNumber]bool, error) {
 	}
 
 	return seqMap, nil
+}
+
+func Ptr[T any](t T) *T {
+	return &t
 }

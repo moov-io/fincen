@@ -21,7 +21,7 @@ func (r ValidateActivityPartyCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateActivityPartyCode")
+	return fincen.NewErrValueInvalid("ActivityPartyCode")
 }
 
 // May be one of 1, 2, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 28, 999
@@ -35,7 +35,7 @@ func (r ValidatePartyIdentificationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCode")
+	return fincen.NewErrValueInvalid("PartyIdentificationCode")
 }
 
 // May be one of L, AKA, DBA
@@ -49,7 +49,7 @@ func (r ValidatePartyNameCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyNameCode")
+	return fincen.NewErrValueInvalid("PartyNameCode")
 }
 
 // May be one of 9, 1, 2, 7, 3, 4, 6, 14
@@ -63,7 +63,7 @@ func (r ValidateFederalRegulatorCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateFederalRegulatorCode")
+	return fincen.NewErrValueInvalid("FederalRegulatorCode")
 }
 
 // May be one of 8, 9
@@ -77,7 +77,7 @@ func (r ValidatePartyAccountAssociationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyAccountAssociationCode")
+	return fincen.NewErrValueInvalid("PartyAccountAssociationCode")
 }
 
 // May be one of "55", "46", "23", "12", "14", "49", "18", "21", "25", "997", "53",

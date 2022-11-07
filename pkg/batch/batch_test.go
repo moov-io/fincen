@@ -304,7 +304,7 @@ func TestElements(t *testing.T) {
 		sample := EFilingBatchXML{}
 		require.Equal(t, "The FormTypeCode has invalid value", sample.Validate().Error())
 
-		sample.FormTypeCode = "CTRX"
+		sample.FormTypeCode = fincen.Report112
 		require.Equal(t, "The Activity has invalid value", sample.Validate().Error())
 
 		var emptyActivity fincen.ElementActivity = (*emptyElementActivity)(nil)
@@ -319,7 +319,7 @@ func TestElements(t *testing.T) {
 }
 
 func TestGenerateSeqNumbers(t *testing.T) {
-	report := NewReport("CTRX")
+	report := NewReport(fincen.Report112)
 	require.NotNil(t, report)
 
 	act1 := currency_transaction.NewActivity()

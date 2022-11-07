@@ -171,7 +171,7 @@ Available types are "SUBMISSION", "CTRX", "SARX", "DOEPX", "FBARX", "8300X"
 
 ```
 // create report with type
-newReport := NewReport("SUBMISSION")
+newReport := NewReport(fincen.ReportSubmission)
 ```
 
 **Adding activities by each type**

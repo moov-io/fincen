@@ -453,7 +453,7 @@ func TestElements(t *testing.T) {
 		indicator := fincen.ValidateIndicatorType("Y")
 		sample.PartyName = &PartyNameType{}
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The ActivityPartyCode has invalid value", sample.Validate().Error())
 
 		sample = PartyType{ActivityPartyTypeCode: "15"}
 
@@ -513,8 +513,8 @@ func TestElements(t *testing.T) {
 	t.Run("AddressType", func(t *testing.T) {
 		var sample AddressType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 
 		require.Equal(t, "The RawCityText is a required field", sample.Validate("35").Error())
 		v50 := fincen.RestrictString50("")
@@ -537,7 +537,7 @@ func TestElements(t *testing.T) {
 		sample.PartyName = &AccountPartyNameType{}
 		sample.Address = &AccountAddressType{}
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The AccountPartyCode has invalid value", sample.Validate().Error())
 
 		sample.ActivityPartyTypeCode = "41"
 		sample.PartyAsEntityOrganizationIndicator = &indicator
@@ -550,8 +550,8 @@ func TestElements(t *testing.T) {
 	t.Run("PartyIdentificationType", func(t *testing.T) {
 		var sample PartyIdentificationType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 
 		require.Equal(t, "The OtherIssuerCountryText is a required field", sample.Validate("15").Error())
 		v2 := fincen.RestrictString2("")
@@ -573,8 +573,8 @@ func TestElements(t *testing.T) {
 	t.Run("PartyNameType", func(t *testing.T) {
 		var sample PartyNameType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PartyNameCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The PartyNameCode has invalid value", sample.Validate("INVALID").Error())
 
 		v150 := fincen.RestrictString150("")
 		sample.RawEntityIndividualLastName = &v150
@@ -600,8 +600,8 @@ func TestElements(t *testing.T) {
 	t.Run("PhoneNumberType", func(t *testing.T) {
 		var sample PhoneNumberType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 
 		v6 := fincen.RestrictString6("")
 		sample.PhoneNumberExtensionText = &v6
@@ -614,8 +614,8 @@ func TestElements(t *testing.T) {
 	t.Run("AccountPartyNameType", func(t *testing.T) {
 		var sample AccountPartyNameType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PartyNameCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The PartyNameCode has invalid value", sample.Validate("INVALID").Error())
 
 		v150 := fincen.RestrictString150("")
 		sample.RawEntityIndividualLastName = &v150

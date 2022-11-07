@@ -32,7 +32,7 @@ type ActivityType struct {
 }
 
 func (r ActivityType) FormTypeCode() string {
-	return "8300X"
+	return fincen.Form8300
 }
 
 func (r ActivityType) TotalAmount() float64 {
@@ -442,14 +442,14 @@ func (r ActivityNarrativeInformationType) Validate(args ...string) error {
 }
 
 type CurrencyTransactionActivityDetailType struct {
-	XMLName                                   xml.Name                                                  `xml:"CurrencyTransactionActivityDetail"`
-	SeqNum                                    fincen.SeqNumber                                          `xml:"SeqNum,attr"`
-	CurrencyTransactionActivityDetailTypeCode *fincen.ValidateCurrencyTransactionActivityDetailCodeType `xml:"CurrencyTransactionActivityDetailTypeCode,omitempty" json:",omitempty"`
-	DetailTransactionAmountText               *fincen.RestrictString15                                  `xml:"DetailTransactionAmountText,omitempty" json:",omitempty"`
-	DetailTransactionDescription              string                                                    `xml:"DetailTransactionDescription,omitempty" json:",omitempty"`
-	InstrumentProductServiceTypeCode          *fincen.ValidateInstrumentProductServiceTypeCode          `xml:"InstrumentProductServiceTypeCode,omitempty" json:",omitempty"`
-	IssuerNameText                            string                                                    `xml:"IssuerNameText,omitempty" json:",omitempty"`
-	OtherForeignCurrencyCountryText           *fincen.RestrictString2                                   `xml:"OtherForeignCurrencyCountryText,omitempty" json:",omitempty"`
+	XMLName                                   xml.Name                                           `xml:"CurrencyTransactionActivityDetail"`
+	SeqNum                                    fincen.SeqNumber                                   `xml:"SeqNum,attr"`
+	CurrencyTransactionActivityDetailTypeCode *ValidateCurrencyTransactionActivityDetailCodeType `xml:"CurrencyTransactionActivityDetailTypeCode,omitempty" json:",omitempty"`
+	DetailTransactionAmountText               *fincen.RestrictString15                           `xml:"DetailTransactionAmountText,omitempty" json:",omitempty"`
+	DetailTransactionDescription              string                                             `xml:"DetailTransactionDescription,omitempty" json:",omitempty"`
+	InstrumentProductServiceTypeCode          *fincen.ValidateInstrumentProductServiceTypeCode   `xml:"InstrumentProductServiceTypeCode,omitempty" json:",omitempty"`
+	IssuerNameText                            string                                             `xml:"IssuerNameText,omitempty" json:",omitempty"`
+	OtherForeignCurrencyCountryText           *fincen.RestrictString2                            `xml:"OtherForeignCurrencyCountryText,omitempty" json:",omitempty"`
 }
 
 func (r CurrencyTransactionActivityDetailType) Validate(args ...string) error {

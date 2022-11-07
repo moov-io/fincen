@@ -967,7 +967,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The Party(type 8) is a required field", activity.Validate().Error())
 
 		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "8"})
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", activity.Validate().Error())
+		require.Equal(t, "The DateYYYYMMDDType has invalid value", activity.Validate().Error())
 	})
 
 	t.Run("ActivityAssociationType", func(t *testing.T) {
@@ -1055,7 +1055,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The PhoneNumber should be omitted", sample.Validate().Error())
 
 		sample.PhoneNumber = nil
-		sample.PartyIdentification = append(sample.PartyIdentification, PartyIdentificationType{})
+		sample.PartyIdentification = append(sample.PartyIdentification, &PartyIdentificationType{})
 		require.Equal(t, "The PartyIdentification should be omitted", sample.Validate().Error())
 
 		sample.PartyIdentification = nil
@@ -1075,7 +1075,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The Account should be omitted", sample.Validate("35").Error())
 
 		sample.Account = nil
-		sample.PartyIdentification = append(sample.PartyIdentification, PartyIdentificationType{}, PartyIdentificationType{}, PartyIdentificationType{})
+		sample.PartyIdentification = append(sample.PartyIdentification, &PartyIdentificationType{}, &PartyIdentificationType{}, &PartyIdentificationType{})
 		sample.ActivityPartyTypeCode = "35"
 		require.Equal(t, "The PartyIdentification has invalid min & max range", sample.Validate("35").Error())
 
@@ -1084,8 +1084,8 @@ func TestElements(t *testing.T) {
 	t.Run("PartyNameType", func(t *testing.T) {
 		var sample PartyNameType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 
 		indicator := fincen.ValidateIndicatorType("Y")
 
@@ -1127,8 +1127,8 @@ func TestElements(t *testing.T) {
 	t.Run("AddressType", func(t *testing.T) {
 		var sample AddressType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 
 		indicator := fincen.ValidateIndicatorType("Y")
 
@@ -1180,8 +1180,8 @@ func TestElements(t *testing.T) {
 	t.Run("PhoneNumberType", func(t *testing.T) {
 		var sample PhoneNumberType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 
 		v6 := fincen.RestrictString6("SA")
 		sample.PhoneNumberExtensionText = &v6
@@ -1196,8 +1196,8 @@ func TestElements(t *testing.T) {
 	t.Run("PartyIdentificationType", func(t *testing.T) {
 		var sample PartyIdentificationType
 
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 
 		indicator := fincen.ValidateIndicatorType("Y")
 		sample.IdentificationPresentUnknownIndicator = &indicator

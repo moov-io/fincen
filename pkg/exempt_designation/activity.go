@@ -28,7 +28,7 @@ type ActivityType struct {
 }
 
 func (r ActivityType) FormTypeCode() string {
-	return "DOEPX"
+	return fincen.Report110
 }
 
 func (r ActivityType) TotalAmount() float64 {
