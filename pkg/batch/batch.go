@@ -72,6 +72,7 @@ func CreateReportWithFile(path string) (*EFilingBatchXML, error) {
 
 type EFilingBatchXML struct {
 	XMLName                 xml.Name                 `xml:"EFilingBatchXML"`
+	SeqNum                  fincen.SeqNumber         `xml:"SeqNum,attr,omitempty" json:",omitempty"`
 	StatusCode              string                   `xml:"StatusCode,attr,omitempty" json:",omitempty"`
 	TotalAmount             float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
 	PartyCount              int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
@@ -96,8 +97,9 @@ type dummyXML struct {
 	Content    []byte           `xml:",innerxml"`
 }
 
-type batchDummy struct {
+type EFilingBatchUnmarshal struct {
 	XMLName                 xml.Name              `xml:"EFilingBatchXML"`
+	SeqNum                  fincen.SeqNumber      `xml:"SeqNum,attr,omitempty" json:",omitempty"`
 	StatusCode              string                `xml:"StatusCode,attr,omitempty" json:",omitempty"`
 	TotalAmount             float64               `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
 	PartyCount              int64                 `xml:"PartyCount,attr,omitempty" json:",omitempty"`
@@ -126,9 +128,10 @@ type batchAttr struct {
 	ConsolidatedOwnerCount  int64
 }
 
-func (r *EFilingBatchXML) copy(org batchDummy) {
+func (r *EFilingBatchXML) copy(org EFilingBatchUnmarshal) {
 	// copy object
 	r.XMLName = org.XMLName
+	r.SeqNum = org.SeqNum
 	r.Attrs = org.Attrs
 	r.StatusCode = org.StatusCode
 	r.TotalAmount = org.TotalAmount
@@ -146,7 +149,7 @@ func (r *EFilingBatchXML) copy(org batchDummy) {
 
 func (r *EFilingBatchXML) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 
-	var dummy batchDummy
+	var dummy EFilingBatchUnmarshal
 	if err := d.DecodeElement(&dummy, &start); err != nil {
 		return err
 	}
@@ -177,64 +180,84 @@ func (r *EFilingBatchXML) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	return nil
 }
 
-func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	a := struct {
-		XMLName                 xml.Name                 `xml:"EFilingBatchXML"`
-		StatusCode              string                   `xml:"StatusCode,attr,omitempty" json:",omitempty"`
-		TotalAmount             float64                  `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
-		PartyCount              int64                    `xml:"PartyCount,attr,omitempty" json:",omitempty"`
-		ActivityCount           int64                    `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
-		AccountCount            int64                    `xml:"AccountCount,attr,omitempty" json:",omitempty"`
-		ActivityAttachmentCount int64                    `xml:"ActivityAttachmentCount,attr,omitempty" json:",omitempty"`
-		AttachmentCount         int64                    `xml:"AttachmentCount,attr,omitempty" json:",omitempty"`
-		JointlyOwnedOwnerCount  int64                    `xml:"JointlyOwnedOwnerCount,attr,omitempty" json:",omitempty"`
-		NoFIOwnerCount          int64                    `xml:"NoFIOwnerCount,attr,omitempty" json:",omitempty"`
-		ConsolidatedOwnerCount  int64                    `xml:"ConsolidatedOwnerCount,attr,omitempty" json:",omitempty"`
-		Attrs                   []xml.Attr               `xml:",any,attr"`
-		FormTypeCode            string                   `xml:"FormTypeCode,omitempty" json:",omitempty"`
-		Activity                []fincen.ElementActivity `xml:"Activity,omitempty" json:",omitempty"`
-		EFilingSubmissionXML    *EFilingSubmissionXML    `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
-	}(r)
+type EFilingBatchMarshal struct {
+	XMLName                 xml.Name              `xml:"EFilingBatchXML"`
+	SeqNum                  fincen.SeqNumber      `xml:"SeqNum,attr,omitempty" json:",omitempty"`
+	StatusCode              string                `xml:"StatusCode,attr,omitempty" json:",omitempty"`
+	TotalAmount             float64               `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
+	PartyCount              int64                 `xml:"PartyCount,attr,omitempty" json:",omitempty"`
+	ActivityCount           int64                 `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
+	AccountCount            int64                 `xml:"AccountCount,attr,omitempty" json:",omitempty"`
+	ActivityAttachmentCount int64                 `xml:"ActivityAttachmentCount,attr,omitempty" json:",omitempty"`
+	AttachmentCount         int64                 `xml:"AttachmentCount,attr,omitempty" json:",omitempty"`
+	JointlyOwnedOwnerCount  int64                 `xml:"JointlyOwnedOwnerCount,attr,omitempty" json:",omitempty"`
+	NoFIOwnerCount          int64                 `xml:"NoFIOwnerCount,attr,omitempty" json:",omitempty"`
+	ConsolidatedOwnerCount  int64                 `xml:"ConsolidatedOwnerCount,attr,omitempty" json:",omitempty"`
+	Attrs                   []xml.Attr            `xml:",any,attr"`
+	FormTypeCode            string                `xml:"fc:FormTypeCode,omitempty" json:",omitempty"`
+	ActivitiesContent       []byte                `xml:",innerxml"`
+	EFilingSubmissionXML    *EFilingSubmissionXML `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
+}
 
-	for index := 0; index < len(a.Attrs); index++ {
-		switch a.Attrs[index].Name.Local {
+func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+
+	dummy := EFilingBatchMarshal{
+		XMLName:                 r.XMLName,
+		SeqNum:                  r.SeqNum,
+		StatusCode:              r.StatusCode,
+		TotalAmount:             r.TotalAmount,
+		PartyCount:              r.PartyCount,
+		ActivityCount:           r.ActivityCount,
+		AccountCount:            r.AccountCount,
+		ActivityAttachmentCount: r.ActivityAttachmentCount,
+		AttachmentCount:         r.AttachmentCount,
+		JointlyOwnedOwnerCount:  r.JointlyOwnedOwnerCount,
+		NoFIOwnerCount:          r.NoFIOwnerCount,
+		ConsolidatedOwnerCount:  r.ConsolidatedOwnerCount,
+		Attrs:                   r.Attrs,
+		FormTypeCode:            r.FormTypeCode,
+		EFilingSubmissionXML:    r.EFilingSubmissionXML,
+	}
+
+	for index := 0; index < len(dummy.Attrs); index++ {
+		switch dummy.Attrs[index].Name.Local {
 		case "schemaLocation", "xsi", "fc2":
-			a.Attrs = append(a.Attrs[:index], a.Attrs[index+1:]...)
+			dummy.Attrs = append(dummy.Attrs[:index], dummy.Attrs[index+1:]...)
 			index--
 		}
 	}
 
-	switch a.FormTypeCode {
+	switch dummy.FormTypeCode {
 	case fincen.Form8300:
-		a.Attrs = append(a.Attrs, xml.Attr{
+		dummy.Attrs = append(dummy.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
 			Value: "www.server.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd",
 		})
 	case fincen.Report110:
-		a.Attrs = append(a.Attrs, xml.Attr{
+		dummy.Attrs = append(dummy.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
 			Value: "www.fincen.gov/base https://www.fincen.gov/base/EFL_DOEPXBatchSchema.xsd",
 		})
 	case fincen.Report112:
-		a.Attrs = append(a.Attrs, xml.Attr{
+		dummy.Attrs = append(dummy.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
 			Value: "www.fincen.gov/base https://www.fincen.gov/sites/default/files/schema/base/EFL_CTRXBatchSchema.xsd",
 		})
 	case fincen.Report111:
-		a.Attrs = append(a.Attrs, xml.Attr{
+		dummy.Attrs = append(dummy.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
 			Value: "www.fincen.gov/base https://www.fincen.gov/base/EFL_FinCENSARXBatchSchema.xsd",
 		})
 	case fincen.Report114:
-		a.Attrs = append(a.Attrs, xml.Attr{
+		dummy.Attrs = append(dummy.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
@@ -242,21 +265,35 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		})
 	}
 
-	a.Attrs = append(a.Attrs, xml.Attr{
-		Name: xml.Name{
-			Local: "xmlns:xsi",
-		},
-		Value: "http://www.w3.org/2001/XMLSchema-instance",
-	})
+	if fincen.CheckInvolved(r.FormTypeCode, fincen.Report112, fincen.Report111, fincen.Report110, fincen.Report114, fincen.Form8300) {
+		dummy.Attrs = append(dummy.Attrs, xml.Attr{
+			Name: xml.Name{
+				Local: "xmlns:xsi",
+			},
+			Value: "http://www.w3.org/2001/XMLSchema-instance",
+		})
 
-	a.Attrs = append(a.Attrs, xml.Attr{
-		Name: xml.Name{
-			Local: "xmlns:fc2",
-		},
-		Value: "www.server.gov/base",
-	})
+		dummy.Attrs = append(dummy.Attrs, xml.Attr{
+			Name: xml.Name{
+				Local: "xmlns:fc2",
+			},
+			Value: "www.fincen.gov/base",
+		})
+		// Batch report don't support sequence number
+		dummy.SeqNum = 0
+	}
 
-	return e.EncodeElement(&a, start)
+	for _, act := range r.Activity {
+		content := []byte{'\n'}
+		if converted, err := fincen.MarshalIndent(act, fincen.DefaultXMLIntent, fincen.DefaultXMLIntent); err == nil {
+			content = append(content, converted...)
+		}
+		if len(content) > 1 {
+			dummy.ActivitiesContent = content
+		}
+	}
+
+	return e.EncodeElement(&dummy, start)
 }
 
 func (r *EFilingBatchXML) AppendActivity(act fincen.ElementActivity) error {

@@ -19,9 +19,11 @@ const (
 	Report110        = "DOEPX"
 	Report114        = "FBARX"
 	Form8300         = "8300X"
+	NameSpace        = "fc2"
 )
 
 var (
+	DefaultXMLIntent        = "  "
 	DefaultValidateFunction = "Validate"
 	SequenceFieldName       = "SeqNum"
 	dateTextRegex           = regexp.MustCompile(`^\d{4}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$`)

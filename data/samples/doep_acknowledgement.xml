@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<EFilingBatchXML StatusCode="A">
-    <EFilingSubmissionXML SeqNum="1" StatusCode="A">
-        <EFilingActivityXML SeqNum="2">
+<EFilingBatchXML StatusCode="A" SeqNum="1">
+    <EFilingSubmissionXML SeqNum="2" StatusCode="A">
+        <EFilingActivityXML SeqNum="3">
             <BSAID>31000055053784</BSAID>
-            <EFilingActivityErrorXML SeqNum="3">
+            <EFilingActivityErrorXML SeqNum="4">
                 <ErrorContextText>EFilingBatchXML/Activity[1]/Party[25]/PartyName[30]/RawIndividualFirstName</ErrorContextText>
                 <ErrorElementNameText>RawIndividualFirstName</ErrorElementNameText>
                 <ErrorLevelText>WARN</ErrorLevelText>
                 <ErrorText>The exempt person is an individual and first name is not provided.</ErrorText>
                 <ErrorTypeCode>P02</ErrorTypeCode>
             </EFilingActivityErrorXML>
-            <EFilingActivityErrorXML SeqNum="4">
+            <EFilingActivityErrorXML SeqNum="5">
                 <ErrorContextText>EFilingBatchXML/Activity[1]/Party[78]/Address[84]/RawZIPCode
                 </ErrorContextText>
                 <ErrorElementNameText>RawIndividualFirstName</ErrorElementNameText>
@@ -19,13 +19,13 @@
                 <ErrorTypeCode>B08</ErrorTypeCode>
             </EFilingActivityErrorXML>
         </EFilingActivityXML>
-        <EFilingActivityXML SeqNum="5">
+        <EFilingActivityXML SeqNum="6">
             <BSAID>31000055053785</BSAID>
-            <EFilingActivityErrorXML SeqNum="6"/>
+            <EFilingActivityErrorXML SeqNum="7"/>
         </EFilingActivityXML>
-        <EFilingActivityXML SeqNum="7">
+        <EFilingActivityXML SeqNum="8">
             <BSAID>31000055053786</BSAID>
-            <EFilingActivityErrorXML SeqNum="8"/>
+            <EFilingActivityErrorXML SeqNum="9"/>
         </EFilingActivityXML>
     </EFilingSubmissionXML>
 </EFilingBatchXML>
