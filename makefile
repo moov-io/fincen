@@ -18,7 +18,7 @@ ifeq ($(OS),Windows_NT)
 else
 	@wget -O lint-project.sh https://raw.githubusercontent.com/moov-io/infra/master/go/lint-project.sh
 	@chmod +x ./lint-project.sh
-	GOOS=js GOARCH=wasm GOCYCLO_LIMIT=115 COVER_THRESHOLD=80.0 time ./lint-project.sh
+	GOOS=js GOARCH=wasm GOCYCLO_LIMIT=115 COVER_THRESHOLD=75.0 SET_GOLANGCI_LINTERS=asciicheck,bidichk,bodyclose,durationcheck,gosec,misspell,nolintlint,rowserrcheck,sqlclosecheck,unused time ./lint-project.sh
 endif
 
 .PHONY: client

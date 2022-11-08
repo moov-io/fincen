@@ -26,14 +26,7 @@ var (
 	escCR   = []byte("&#xD;")
 	escFFFD = []byte("\uFFFD") // Unicode replacement character
 
-	begComment  = []byte("<!--")
-	endComment  = []byte("-->")
-	endProcInst = []byte("?>")
-
-	attrType            = reflect.TypeOf(xml.Attr{})
-	unmarshalerType     = reflect.TypeOf((*xml.Unmarshaler)(nil)).Elem()
-	unmarshalerAttrType = reflect.TypeOf((*xml.UnmarshalerAttr)(nil)).Elem()
-	textUnmarshalerType = reflect.TypeOf((*encoding.TextUnmarshaler)(nil)).Elem()
+	attrType = reflect.TypeOf(xml.Attr{})
 
 	marshalerType     = reflect.TypeOf((*xml.Marshaler)(nil)).Elem()
 	marshalerAttrType = reflect.TypeOf((*xml.MarshalerAttr)(nil)).Elem()
@@ -673,7 +666,7 @@ func (p *printer) marshalValue(val reflect.Value, finfo *fieldInfo, startTemplat
 			name = name[:i]
 		}
 		if name == "" {
-			return &xml.UnsupportedTypeError{typ}
+			return &xml.UnsupportedTypeError{Type: typ}
 		}
 		start.Name.Local = name
 	}
@@ -759,7 +752,7 @@ func (p *printer) marshalAttr(start *xml.StartElement, name xml.Name, val reflec
 		if err != nil {
 			return err
 		}
-		start.Attr = append(start.Attr, xml.Attr{name, string(text)})
+		start.Attr = append(start.Attr, xml.Attr{Name: name, Value: string(text)})
 		return nil
 	}
 
@@ -770,14 +763,13 @@ func (p *printer) marshalAttr(start *xml.StartElement, name xml.Name, val reflec
 			if err != nil {
 				return err
 			}
-			start.Attr = append(start.Attr, xml.Attr{name, string(text)})
+			start.Attr = append(start.Attr, xml.Attr{Name: name, Value: string(text)})
 			return nil
 		}
 	}
 
 	// Dereference or skip nil pointer, interface values.
-	switch val.Kind() {
-	case reflect.Pointer, reflect.Interface:
+	if val.Kind() == reflect.Pointer || val.Kind() == reflect.Interface {
 		if val.IsNil() {
 			return nil
 		}
@@ -807,7 +799,7 @@ func (p *printer) marshalAttr(start *xml.StartElement, name xml.Name, val reflec
 	if b != nil {
 		s = string(b)
 	}
-	start.Attr = append(start.Attr, xml.Attr{name, s})
+	start.Attr = append(start.Attr, xml.Attr{Name: name, Value: s})
 	return nil
 }
 
@@ -946,7 +938,7 @@ func (p *printer) marshalSimple(typ reflect.Type, val reflect.Value) (string, []
 		// []byte
 		return "", val.Bytes(), nil
 	}
-	return "", nil, &xml.UnsupportedTypeError{typ}
+	return "", nil, &xml.UnsupportedTypeError{Type: typ}
 }
 
 func (p *printer) marshalStruct(tinfo *typeInfo, val reflect.Value) error {
@@ -1352,7 +1344,12 @@ Loop:
 		if len(oldf.idx) == len(newf.idx) {
 			f1 := typ.FieldByIndex(oldf.idx)
 			f2 := typ.FieldByIndex(newf.idx)
-			return &xml.TagPathError{typ, f1.Name, f1.Tag.Get("xml"), f2.Name, f2.Tag.Get("xml")}
+			return &xml.TagPathError{
+				Struct: typ,
+				Field1: f1.Name,
+				Tag1:   f1.Tag.Get("xml"),
+				Field2: f2.Name,
+				Tag2:   f2.Tag.Get("xml")}
 		}
 	}
 
@@ -1513,9 +1510,9 @@ func getTypeInfo(typ reflect.Type) (*typeInfo, error) {
 					if tinfo.xmlname == nil {
 						tinfo.xmlname = inner.xmlname
 					}
-					for _, finfo := range inner.fields {
+					for index, finfo := range inner.fields {
 						finfo.idx = append([]int{i}, finfo.idx...)
-						if err := addFieldInfo(typ, tinfo, &finfo); err != nil {
+						if err := addFieldInfo(typ, tinfo, &inner.fields[index]); err != nil {
 							return nil, err
 						}
 					}
