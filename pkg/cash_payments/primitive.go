@@ -21,7 +21,7 @@ func (r ValidateActivityNarrativeSequenceNumber) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateActivityNarrativeSequenceNumber")
+	return fincen.NewErrValueInvalid("ActivityNarrativeSequenceNumber")
 }
 
 // May be one of 35, 37, 16, 23, 4, 8, 3
@@ -35,7 +35,7 @@ func (r ValidateActivityPartyCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidateActivityPartyCode")
+	return fincen.NewErrValueInvalid("ActivityPartyCode")
 }
 
 // May be one of 1, 2, 5, 6, 7, 28, 999
@@ -49,7 +49,7 @@ func (r ValidatePartyIdentificationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyIdentificationCode")
+	return fincen.NewErrValueInvalid("PartyIdentificationCode")
 }
 
 // May be one of L, DBA
@@ -63,5 +63,19 @@ func (r ValidatePartyNameCodeType) Validate() error {
 			return nil
 		}
 	}
-	return fincen.NewErrValueInvalid("ValidatePartyNameCode")
+	return fincen.NewErrValueInvalid("PartyNameCode")
+}
+
+// May be one of 1, 2, 3, 4, 5, 6, 7, 8, 9, 999
+type ValidateCurrencyTransactionActivityDetailCodeType string
+
+func (r ValidateCurrencyTransactionActivityDetailCodeType) Validate() error {
+	for _, vv := range []string{
+		"1", "2", "3", "4", "5", "6", "7", "8", "9", "999",
+	} {
+		if reflect.DeepEqual(string(r), vv) {
+			return nil
+		}
+	}
+	return fincen.NewErrValueInvalid("CurrencyTransactionActivityDetailCodeType")
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<EFilingBatchXML StatusCode="A">
-	<EFilingSubmissionXML StatusCode="A" SeqNum="1">
-		<EFilingActivityXML SeqNum="2">
+<EFilingBatchXML StatusCode="A" SeqNum="1">
+	<EFilingSubmissionXML StatusCode="A" SeqNum="2">
+		<EFilingActivityXML SeqNum="3">
 			<BSAID>31000000000001</BSAID>
-			<EFilingActivityErrorXML SeqNum="3">
+			<EFilingActivityErrorXML SeqNum="4">
 				<ErrorContextText>EFilingBatchXML/Activity[1]/Party[218]/Address[232]/RawZIPCode</ErrorContextText>
 				<ErrorElementNameText>RawZIPCode</ErrorElementNameText>
 				<ErrorLevelText>WARN</ErrorLevelText>
@@ -11,20 +11,20 @@
 				<ErrorTypeCode>F18</ErrorTypeCode>
 			</EFilingActivityErrorXML>
 		</EFilingActivityXML>
-		<EFilingActivityXML SeqNum="4">
+		<EFilingActivityXML SeqNum="5">
 			<BSAID>31000000000002</BSAID>
-			<EFilingActivityErrorXML SeqNum="5"/>
+			<EFilingActivityErrorXML SeqNum="6"/>
 		</EFilingActivityXML>
-		<EFilingActivityXML SeqNum="6">
+		<EFilingActivityXML SeqNum="7">
 			<BSAID>31000000000003</BSAID>
-			<EFilingActivityErrorXML SeqNum="7">
+			<EFilingActivityErrorXML SeqNum="8">
 				<ErrorContextText>EFilingBatchXML/Activity[3]/Party[577]/PartyIdentification[608]/PartyIdentificationNumberText</ErrorContextText>
 				<ErrorElementNameText>PartyIdentificationNumberText</ErrorElementNameText>
 				<ErrorLevelText>WARN</ErrorLevelText>
 				<ErrorText>The element contains an invalid number string.</ErrorText>
 				<ErrorTypeCode>C57</ErrorTypeCode>
 			</EFilingActivityErrorXML>
-			<EFilingActivityErrorXML SeqNum="8">
+			<EFilingActivityErrorXML SeqNum="9">
 				<ErrorContextText>EFilingBatchXML/Activity[3]</ErrorContextText>
 				<ErrorElementNameText>Activity</ErrorElementNameText>
 				<ErrorLevelText>WARN</ErrorLevelText>

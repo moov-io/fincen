@@ -35,7 +35,7 @@ type ActivityType struct {
 }
 
 func (r ActivityType) FormTypeCode() string {
-	return "SARX"
+	return fincen.Report111
 }
 
 func (r ActivityType) TotalAmount() float64 {
@@ -216,10 +216,25 @@ func (r PartyType) fieldInclusion() error {
 
 	typeCode := string(r.ActivityPartyTypeCode)
 
+	existed := make(map[string]bool)
+	for _, pi := range r.PartyIdentification {
+		if pi.PartyIdentificationTypeCode == nil {
+			continue
+		}
+
+		existed[string(*pi.PartyIdentificationTypeCode)] = true
+	}
+
 	switch typeCode {
 	case "35":
-		if len(r.PartyName) != 1 || len(r.Address) != 1 || len(r.PhoneNumber) != 1 || len(r.PartyIdentification) != 1 {
+		if len(r.PartyName) != 1 || len(r.Address) != 1 || len(r.PhoneNumber) != 1 {
 			return fincen.NewErrValueInvalid("Party")
+		}
+		if len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 2 {
+			return fincen.NewErrValueInvalid("PartyIdentification")
+		}
+		if !existed["28"] || !existed["4"] {
+			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	case "37":
 		if len(r.PartyName) != 1 {
@@ -227,10 +242,14 @@ func (r PartyType) fieldInclusion() error {
 		}
 	case "30":
 		if r.PrimaryRegulatorTypeCode == nil || (len(r.PartyName) < 1 || len(r.PartyName) > 2) || len(r.Address) != 1 ||
-			(len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3) ||
 			(len(r.OrganizationClassificationTypeSubtype) < 1 || len(r.OrganizationClassificationTypeSubtype) > 15) {
-
 			return fincen.NewErrValueInvalid("Party")
+		}
+		if len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3 {
+			return fincen.NewErrValueInvalid("PartyIdentification")
+		}
+		if !existed["4"] {
+			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	case "8":
 		if len(r.PartyName) != 1 || len(r.PhoneNumber) != 1 {
@@ -243,18 +262,23 @@ func (r PartyType) fieldInclusion() error {
 	case "34":
 		if r.PrimaryRegulatorTypeCode == nil ||
 			(len(r.PartyName) < 1 || len(r.PartyName) > 2) ||
-			(len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3) ||
 			(len(r.OrganizationClassificationTypeSubtype) < 1 || len(r.OrganizationClassificationTypeSubtype) > 12) ||
 			len(r.Address) != 1 {
-
 			return fincen.NewErrValueInvalid("Party")
+		}
+		if len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3 {
+			return fincen.NewErrValueInvalid("PartyIdentification")
+		}
+		if !existed["4"] {
+			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	case "33":
 		if (len(r.PartyName) < 1 || len(r.PartyName) > 100) ||
-			(len(r.Address) < 1 || len(r.Address) > 99) ||
-			(len(r.PartyIdentification) < 2 || len(r.PartyIdentification) > 100) {
-
+			(len(r.Address) < 1 || len(r.Address) > 99) {
 			return fincen.NewErrValueInvalid("Party")
+		}
+		if len(r.PartyIdentification) > 100 {
+			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	}
 
@@ -529,7 +553,7 @@ func (r AssociationParty) Validate(args ...string) error {
 type PartyAccountAssociationType struct {
 	XMLName                         xml.Name                                `xml:"PartyAccountAssociation"`
 	SeqNum                          fincen.SeqNumber                        `xml:"SeqNum,attr"`
-	Party                           []AccountAssociationParty               `xml:"Party"`
+	Party                           []*AccountAssociationParty              `xml:"Party"`
 	AccountClosedIndicator          *fincen.ValidateIndicatorType           `xml:"AccountClosedIndicator,omitempty" json:",omitempty"`
 	PartyAccountAssociationTypeCode ValidatePartyAccountAssociationCodeType `xml:"PartyAccountAssociationTypeCode"`
 }

@@ -226,7 +226,7 @@ var timeDataOrBlankTypeRegex = regexp.MustCompile(`([0-1][0-9]|(2[0-3])):[0-5][0
 
 func (r ValidateTimeDataOrBlankType) Validate() error {
 	if !timeDataOrBlankTypeRegex.MatchString(string(r)) {
-		return NewErrValueInvalid("ValidateTimeDataOrBlankType")
+		return NewErrValueInvalid("TimeDataOrBlankType")
 	}
 	return nil
 }
@@ -290,7 +290,7 @@ func (r ValidateAssetAttributeTypeIDTypeCode) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateAssetAttributeTypeIDTypeCode")
+	return NewErrValueInvalid("AssetAttributeTypeIDTypeCode")
 }
 
 // May be one of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 41, 46, 47
@@ -304,7 +304,7 @@ func (r ValidateAssetSubtypeIDTypeCode) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateAssetSubtypeIDTypeCode")
+	return NewErrValueInvalid("AssetSubtypeIDTypeCode")
 }
 
 // May be one of 5, 6
@@ -318,7 +318,7 @@ func (r ValidateAssetTypeIDTypeCode) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateAssetTypeIDTypeCode")
+	return NewErrValueInvalid("AssetTypeIDTypeCode")
 }
 
 // May be one of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 999
@@ -332,7 +332,7 @@ func (r ValidateCyberEventIndicatorsTypeCode) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateCyberEventIndicatorsTypeCode")
+	return NewErrValueInvalid("CyberEventIndicatorsTypeCode")
 }
 
 // May be one of E, U
@@ -346,7 +346,7 @@ func (r ValidateElectronicAddressTypeCode) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateElectronicAddressTypeCode")
+	return NewErrValueInvalid("ElectronicAddressTypeCode")
 }
 
 // May be one of Y,
@@ -360,7 +360,7 @@ func (r ValidateIndicatorType) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateIndicatorType")
+	return NewErrValueInvalid("IndicatorType")
 }
 
 // May be one of 1, 2, 3, 4, 5, 11, 12, 999
@@ -374,7 +374,7 @@ func (r ValidateOrganizationCodeType) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateOrganizationCodeType")
+	return NewErrValueInvalid("OrganizationCodeType")
 }
 
 // May be one of 101, 102, 103, 503, 504, 508, 513, 514, 535, 528, 529, 533, 534, 539, 540, 541, 542, 1999, 5999
@@ -388,7 +388,7 @@ func (r ValidateOrganizationSubtypeCodeSarType) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateOrganizationSubtypeCodeSarType")
+	return NewErrValueInvalid("OrganizationSubtypeCodeSarType")
 }
 
 // May be one of F, M, R, W
@@ -402,7 +402,7 @@ func (r ValidatePhoneNumberCodeType) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidatePhoneNumberCodeType")
+	return NewErrValueInvalid("PhoneNumberCodeType")
 }
 
 // May be one of 106, 111, 112, 113, 114, 301, 304, 305, 308, 309, 310, 312, 320, 321, 322, 323, 324, 325, 401, 402, 403, 404, 405, 409, 501, 502, 504, 505, 506, 507, 601, 603, 604, 608, 609, 701, 801, 804, 805, 806, 807, 808, 809, 812, 820, 821, 822, 823, 824, 901, 903, 904, 905, 907, 908, 909, 910, 911, 913, 917, 920, 921, 922, 924, 925, 926, 927, 928, 1001, 1003, 1005, 1006, 1007, 1101, 1102, 1201, 1202, 1203, 1204, 1999, 3999, 4999, 5999, 6999, 7999, 8999, 9999, 10999, 11999, 12999
@@ -416,7 +416,7 @@ func (r ValidateSuspiciousActivitySubtypeID) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateSuspiciousActivitySubtypeID")
+	return NewErrValueInvalid("SuspiciousActivitySubtypeID")
 }
 
 // May be one of 1, 12, 3, 4, 5, 6, 7, 8, 9, 10, 11
@@ -430,21 +430,7 @@ func (r ValidateSuspiciousActivityTypeID) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateSuspiciousActivityTypeID")
-}
-
-// May be one of 1, 2, 3, 4, 5, 6, 7, 8, 9, 999
-type ValidateCurrencyTransactionActivityDetailCodeType string
-
-func (r ValidateCurrencyTransactionActivityDetailCodeType) Validate() error {
-	for _, vv := range []string{
-		"1", "2", "3", "4", "5", "6", "7", "8", "9", "999",
-	} {
-		if reflect.DeepEqual(string(r), vv) {
-			return nil
-		}
-	}
-	return NewErrValueInvalid("ValidateCurrencyTransactionActivityDetailCodeType")
+	return NewErrValueInvalid("SuspiciousActivityTypeID")
 }
 
 // May be one of 35, 16, 39, 26, 40, 34
@@ -458,7 +444,7 @@ func (r ValidateInstrumentProductServiceTypeCode) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateInstrumentProductServiceTypeCode")
+	return NewErrValueInvalid("InstrumentProductServiceTypeCode")
 }
 
 // May be one of I, O, U
@@ -472,7 +458,7 @@ func (r ValidatePartyTypeCode) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidatePartyTypeCode")
+	return NewErrValueInvalid("PartyTypeCode")
 }
 
 // May be one of 101, 102, 103, 1999
@@ -486,7 +472,7 @@ func (r ValidateOrganizationSubtypeCodeCtrType) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateOrganizationSubtypeCodeCtrType")
+	return NewErrValueInvalid("OrganizationSubtypeCodeCtrType")
 }
 
 // May be one of Y, N,
@@ -500,7 +486,7 @@ func (r ValidateIndicatorYNType) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateIndicatorYNType")
+	return NewErrValueInvalid("IndicatorYNType")
 }
 
 // May be one of 1, 2, 3, 4, 5, 6, 7, 8, 9, 999
@@ -514,7 +500,7 @@ func (r ValidateLateFilingReasonCodeType) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateLateFilingReasonCodeType")
+	return NewErrValueInvalid("LateFilingReasonCodeType")
 }
 
 // May be one of 141, 142, 143, 144
@@ -528,7 +514,7 @@ func (r ValidateEFilingAccountTypeCodeType) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateEFilingAccountTypeCodeType")
+	return NewErrValueInvalid("EFilingAccountTypeCodeType")
 }
 
 // May be one of 1, 2, 999
@@ -542,7 +528,7 @@ func (r ValidateAccountTypeCodeType) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateAccountTypeCodeType")
+	return NewErrValueInvalid("AccountTypeCodeType")
 }
 
 // May be one of C, D, E, F
@@ -556,16 +542,20 @@ func (r ValidateExemptBasisTypeCode) Validate() error {
 			return nil
 		}
 	}
-	return NewErrValueInvalid("ValidateExemptBasisTypeCode")
+	return NewErrValueInvalid("ExemptBasisTypeCode")
 }
 
 // May be one of C, D, E, F
 type SeqNumber int64
 
 func (r SeqNumber) Validate() error {
-	if int64(r) == 0 {
-		return NewErrValueInvalid("SeqNumber")
-	}
+	// TODO disable check
+	/*
+		if int64(r) == 0 {
+			return NewErrValueInvalid("SeqNumber")
+		}
+	*/
+
 	return nil
 }
 

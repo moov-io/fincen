@@ -29,7 +29,7 @@ func TestPrimitives(t *testing.T) {
 
 	t.Run("ValidateActivityPartyCodeType", func(t *testing.T) {
 		var sample ValidateActivityPartyCodeType
-		require.Equal(t, "The ValidateActivityPartyCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The ActivityPartyCode has invalid value", sample.Validate().Error())
 
 		sample = "35"
 		require.NoError(t, sample.Validate())
@@ -37,7 +37,7 @@ func TestPrimitives(t *testing.T) {
 
 	t.Run("ValidateAccountPartyCodeType", func(t *testing.T) {
 		var sample ValidateAccountPartyCodeType
-		require.Equal(t, "The ValidateAccountPartyCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The AccountPartyCode has invalid value", sample.Validate().Error())
 
 		sample = "41"
 		require.NoError(t, sample.Validate())
@@ -45,7 +45,7 @@ func TestPrimitives(t *testing.T) {
 
 	t.Run("ValidateActivityPartyIdentificationCodeType", func(t *testing.T) {
 		var sample ValidateActivityPartyIdentificationCodeType
-		require.Equal(t, "The ValidateActivityPartyIdentificationCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The ActivityPartyIdentificationCode has invalid value", sample.Validate().Error())
 
 		sample = "1"
 		require.NoError(t, sample.Validate())
@@ -53,7 +53,7 @@ func TestPrimitives(t *testing.T) {
 
 	t.Run("ValidateAccountPartyIdentificationCodeType", func(t *testing.T) {
 		var sample ValidateAccountPartyIdentificationCodeType
-		require.Equal(t, "The ValidateAccountPartyIdentificationCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The AccountPartyIdentificationCode has invalid value", sample.Validate().Error())
 
 		sample = "1"
 		require.NoError(t, sample.Validate())
@@ -61,7 +61,7 @@ func TestPrimitives(t *testing.T) {
 
 	t.Run("ValidatePartyNameCodeType", func(t *testing.T) {
 		var sample ValidatePartyNameCodeType
-		require.Equal(t, "The ValidatePartyNameCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The PartyNameCode has invalid value", sample.Validate().Error())
 
 		sample = "L"
 		require.NoError(t, sample.Validate())

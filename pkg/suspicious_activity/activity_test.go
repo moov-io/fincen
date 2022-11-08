@@ -37,6 +37,10 @@ func mocParties() map[string][]byte {
 		<PartyIdentificationNumberText>458985215</PartyIdentificationNumberText>
 		<PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
 	</PartyIdentification>
+	<PartyIdentification SeqNum="9">
+		<PartyIdentificationNumberText>458985215</PartyIdentificationNumberText>
+		<PartyIdentificationTypeCode>28</PartyIdentificationTypeCode>
+	</PartyIdentification>
 </Party>`)
 
 	parties["37"] = []byte(`<Party SeqNum="10">
@@ -75,7 +79,7 @@ func mocParties() map[string][]byte {
 	</PartyIdentification>
 	<PartyIdentification SeqNum="18">
 		<PartyIdentificationNumberText>451256558</PartyIdentificationNumberText>
-		<PartyIdentificationTypeCode>29</PartyIdentificationTypeCode>
+		<PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
 	</PartyIdentification>
 	<OrganizationClassificationTypeSubtype SeqNum="19">
 		<OrganizationSubtypeID>535</OrganizationSubtypeID>
@@ -143,7 +147,7 @@ func mocParties() map[string][]byte {
 	</Address>
 	<PartyIdentification SeqNum="33">
 		<PartyIdentificationNumberText>458789856</PartyIdentificationNumberText>
-		<PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
+		<PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
 	</PartyIdentification>
 	<PartyIdentification SeqNum="34">
 		<PartyIdentificationNumberText>5589887789</PartyIdentificationNumberText>
@@ -295,7 +299,7 @@ func TestParty(t *testing.T) {
 		require.Equal(t, len(party.PartyName), 1)
 		require.Equal(t, len(party.Address), 1)
 		require.Equal(t, len(party.PhoneNumber), 1)
-		require.Equal(t, len(party.PartyIdentification), 1)
+		require.Equal(t, len(party.PartyIdentification), 2)
 
 		name := party.PartyName[0]
 		require.Equal(t, name.SeqNum, fincen.SeqNumber(5))
@@ -639,7 +643,7 @@ func TestElements(t *testing.T) {
 
 	t.Run("PartyType", func(t *testing.T) {
 		var sample PartyType
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The ActivityPartyCode has invalid value", sample.Validate().Error())
 		sample.ActivityPartyTypeCode = "35"
 		require.Equal(t, "The Party has invalid value", sample.Validate().Error())
 		sample.ActivityPartyTypeCode = "37"
@@ -658,8 +662,8 @@ func TestElements(t *testing.T) {
 
 	t.Run("PartyNameType", func(t *testing.T) {
 		var sample PartyNameType
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 		require.Equal(t, "The PartyName has invalid value", sample.Validate("35").Error())
 		require.Equal(t, "The PartyName has invalid value", sample.Validate("30").Error())
 		require.Equal(t, "The PartyName has invalid value", sample.Validate("34").Error())
@@ -670,29 +674,29 @@ func TestElements(t *testing.T) {
 
 	t.Run("AddressType", func(t *testing.T) {
 		var sample AddressType
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 		require.Equal(t, "The Address has invalid value", sample.Validate("35").Error())
 	})
 
 	t.Run("PhoneNumberType", func(t *testing.T) {
 		var sample PhoneNumberType
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 		require.Equal(t, "The PhoneNumber has invalid value", sample.Validate("8").Error())
 	})
 
 	t.Run("PartyIdentificationType", func(t *testing.T) {
 		var sample PartyIdentificationType
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 		require.Equal(t, "The PartyIdentification has invalid value", sample.Validate("30").Error())
 	})
 
 	t.Run("PartyAssociationType", func(t *testing.T) {
 		var sample PartyAssociationType
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.NoError(t, sample.Validate())
+		require.NoError(t, sample.Validate("INVALID"))
 		for i := 0; i < 100; i++ {
 			sample.Party = append(sample.Party, &AssociationParty{})
 		}
@@ -701,15 +705,15 @@ func TestElements(t *testing.T) {
 
 	t.Run("PartyAccountAssociationType", func(t *testing.T) {
 		var sample PartyAccountAssociationType
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PartyAccountAssociationCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The PartyAccountAssociationCode has invalid value", sample.Validate("INVALID").Error())
 		require.Equal(t, "The Party has invalid min & max range", sample.Validate("33").Error())
 	})
 
 	t.Run("AccountType", func(t *testing.T) {
 		var sample AccountType
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate("INVALID").Error())
+		require.Equal(t, "The PartyAccountAssociationCode has invalid value (PartyAccountAssociationType)", sample.Validate().Error())
+		require.Equal(t, "The PartyAccountAssociationCode has invalid value (PartyAccountAssociationType)", sample.Validate("INVALID").Error())
 		require.Equal(t, "The Account has invalid value", sample.Validate("41").Error())
 	})
 
@@ -718,6 +722,6 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The SuspiciousActivity has invalid min & max range", sample.Validate().Error())
 
 		sample.SuspiciousActivityClassification = append(sample.SuspiciousActivityClassification, &SuspiciousActivityClassificationType{})
-		require.Equal(t, "The SeqNumber has invalid value (SeqNumber)", sample.Validate().Error())
+		require.Equal(t, "The DateYYYYMMDDType has invalid value", sample.Validate().Error())
 	})
 }

@@ -30,7 +30,7 @@ func TestPrimitives(t *testing.T) {
 
 	t.Run("ValidateActivityPartyCodeType", func(t *testing.T) {
 		var sample ValidateActivityPartyCodeType
-		require.Equal(t, "The ValidateActivityPartyCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The ActivityPartyCode has invalid value", sample.Validate().Error())
 
 		sample = "35"
 		require.NoError(t, sample.Validate())
@@ -38,7 +38,7 @@ func TestPrimitives(t *testing.T) {
 
 	t.Run("ValidatePartyIdentificationCodeType", func(t *testing.T) {
 		var sample ValidatePartyIdentificationCodeType
-		require.Equal(t, "The ValidatePartyIdentificationCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The PartyIdentificationCode has invalid value", sample.Validate().Error())
 
 		sample = "1"
 		require.NoError(t, sample.Validate())
@@ -46,7 +46,7 @@ func TestPrimitives(t *testing.T) {
 
 	t.Run("ValidatePartyNameCodeType", func(t *testing.T) {
 		var sample ValidatePartyNameCodeType
-		require.Equal(t, "The ValidatePartyNameCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The PartyNameCode has invalid value", sample.Validate().Error())
 
 		sample = "L"
 		require.NoError(t, sample.Validate())
@@ -54,7 +54,7 @@ func TestPrimitives(t *testing.T) {
 
 	t.Run("ValidateFederalRegulatorCodeType", func(t *testing.T) {
 		var sample ValidateFederalRegulatorCodeType
-		require.Equal(t, "The ValidateFederalRegulatorCode has invalid value", sample.Validate().Error())
+		require.Equal(t, "The FederalRegulatorCode has invalid value", sample.Validate().Error())
 
 		sample = "1"
 		require.NoError(t, sample.Validate())
