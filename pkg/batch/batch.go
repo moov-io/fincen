@@ -281,6 +281,8 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		})
 		// Batch report don't support sequence number
 		dummy.SeqNum = 0
+		// force namespace prefix
+		start.Name.Local = "fc2:EFilingBatchXML"
 	}
 
 	for _, act := range r.Activity {
