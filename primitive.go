@@ -354,7 +354,7 @@ type ValidateIndicatorType string
 
 func (r ValidateIndicatorType) Validate() error {
 	for _, vv := range []string{
-		"Y",
+		"Y", "",
 	} {
 		if reflect.DeepEqual(string(r), vv) {
 			return nil
