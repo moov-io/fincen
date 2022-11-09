@@ -1,3 +1,9 @@
+## v0.3.0 (Released 2022-11-09)
+
+IMPROVEMENTS
+
+- feat: fixing fc to fc2 for formTypeCode and adding empty indicator for currency  transactions
+
 ## v0.2.9 (Released 2022-11-09)
 
 IMPROVEMENTS
