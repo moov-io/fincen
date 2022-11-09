@@ -194,7 +194,7 @@ type EFilingBatchMarshal struct {
 	NoFIOwnerCount          int64                 `xml:"NoFIOwnerCount,attr,omitempty" json:",omitempty"`
 	ConsolidatedOwnerCount  int64                 `xml:"ConsolidatedOwnerCount,attr,omitempty" json:",omitempty"`
 	Attrs                   []xml.Attr            `xml:",any,attr"`
-	FormTypeCode            string                `xml:"fc:FormTypeCode,omitempty" json:",omitempty"`
+	FormTypeCode            string                `xml:"fc2:FormTypeCode,omitempty" json:",omitempty"`
 	ActivitiesContent       []byte                `xml:",innerxml"`
 	EFilingSubmissionXML    *EFilingSubmissionXML `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
 }
