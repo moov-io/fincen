@@ -54,7 +54,7 @@ The HTTP server is available in a Docker image and the Go package github.com/moo
 - [FAQ](#faq)
 - [Getting help](#getting-help)
 - [Supported and tested platforms](#supported-and-tested-platforms)
-- [Contributing](#contributing) 
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Project status
@@ -70,7 +70,7 @@ https://bsaefiling.fincen.treas.gov/docs/SDTMRequirements.pdf
 
 ## Supported Forms
 
-- FinCEN Currency Transaction Report (FinCEN Report 112) 
+- FinCEN Currency Transaction Report (FinCEN Report 112)
 - FinCEN Designation of Exempt Person (FinCEN Report 110)
 - FinCEN Suspicious Activity Report (FinCEN Report 111)
 - Report of Foreign Bank and Financial Accounts (FinCEN Report 114)
@@ -152,12 +152,11 @@ null
 
 ### Go library
 
-This project uses [Go Modules](https://github.com/golang/go/wiki/Modules) and uses Go v1.14 or higher. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production.
+This project uses [Go Modules](https://go.dev/blog/using-go-modules) and Go v1.18 or newer. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production.
 
 ```
 $ git@github.com:moov-io/fincen.git
 
-# Pull down into the Go Module cache
 $ go get -u github.com/moov-io/fincen
 ```
 The package [`github.com/moov-io/fincen`](https://pkg.go.dev/github.com/moov-io/fincen) offers a Go-based Fincen file reader and writer.
@@ -167,7 +166,7 @@ The package [`github.com/moov-io/fincen`](https://pkg.go.dev/github.com/moov-io/
 **Creating XML Batch Reporting form**
 
 Fincen project used general XML batch reporting form struct.
-Available types are "SUBMISSION", "CTRX", "SARX", "DOEPX", "FBARX", "8300X" 
+Available types are "SUBMISSION", "CTRX", "SARX", "DOEPX", "FBARX", "8300X"
 
 ```
 // create report with type
@@ -176,7 +175,7 @@ newReport := NewReport(fincen.ReportSubmission)
 
 **Adding activities by each type**
 
-Activity should add into the form struct using sub package 
+Activity should add into the form struct using sub package
 
 ```
 // create activity (ctr)
@@ -233,7 +232,7 @@ Note: 32-bit platforms have known issues and are not supported.
 
 Yes please! Please review our [Contributing guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) to get started!
 
-This project uses [Go Modules](https://github.com/golang/go/wiki/Modules) and uses Go v1.19 or higher. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production.
+This project uses [Go Modules](https://go.dev/blog/using-go-modules) and Go v1.18 or newer. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production.
 
 
 ## License

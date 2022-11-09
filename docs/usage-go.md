@@ -13,7 +13,6 @@ See [Golang's install instructions](https://golang.org/doc/install) for help in 
 ```
 $ git@github.com:moov-io/fincen.git
 
-# Pull down into the Go Module cfincene
 $ go get -u github.com/moov-io/fincen
 
 $ go doc github.com/moov-io/fincen BatchHeader
