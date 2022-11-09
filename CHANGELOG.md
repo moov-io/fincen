@@ -1,3 +1,9 @@
+## v0.3.1 (Released 2022-11-09)
+
+IMPROVEMENTS
+
+- fix: fixing xml namespace prefix of EFilingBatchXML
+
 ## v0.3.0 (Released 2022-11-09)
 
 IMPROVEMENTS
