@@ -1,3 +1,16 @@
+## v0.2.9 (Released 2022-11-09)
+
+IMPROVEMENTS
+
+- fix: modified namespace prefix of form type code
+
+BUILD
+
+- fix(deps): removed module github.com/antihax/optional
+- fix(deps): removed module golang.org/x/oauth2
+- fix(deps): removed module google.golang.org/appengine
+- fix(deps): removed module golang.org/x/net
+
 ## v0.2.6 (Released 2022-10-28)
 
 IMPROVEMENTS
