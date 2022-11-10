@@ -79,3 +79,17 @@ func (r ValidatePartyNameCodeType) Validate() error {
 	}
 	return fincen.NewErrValueInvalid("PartyNameCode")
 }
+
+// May be one of Y, N,
+type ValidateIndicatorYNType string
+
+func (r ValidateIndicatorYNType) Validate() error {
+	for _, vv := range []string{
+		"Y", "N",
+	} {
+		if reflect.DeepEqual(string(r), vv) {
+			return nil
+		}
+	}
+	return fincen.NewErrValueInvalid("IndicatorYNType")
+}

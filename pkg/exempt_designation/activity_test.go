@@ -219,7 +219,7 @@ func TestParty(t *testing.T) {
 		require.NotNil(t, party.PhoneNumber)
 		require.NotNil(t, party.ElectronicAddress)
 		require.Equal(t, len(party.PartyIdentification), 1)
-		require.Equal(t, *party.PartyAsEntityOrganizationIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.PartyAsEntityOrganizationIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		name := party.PartyName[0]
 		require.Equal(t, name.SeqNum, fincen.SeqNumber(24))
@@ -410,7 +410,7 @@ func TestElements(t *testing.T) {
 
 		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())
 
-		indicator := fincen.ValidateIndicatorType("Y")
+		indicator := fincen.ValidateIndicatorNullType("Y")
 
 		sample.ExemptionAmendedIndicator = &indicator
 		sample.ExemptionRevokedIndicator = &indicator

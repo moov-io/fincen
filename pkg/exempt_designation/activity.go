@@ -17,14 +17,14 @@ func NewActivity() *ActivityType {
 }
 
 type ActivityType struct {
-	XMLName                            xml.Name                        `xml:"Activity"`
-	SeqNum                             fincen.SeqNumber                `xml:"SeqNum,attr"`
-	DesignatedMoreThanOneBankIndicator *fincen.ValidateIndicatorType   `xml:"DesignatedMoreThanOneBankIndicator,omitempty" json:",omitempty"`
-	EFilingPriorDocumentNumber         *EFilingPriorDocumentNumberType `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
-	FilingDateText                     fincen.DateYYYYMMDDType         `xml:"FilingDateText"`
-	ActivityAssociation                *ActivityAssociationType        `xml:"ActivityAssociation"`
-	Party                              []*PartyType                    `xml:"Party"`
-	DesignationExemptActivity          *DesignationExemptActivityType  `xml:"DesignationExemptActivity"`
+	XMLName                            xml.Name                          `xml:"Activity"`
+	SeqNum                             fincen.SeqNumber                  `xml:"SeqNum,attr"`
+	DesignatedMoreThanOneBankIndicator *fincen.ValidateIndicatorNullType `xml:"DesignatedMoreThanOneBankIndicator,omitempty" json:",omitempty"`
+	EFilingPriorDocumentNumber         *EFilingPriorDocumentNumberType   `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
+	FilingDateText                     fincen.DateYYYYMMDDType           `xml:"FilingDateText"`
+	ActivityAssociation                *ActivityAssociationType          `xml:"ActivityAssociation"`
+	Party                              []*PartyType                      `xml:"Party"`
+	DesignationExemptActivity          *DesignationExemptActivityType    `xml:"DesignationExemptActivity"`
 }
 
 func (r ActivityType) FormTypeCode() string {
@@ -100,11 +100,11 @@ func (r ActivityType) Validate(args ...string) error {
 }
 
 type ActivityAssociationType struct {
-	XMLName                     xml.Name                      `xml:"ActivityAssociation"`
-	SeqNum                      fincen.SeqNumber              `xml:"SeqNum,attr"`
-	ExemptionAmendedIndicator   *fincen.ValidateIndicatorType `xml:"ExemptionAmendedIndicator,omitempty" json:",omitempty"`
-	ExemptionRevokedIndicator   *fincen.ValidateIndicatorType `xml:"ExemptionRevokedIndicator,omitempty" json:",omitempty"`
-	InitialDesignationIndicator *fincen.ValidateIndicatorType `xml:"InitialDesignationIndicator,omitempty" json:",omitempty"`
+	XMLName                     xml.Name                          `xml:"ActivityAssociation"`
+	SeqNum                      fincen.SeqNumber                  `xml:"SeqNum,attr"`
+	ExemptionAmendedIndicator   *fincen.ValidateIndicatorNullType `xml:"ExemptionAmendedIndicator,omitempty" json:",omitempty"`
+	ExemptionRevokedIndicator   *fincen.ValidateIndicatorNullType `xml:"ExemptionRevokedIndicator,omitempty" json:",omitempty"`
+	InitialDesignationIndicator *fincen.ValidateIndicatorNullType `xml:"InitialDesignationIndicator,omitempty" json:",omitempty"`
 }
 
 func (r ActivityAssociationType) Validate(args ...string) error {
@@ -134,7 +134,7 @@ type PartyType struct {
 	XMLName                            xml.Name                          `xml:"Party"`
 	SeqNum                             fincen.SeqNumber                  `xml:"SeqNum,attr"`
 	ActivityPartyTypeCode              ValidateActivityPartyCodeType     `xml:"ActivityPartyTypeCode"`
-	PartyAsEntityOrganizationIndicator *fincen.ValidateIndicatorType     `xml:"PartyAsEntityOrganizationIndicator,omitempty" json:",omitempty"`
+	PartyAsEntityOrganizationIndicator *fincen.ValidateIndicatorNullType `xml:"PartyAsEntityOrganizationIndicator,omitempty" json:",omitempty"`
 	PrimaryRegulatorTypeCode           *ValidateFederalRegulatorCodeType `xml:"PrimaryRegulatorTypeCode,omitempty" json:",omitempty"`
 	PartyName                          []*PartyNameType                  `xml:"PartyName,omitempty" json:",omitempty"`
 	Address                            *AddressType                      `xml:"Address,omitempty" json:",omitempty"`

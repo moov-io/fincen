@@ -152,10 +152,10 @@ func main() {
 
 	party6 := &PartyType{
 		ActivityPartyTypeCode:                           ValidateActivityPartyCodeType("50"),
-		FemaleGenderIndicator:                           Ptr(ValidateIndicatorType("Y")),
+		FemaleGenderIndicator:                           Ptr(ValidateIndicatorNullType("Y")),
 		IndividualBirthDateText:                         Ptr(DateYYYYMMDDOrBlankTypeDOB("19750120")),
 		IndividualEntityCashInAmountText:                Ptr(RestrictString15("20000")),
-		MultipleTransactionsPersonsIndividualsIndicator: Ptr(ValidateIndicatorType("Y")),
+		MultipleTransactionsPersonsIndividualsIndicator: Ptr(ValidateIndicatorNullType("Y")),
 	}
 	party6.PartyName = []*PartyNameType{
 		{
@@ -174,15 +174,15 @@ func main() {
 		RawCityText:                   Ptr(RestrictString50("Vienna")),
 		RawCountryCodeText:            Ptr(RestrictString2("US")),
 		RawStateCodeText:              Ptr(RestrictString3("VA")),
-		StreetAddressUnknownIndicator: Ptr(ValidateIndicatorType("Y")),
-		ZIPCodeUnknownIndicator:       Ptr(ValidateIndicatorType("Y")),
+		StreetAddressUnknownIndicator: Ptr(ValidateIndicatorNullType("Y")),
+		ZIPCodeUnknownIndicator:       Ptr(ValidateIndicatorNullType("Y")),
 	}
 	party6.PhoneNumber = &PhoneNumberType{
 		PhoneNumberText: Ptr(RestrictString16("1458987456")),
 	}
 	party6.PartyIdentification = []*PartyIdentificationType{
 		{
-			TINUnknownIndicator: Ptr(ValidateIndicatorType("Y")),
+			TINUnknownIndicator: Ptr(ValidateIndicatorNullType("Y")),
 		},
 		{
 			OtherIssuerCountryText:        Ptr(RestrictString2("US")),
@@ -224,7 +224,7 @@ func main() {
 	act.Party = []*PartyType{party1, party2, party3, party4, party5, party6}
 	act.FilingDateText = "19801025"
 	act.ActivityAssociation = &ActivityAssociationType{
-		CorrectsAmendsPriorReportIndicator: Ptr(ValidateIndicatorType("Y")),
+		CorrectsAmendsPriorReportIndicator: "Y",
 	}
 	act.CurrencyTransactionActivity = &CurrencyTransactionActivityType{
 		AggregateTransactionIndicator: "Y",

@@ -53,7 +53,7 @@ func main() {
 	party3 := &PartyType{
 		ActivityPartyTypeCode:                           ValidateActivityPartyCodeType("15"),
 		FilerFinancialInterest25ForeignAccountIndicator: Ptr(ValidateIndicatorYNType("N")),
-		FilerTypeIndividualIndicator:                    Ptr(ValidateIndicatorType("Y")),
+		FilerTypeIndividualIndicator:                    Ptr(ValidateIndicatorNullType("Y")),
 		IndividualBirthDateText:                         Ptr(DateYYYYMMDDOrBlankType("19700515")),
 		SignatureAuthoritiesIndicator:                   Ptr(ValidateIndicatorYNType("N")),
 	}

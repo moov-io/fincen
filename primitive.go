@@ -363,6 +363,20 @@ func (r ValidateIndicatorType) Validate() error {
 	return NewErrValueInvalid("IndicatorType")
 }
 
+// May be one of Y
+type ValidateIndicatorNullType string
+
+func (r ValidateIndicatorNullType) Validate() error {
+	for _, vv := range []string{
+		"Y",
+	} {
+		if reflect.DeepEqual(string(r), vv) {
+			return nil
+		}
+	}
+	return NewErrValueInvalid("IndicatorType")
+}
+
 // May be one of 1, 2, 3, 4, 5, 11, 12, 999
 type ValidateOrganizationCodeType int
 
@@ -473,20 +487,6 @@ func (r ValidateOrganizationSubtypeCodeCtrType) Validate() error {
 		}
 	}
 	return NewErrValueInvalid("OrganizationSubtypeCodeCtrType")
-}
-
-// May be one of Y, N,
-type ValidateIndicatorYNType string
-
-func (r ValidateIndicatorYNType) Validate() error {
-	for _, vv := range []string{
-		"Y", "N",
-	} {
-		if reflect.DeepEqual(string(r), vv) {
-			return nil
-		}
-	}
-	return NewErrValueInvalid("IndicatorYNType")
 }
 
 // May be one of 1, 2, 3, 4, 5, 6, 7, 8, 9, 999

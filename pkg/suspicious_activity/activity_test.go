@@ -477,8 +477,8 @@ func TestParty(t *testing.T) {
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(29))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("34"))
 		require.Equal(t, *party.LossToFinancialAmountText, fincen.RestrictString15("15000"))
-		require.Equal(t, *party.NoBranchActivityInvolvedIndicator, fincen.ValidateIndicatorType("Y"))
-		require.Equal(t, *party.PayLocationIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.NoBranchActivityInvolvedIndicator, fincen.ValidateIndicatorNullType("Y"))
+		require.Equal(t, *party.PayLocationIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, *party.PrimaryRegulatorTypeCode, ValidateFederalRegulatorCodeType("4"))
 		require.Equal(t, len(party.PartyName), 2)
 
@@ -509,9 +509,9 @@ func TestParty(t *testing.T) {
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(61))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("33"))
-		require.Equal(t, *party.AdmissionConfessionYesIndicator, fincen.ValidateIndicatorType("Y"))
-		require.Equal(t, *party.BothPurchaserSenderPayeeReceiveIndicator, fincen.ValidateIndicatorType("Y"))
-		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.AdmissionConfessionYesIndicator, fincen.ValidateIndicatorNullType("Y"))
+		require.Equal(t, *party.BothPurchaserSenderPayeeReceiveIndicator, fincen.ValidateIndicatorNullType("Y"))
+		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, *party.IndividualBirthDateText, fincen.DateYYYYMMDDOrBlankTypeDOB("19801025"))
 		require.Equal(t, len(party.PartyName), 3)
 
@@ -543,7 +543,7 @@ func TestParty(t *testing.T) {
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(39))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("46"))
-		require.Equal(t, *party.SellingLocationIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.SellingLocationIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		address := party.Address
 		require.Equal(t, address.SeqNum, fincen.SeqNumber(40))
@@ -570,7 +570,7 @@ func TestParty(t *testing.T) {
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(75))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("41"))
-		require.Equal(t, *party.NonUSFinancialInstitutionIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.NonUSFinancialInstitutionIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, len(party.Account), 2)
 
 		identification := party.PartyIdentification
@@ -600,7 +600,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "SARX", activity.FormTypeCode())
 		require.Equal(t, "The Party has invalid min & max range", activity.Validate().Error())
 
-		indicator := fincen.ValidateIndicatorType("Y")
+		indicator := fincen.ValidateIndicatorNullType("Y")
 
 		activity.EFilingPriorDocumentNumber = nil
 		activity.ActivityAssociation.CorrectsAmendsPriorReportIndicator = &indicator
@@ -635,7 +635,7 @@ func TestElements(t *testing.T) {
 	t.Run("ActivityAssociationType", func(t *testing.T) {
 		var sample ActivityAssociationType
 		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())
-		indicator := fincen.ValidateIndicatorType("Y")
+		indicator := fincen.ValidateIndicatorNullType("Y")
 		sample.InitialReportIndicator = &indicator
 		sample.CorrectsAmendsPriorReportIndicator = &indicator
 		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())

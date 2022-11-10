@@ -67,4 +67,15 @@ func TestPrimitives(t *testing.T) {
 		require.NoError(t, sample.Validate())
 	})
 
+	t.Run("ValidateIndicatorYNType", func(t *testing.T) {
+		var sample ValidateIndicatorYNType
+		require.Equal(t, "The IndicatorYNType has invalid value", sample.Validate().Error())
+
+		sample = "Y"
+		require.NoError(t, sample.Validate())
+
+		sample = "N"
+		require.NoError(t, sample.Validate())
+	})
+
 }

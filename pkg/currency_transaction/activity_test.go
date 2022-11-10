@@ -599,10 +599,10 @@ func TestParty(t *testing.T) {
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(28))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("50"))
-		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, *party.IndividualBirthDateText, fincen.DateYYYYMMDDOrBlankTypeDOB("19750120"))
 		require.Equal(t, *party.IndividualEntityCashInAmountText, fincen.RestrictString15("20000"))
-		require.Equal(t, *party.MultipleTransactionsPersonsIndividualsIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.MultipleTransactionsPersonsIndividualsIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, len(party.PartyName), 2)
 		require.Equal(t, len(party.PartyIdentification), 2)
 		require.Equal(t, len(party.Account), 3)
@@ -625,8 +625,8 @@ func TestParty(t *testing.T) {
 		require.Equal(t, *address.RawCityText, fincen.RestrictString50("Vienna"))
 		require.Equal(t, *address.RawCountryCodeText, fincen.RestrictString2("US"))
 		require.Equal(t, *address.RawStateCodeText, fincen.RestrictString3("VA"))
-		require.Equal(t, *address.StreetAddressUnknownIndicator, fincen.ValidateIndicatorType("Y"))
-		require.Equal(t, *address.ZIPCodeUnknownIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *address.StreetAddressUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
+		require.Equal(t, *address.ZIPCodeUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		number := party.PhoneNumber
 		require.Equal(t, number.SeqNum, fincen.SeqNumber(32))
@@ -634,7 +634,7 @@ func TestParty(t *testing.T) {
 
 		identification := party.PartyIdentification[0]
 		require.Equal(t, identification.SeqNum, fincen.SeqNumber(33))
-		require.Equal(t, *identification.TINUnknownIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *identification.TINUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		identification = party.PartyIdentification[1]
 		require.Equal(t, identification.SeqNum, fincen.SeqNumber(34))
@@ -686,10 +686,10 @@ func TestParty(t *testing.T) {
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(28))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("17"))
-		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, *party.IndividualBirthDateText, fincen.DateYYYYMMDDOrBlankTypeDOB("19750120"))
 		require.Equal(t, *party.IndividualEntityCashInAmountText, fincen.RestrictString15("20000"))
-		require.Equal(t, *party.MultipleTransactionsPersonsIndividualsIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.MultipleTransactionsPersonsIndividualsIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, len(party.PartyName), 2)
 		require.Equal(t, len(party.PartyIdentification), 2)
 		require.Equal(t, len(party.Account), 3)
@@ -712,8 +712,8 @@ func TestParty(t *testing.T) {
 		require.Equal(t, *address.RawCityText, fincen.RestrictString50("Vienna"))
 		require.Equal(t, *address.RawCountryCodeText, fincen.RestrictString2("US"))
 		require.Equal(t, *address.RawStateCodeText, fincen.RestrictString3("VA"))
-		require.Equal(t, *address.StreetAddressUnknownIndicator, fincen.ValidateIndicatorType("Y"))
-		require.Equal(t, *address.ZIPCodeUnknownIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *address.StreetAddressUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
+		require.Equal(t, *address.ZIPCodeUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		number := party.PhoneNumber
 		require.Equal(t, number.SeqNum, fincen.SeqNumber(32))
@@ -721,7 +721,7 @@ func TestParty(t *testing.T) {
 
 		identification := party.PartyIdentification[0]
 		require.Equal(t, identification.SeqNum, fincen.SeqNumber(33))
-		require.Equal(t, *identification.TINUnknownIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *identification.TINUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		identification = party.PartyIdentification[1]
 		require.Equal(t, identification.SeqNum, fincen.SeqNumber(34))
@@ -773,10 +773,10 @@ func TestParty(t *testing.T) {
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(28))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("23"))
-		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, *party.IndividualBirthDateText, fincen.DateYYYYMMDDOrBlankTypeDOB("19750120"))
 		require.Equal(t, *party.IndividualEntityCashInAmountText, fincen.RestrictString15("20000"))
-		require.Equal(t, *party.MultipleTransactionsPersonsIndividualsIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.MultipleTransactionsPersonsIndividualsIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, len(party.PartyName), 2)
 		require.Equal(t, len(party.PartyIdentification), 2)
 		require.Equal(t, len(party.Account), 3)
@@ -799,8 +799,8 @@ func TestParty(t *testing.T) {
 		require.Equal(t, *address.RawCityText, fincen.RestrictString50("Vienna"))
 		require.Equal(t, *address.RawCountryCodeText, fincen.RestrictString2("US"))
 		require.Equal(t, *address.RawStateCodeText, fincen.RestrictString3("VA"))
-		require.Equal(t, *address.StreetAddressUnknownIndicator, fincen.ValidateIndicatorType("Y"))
-		require.Equal(t, *address.ZIPCodeUnknownIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *address.StreetAddressUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
+		require.Equal(t, *address.ZIPCodeUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		number := party.PhoneNumber
 		require.Equal(t, number.SeqNum, fincen.SeqNumber(32))
@@ -808,7 +808,7 @@ func TestParty(t *testing.T) {
 
 		identification := party.PartyIdentification[0]
 		require.Equal(t, identification.SeqNum, fincen.SeqNumber(33))
-		require.Equal(t, *identification.TINUnknownIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *identification.TINUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		identification = party.PartyIdentification[1]
 		require.Equal(t, identification.SeqNum, fincen.SeqNumber(34))
@@ -860,10 +860,10 @@ func TestParty(t *testing.T) {
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(28))
 		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("58"))
-		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.FemaleGenderIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, *party.IndividualBirthDateText, fincen.DateYYYYMMDDOrBlankTypeDOB("19750120"))
 		require.Equal(t, *party.IndividualEntityCashInAmountText, fincen.RestrictString15("20000"))
-		require.Equal(t, *party.MultipleTransactionsPersonsIndividualsIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *party.MultipleTransactionsPersonsIndividualsIndicator, fincen.ValidateIndicatorNullType("Y"))
 		require.Equal(t, len(party.PartyName), 2)
 		require.Equal(t, len(party.PartyIdentification), 2)
 		require.Equal(t, len(party.Account), 3)
@@ -886,8 +886,8 @@ func TestParty(t *testing.T) {
 		require.Equal(t, *address.RawCityText, fincen.RestrictString50("Vienna"))
 		require.Equal(t, *address.RawCountryCodeText, fincen.RestrictString2("US"))
 		require.Equal(t, *address.RawStateCodeText, fincen.RestrictString3("VA"))
-		require.Equal(t, *address.StreetAddressUnknownIndicator, fincen.ValidateIndicatorType("Y"))
-		require.Equal(t, *address.ZIPCodeUnknownIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *address.StreetAddressUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
+		require.Equal(t, *address.ZIPCodeUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		number := party.PhoneNumber
 		require.Equal(t, number.SeqNum, fincen.SeqNumber(32))
@@ -895,7 +895,7 @@ func TestParty(t *testing.T) {
 
 		identification := party.PartyIdentification[0]
 		require.Equal(t, identification.SeqNum, fincen.SeqNumber(33))
-		require.Equal(t, *identification.TINUnknownIndicator, fincen.ValidateIndicatorType("Y"))
+		require.Equal(t, *identification.TINUnknownIndicator, fincen.ValidateIndicatorNullType("Y"))
 
 		identification = party.PartyIdentification[1]
 		require.Equal(t, identification.SeqNum, fincen.SeqNumber(34))
@@ -977,9 +977,9 @@ func TestElements(t *testing.T) {
 
 		indicator := fincen.ValidateIndicatorType("Y")
 
-		sample.CorrectsAmendsPriorReportIndicator = &indicator
-		sample.FinCENDirectBackFileIndicator = &indicator
-		sample.InitialReportIndicator = &indicator
+		sample.CorrectsAmendsPriorReportIndicator = indicator
+		sample.FinCENDirectBackFileIndicator = indicator
+		sample.InitialReportIndicator = indicator
 		require.Equal(t, "The ActivityAssociation has invalid value", sample.Validate().Error())
 	})
 
@@ -988,9 +988,9 @@ func TestElements(t *testing.T) {
 
 		require.Equal(t, "The PartyName has invalid min & max range", sample.Validate().Error())
 
-		indicator := fincen.ValidateIndicatorType("Y")
+		indicator := fincen.Ptr(fincen.ValidateIndicatorNullType("Y"))
 
-		sample.BirthDateUnknownIndicator = &indicator
+		sample.BirthDateUnknownIndicator = indicator
 		require.Equal(t, "The BirthDateUnknownIndicator should be omitted", sample.Validate().Error())
 
 		sample.BirthDateUnknownIndicator = nil
@@ -1003,7 +1003,7 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The EFilingCoverageEndDateText should be omitted", sample.Validate().Error())
 
 		sample.EFilingCoverageEndDateText = nil
-		sample.FemaleGenderIndicator = &indicator
+		sample.FemaleGenderIndicator = indicator
 		require.Equal(t, "The FemaleGenderIndicator should be omitted", sample.Validate().Error())
 
 		sample.FemaleGenderIndicator = nil
@@ -1021,19 +1021,19 @@ func TestElements(t *testing.T) {
 		require.Equal(t, "The IndividualEntityCashOutAmountText should be omitted", sample.Validate().Error())
 
 		sample.IndividualEntityCashOutAmountText = nil
-		sample.MaleGenderIndicator = &indicator
+		sample.MaleGenderIndicator = indicator
 		require.Equal(t, "The MaleGenderIndicator should be omitted", sample.Validate().Error())
 
 		sample.MaleGenderIndicator = nil
-		sample.MultipleTransactionsPersonsIndividualsIndicator = &indicator
+		sample.MultipleTransactionsPersonsIndividualsIndicator = indicator
 		require.Equal(t, "The MultipleTransactionsPersonsIndividualsIndicator should be omitted", sample.Validate().Error())
 
 		sample.MultipleTransactionsPersonsIndividualsIndicator = nil
-		sample.PartyAsEntityOrganizationIndicator = &indicator
+		sample.PartyAsEntityOrganizationIndicator = indicator
 		require.Equal(t, "The PartyAsEntityOrganizationIndicator should be omitted", sample.Validate().Error())
 
 		sample.PartyAsEntityOrganizationIndicator = nil
-		sample.UnknownGenderIndicator = &indicator
+		sample.UnknownGenderIndicator = indicator
 		require.Equal(t, "The UnknownGenderIndicator should be omitted", sample.Validate().Error())
 
 		sample.UnknownGenderIndicator = nil
@@ -1087,7 +1087,7 @@ func TestElements(t *testing.T) {
 		require.NoError(t, sample.Validate())
 		require.NoError(t, sample.Validate("INVALID"))
 
-		indicator := fincen.ValidateIndicatorType("Y")
+		indicator := fincen.ValidateIndicatorNullType("Y")
 
 		sample.EntityLastNameUnknownIndicator = &indicator
 		require.Equal(t, "The EntityLastNameUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
@@ -1130,7 +1130,7 @@ func TestElements(t *testing.T) {
 		require.NoError(t, sample.Validate())
 		require.NoError(t, sample.Validate("INVALID"))
 
-		indicator := fincen.ValidateIndicatorType("Y")
+		indicator := fincen.ValidateIndicatorNullType("Y")
 
 		sample.CityUnknownIndicator = &indicator
 		require.Equal(t, "The CityUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
@@ -1199,7 +1199,7 @@ func TestElements(t *testing.T) {
 		require.NoError(t, sample.Validate())
 		require.NoError(t, sample.Validate("INVALID"))
 
-		indicator := fincen.ValidateIndicatorType("Y")
+		indicator := fincen.ValidateIndicatorNullType("Y")
 		sample.IdentificationPresentUnknownIndicator = &indicator
 		require.Equal(t, "The IdentificationPresentUnknownIndicator should be omitted", sample.Validate("INVALID").Error())
 
