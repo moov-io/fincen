@@ -1,3 +1,9 @@
+## v0.3.2 (Released 2022-11-10)
+
+IMPROVEMENTS
+
+- fix: splitting indicator type
+
 ## v0.3.1 (Released 2022-11-09)
 
 IMPROVEMENTS
