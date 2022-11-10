@@ -22,9 +22,9 @@ type ActivityType struct {
 	SeqNum                                      fincen.SeqNumber                  `xml:"SeqNum,attr"`
 	EFilingPriorDocumentNumber                  int64                             `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
 	FilingDateText                              fincen.DateYYYYMMDDType           `xml:"FilingDateText"`
-	MultipleSubjectsIndicator                   *fincen.ValidateIndicatorType     `xml:"MultipleSubjectsIndicator,omitempty" json:",omitempty"`
-	SuspiciousTransactionIndicator              *fincen.ValidateIndicatorType     `xml:"SuspiciousTransactionIndicator,omitempty" json:",omitempty"`
-	TransactionOnBehalfMultiplePersonsIndicator *fincen.ValidateIndicatorType     `xml:"TransactionOnBehalfMultiplePersonsIndicator,omitempty" json:",omitempty"`
+	MultipleSubjectsIndicator                   *fincen.ValidateIndicatorNullType `xml:"MultipleSubjectsIndicator,omitempty" json:",omitempty"`
+	SuspiciousTransactionIndicator              *fincen.ValidateIndicatorNullType `xml:"SuspiciousTransactionIndicator,omitempty" json:",omitempty"`
+	TransactionOnBehalfMultiplePersonsIndicator *fincen.ValidateIndicatorNullType `xml:"TransactionOnBehalfMultiplePersonsIndicator,omitempty" json:",omitempty"`
 	ActivityAssociation                         *ActivityAssociationType          `xml:"ActivityAssociation"`
 	Party                                       []*PartyType                      `xml:"Party"`
 	CurrencyTransactionActivity                 *CurrencyTransactionActivityType  `xml:"CurrencyTransactionActivity"`
@@ -122,10 +122,10 @@ func (r ActivityType) Validate(args ...string) error {
 }
 
 type ActivityAssociationType struct {
-	XMLName                            xml.Name                      `xml:"ActivityAssociation"`
-	SeqNum                             fincen.SeqNumber              `xml:"SeqNum,attr"`
-	CorrectsAmendsPriorReportIndicator *fincen.ValidateIndicatorType `xml:"CorrectsAmendsPriorReportIndicator,omitempty" json:",omitempty"`
-	InitialReportIndicator             *fincen.ValidateIndicatorType `xml:"InitialReportIndicator,omitempty" json:",omitempty"`
+	XMLName                            xml.Name                          `xml:"ActivityAssociation"`
+	SeqNum                             fincen.SeqNumber                  `xml:"SeqNum,attr"`
+	CorrectsAmendsPriorReportIndicator *fincen.ValidateIndicatorNullType `xml:"CorrectsAmendsPriorReportIndicator,omitempty" json:",omitempty"`
+	InitialReportIndicator             *fincen.ValidateIndicatorNullType `xml:"InitialReportIndicator,omitempty" json:",omitempty"`
 }
 
 func (r ActivityAssociationType) Validate(args ...string) error {
@@ -406,7 +406,7 @@ func (r PartyOccupationBusinessType) Validate(args ...string) error {
 type CurrencyTransactionActivityType struct {
 	XMLName                           xml.Name                                 `xml:"CurrencyTransactionActivity"`
 	SeqNum                            fincen.SeqNumber                         `xml:"SeqNum,attr"`
-	InstallmentPaymentOtherIndicator  *fincen.ValidateIndicatorType            `xml:"InstallmentPaymentOtherIndicator,omitempty" json:",omitempty"`
+	InstallmentPaymentOtherIndicator  *fincen.ValidateIndicatorNullType        `xml:"InstallmentPaymentOtherIndicator,omitempty" json:",omitempty"`
 	Total100DollarBillInAmountText    string                                   `xml:"Total100DollarBillInAmountText,omitempty" json:",omitempty"`
 	TotalCashInReceiveAmountText      string                                   `xml:"TotalCashInReceiveAmountText"`
 	TotalPriceAmountText              string                                   `xml:"TotalPriceAmountText,omitempty" json:",omitempty"`

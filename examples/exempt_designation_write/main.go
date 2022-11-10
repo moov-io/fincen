@@ -52,7 +52,7 @@ func main() {
 
 	party3 := &PartyType{
 		ActivityPartyTypeCode:              ValidateActivityPartyCodeType("11"),
-		PartyAsEntityOrganizationIndicator: Ptr(ValidateIndicatorType("Y")),
+		PartyAsEntityOrganizationIndicator: Ptr(ValidateIndicatorNullType("Y")),
 	}
 	party3.PartyName = []*PartyNameType{
 		{
@@ -120,7 +120,7 @@ func main() {
 	act.Party = []*PartyType{party1, party2, party3, party4}
 	act.FilingDateText = "19801025"
 	act.ActivityAssociation = &ActivityAssociationType{
-		InitialDesignationIndicator: Ptr(ValidateIndicatorType("Y")),
+		InitialDesignationIndicator: Ptr(ValidateIndicatorNullType("Y")),
 	}
 	act.DesignationExemptActivity = &DesignationExemptActivityType{
 		ExemptBasisTypeCode:          "C",

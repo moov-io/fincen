@@ -179,6 +179,8 @@
         <FilingDateText>19801025</FilingDateText>
         <ActivityAssociation SeqNum="43">
             <CorrectsAmendsPriorReportIndicator>Y</CorrectsAmendsPriorReportIndicator>
+            <FinCENDirectBackFileIndicator/>
+            <InitialReportIndicator/>
         </ActivityAssociation>
         <CurrencyTransactionActivity SeqNum="44">
             <AggregateTransactionIndicator>Y</AggregateTransactionIndicator>

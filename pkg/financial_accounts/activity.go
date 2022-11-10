@@ -21,8 +21,8 @@ type ActivityType struct {
 	SeqNum                            fincen.SeqNumber                  `xml:"SeqNum,attr"`
 	ApprovalOfficialSignatureDateText fincen.DateYYYYMMDDType           `xml:"ApprovalOfficialSignatureDateText"`
 	EFilingPriorDocumentNumber        int64                             `xml:"EFilingPriorDocumentNumber,omitempty" json:",omitempty"`
-	PreparerFilingSignatureIndicator  *fincen.ValidateIndicatorType     `xml:"PreparerFilingSignatureIndicator,omitempty" json:",omitempty"`
-	ThirdPartyPreparerIndicator       *fincen.ValidateIndicatorType     `xml:"ThirdPartyPreparerIndicator,omitempty" json:",omitempty"`
+	PreparerFilingSignatureIndicator  *fincen.ValidateIndicatorNullType `xml:"PreparerFilingSignatureIndicator,omitempty" json:",omitempty"`
+	ThirdPartyPreparerIndicator       *fincen.ValidateIndicatorNullType `xml:"ThirdPartyPreparerIndicator,omitempty" json:",omitempty"`
 	ActivityAssociation               *ActivityAssociationType          `xml:"ActivityAssociation"`
 	Party                             []*PartyType                      `xml:"Party"`
 	Account                           []*AccountType                    `xml:"Account,omitempty" json:",omitempty"`
@@ -120,23 +120,23 @@ func (r ActivityAssociationType) Validate(args ...string) error {
 }
 
 type PartyType struct {
-	XMLName                                         xml.Name                        `xml:"Party"`
-	SeqNum                                          fincen.SeqNumber                `xml:"SeqNum,attr"`
-	ActivityPartyTypeCode                           ValidateActivityPartyCodeType   `xml:"ActivityPartyTypeCode"`
-	FilerFinancialInterest25ForeignAccountIndicator *fincen.ValidateIndicatorYNType `xml:"FilerFinancialInterest25ForeignAccountIndicator,omitempty" json:",omitempty"`
-	FilerTypeConsolidatedIndicator                  *fincen.ValidateIndicatorType   `xml:"FilerTypeConsolidatedIndicator,omitempty" json:",omitempty"`
-	FilerTypeCorporationIndicator                   *fincen.ValidateIndicatorType   `xml:"FilerTypeCorporationIndicator,omitempty" json:",omitempty"`
-	FilerTypeFiduciaryOtherIndicator                *fincen.ValidateIndicatorType   `xml:"FilerTypeFiduciaryOtherIndicator,omitempty" json:",omitempty"`
-	FilerTypeIndividualIndicator                    *fincen.ValidateIndicatorType   `xml:"FilerTypeIndividualIndicator,omitempty" json:",omitempty"`
-	FilerTypeOtherText                              *fincen.RestrictString50        `xml:"FilerTypeOtherText,omitempty" json:",omitempty"`
-	FilerTypePartnershipIndicator                   *fincen.ValidateIndicatorType   `xml:"FilerTypePartnershipIndicator,omitempty" json:",omitempty"`
-	IndividualBirthDateText                         *fincen.DateYYYYMMDDOrBlankType `xml:"IndividualBirthDateText,omitempty" json:",omitempty"`
-	SelfEmployedIndicator                           *fincen.ValidateIndicatorType   `xml:"SelfEmployedIndicator,omitempty" json:",omitempty"`
-	SignatureAuthoritiesIndicator                   *fincen.ValidateIndicatorYNType `xml:"SignatureAuthoritiesIndicator,omitempty" json:",omitempty"`
-	PartyName                                       *PartyNameType                  `xml:"PartyName"`
-	Address                                         *AddressType                    `xml:"Address,omitempty" json:",omitempty"`
-	PhoneNumber                                     *PhoneNumberType                `xml:"PhoneNumber,omitempty" json:",omitempty"`
-	PartyIdentification                             []*PartyIdentificationType      `xml:"PartyIdentification,omitempty" json:",omitempty"`
+	XMLName                                         xml.Name                          `xml:"Party"`
+	SeqNum                                          fincen.SeqNumber                  `xml:"SeqNum,attr"`
+	ActivityPartyTypeCode                           ValidateActivityPartyCodeType     `xml:"ActivityPartyTypeCode"`
+	FilerFinancialInterest25ForeignAccountIndicator *ValidateIndicatorYNType          `xml:"FilerFinancialInterest25ForeignAccountIndicator,omitempty" json:",omitempty"`
+	FilerTypeConsolidatedIndicator                  *fincen.ValidateIndicatorNullType `xml:"FilerTypeConsolidatedIndicator,omitempty" json:",omitempty"`
+	FilerTypeCorporationIndicator                   *fincen.ValidateIndicatorNullType `xml:"FilerTypeCorporationIndicator,omitempty" json:",omitempty"`
+	FilerTypeFiduciaryOtherIndicator                *fincen.ValidateIndicatorNullType `xml:"FilerTypeFiduciaryOtherIndicator,omitempty" json:",omitempty"`
+	FilerTypeIndividualIndicator                    *fincen.ValidateIndicatorNullType `xml:"FilerTypeIndividualIndicator,omitempty" json:",omitempty"`
+	FilerTypeOtherText                              *fincen.RestrictString50          `xml:"FilerTypeOtherText,omitempty" json:",omitempty"`
+	FilerTypePartnershipIndicator                   *fincen.ValidateIndicatorNullType `xml:"FilerTypePartnershipIndicator,omitempty" json:",omitempty"`
+	IndividualBirthDateText                         *fincen.DateYYYYMMDDOrBlankType   `xml:"IndividualBirthDateText,omitempty" json:",omitempty"`
+	SelfEmployedIndicator                           *fincen.ValidateIndicatorNullType `xml:"SelfEmployedIndicator,omitempty" json:",omitempty"`
+	SignatureAuthoritiesIndicator                   *ValidateIndicatorYNType          `xml:"SignatureAuthoritiesIndicator,omitempty" json:",omitempty"`
+	PartyName                                       *PartyNameType                    `xml:"PartyName"`
+	Address                                         *AddressType                      `xml:"Address,omitempty" json:",omitempty"`
+	PhoneNumber                                     *PhoneNumberType                  `xml:"PhoneNumber,omitempty" json:",omitempty"`
+	PartyIdentification                             []*PartyIdentificationType        `xml:"PartyIdentification,omitempty" json:",omitempty"`
 }
 
 func (r PartyType) fieldInclusion() error {
@@ -224,7 +224,7 @@ type AccountType struct {
 	EFilingAccountTypeCode        fincen.ValidateEFilingAccountTypeCodeType `xml:"EFilingAccountTypeCode"`
 	JointOwnerQuantityText        *fincen.RestrictString3                   `xml:"JointOwnerQuantityText,omitempty" json:",omitempty"`
 	OtherAccountTypeText          *fincen.RestrictString50                  `xml:"OtherAccountTypeText,omitempty" json:",omitempty"`
-	UnknownMaximumValueIndicator  *fincen.ValidateIndicatorType             `xml:"UnknownMaximumValueIndicator,omitempty" json:",omitempty"`
+	UnknownMaximumValueIndicator  *fincen.ValidateIndicatorNullType         `xml:"UnknownMaximumValueIndicator,omitempty" json:",omitempty"`
 	Party                         []*AccountPartyType                       `xml:"Party"`
 }
 
@@ -295,13 +295,13 @@ func (r AddressType) Validate(args ...string) error {
 }
 
 type AccountPartyType struct {
-	XMLName                            xml.Name                        `xml:"Party"`
-	SeqNum                             fincen.SeqNumber                `xml:"SeqNum,attr"`
-	ActivityPartyTypeCode              ValidateAccountPartyCodeType    `xml:"ActivityPartyTypeCode"`
-	PartyAsEntityOrganizationIndicator *fincen.ValidateIndicatorType   `xml:"PartyAsEntityOrganizationIndicator,omitempty" json:",omitempty"`
-	PartyName                          *AccountPartyNameType           `xml:"PartyName"`
-	Address                            *AccountAddressType             `xml:"Address"`
-	PartyIdentification                *AccountPartyIdentificationType `xml:"PartyIdentification,omitempty" json:",omitempty"`
+	XMLName                            xml.Name                          `xml:"Party"`
+	SeqNum                             fincen.SeqNumber                  `xml:"SeqNum,attr"`
+	ActivityPartyTypeCode              ValidateAccountPartyCodeType      `xml:"ActivityPartyTypeCode"`
+	PartyAsEntityOrganizationIndicator *fincen.ValidateIndicatorNullType `xml:"PartyAsEntityOrganizationIndicator,omitempty" json:",omitempty"`
+	PartyName                          *AccountPartyNameType             `xml:"PartyName"`
+	Address                            *AccountAddressType               `xml:"Address"`
+	PartyIdentification                *AccountPartyIdentificationType   `xml:"PartyIdentification,omitempty" json:",omitempty"`
 }
 
 func (r AccountPartyType) fieldInclusion() error {

@@ -449,8 +449,8 @@ func TestElements(t *testing.T) {
 
 	t.Run("PartyType", func(t *testing.T) {
 		var sample PartyType
-		indicatorYN := fincen.ValidateIndicatorYNType("Y")
-		indicator := fincen.ValidateIndicatorType("Y")
+		indicatorYN := ValidateIndicatorYNType("Y")
+		indicator := fincen.ValidateIndicatorNullType("Y")
 		sample.PartyName = &PartyNameType{}
 
 		require.Equal(t, "The ActivityPartyCode has invalid value", sample.Validate().Error())
@@ -533,7 +533,7 @@ func TestElements(t *testing.T) {
 
 	t.Run("AccountPartyType", func(t *testing.T) {
 		var sample AccountPartyType
-		indicator := fincen.ValidateIndicatorType("Y")
+		indicator := fincen.ValidateIndicatorNullType("Y")
 		sample.PartyName = &AccountPartyNameType{}
 		sample.Address = &AccountAddressType{}
 

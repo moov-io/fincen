@@ -125,8 +125,8 @@ func main() {
 	party5 := &PartyType{}
 	party5.ActivityPartyTypeCode = ValidateActivityPartyCodeType("34")
 	party5.LossToFinancialAmountText = Ptr(RestrictString15("15000"))
-	party5.NoBranchActivityInvolvedIndicator = Ptr(ValidateIndicatorType("Y"))
-	party5.PayLocationIndicator = Ptr(ValidateIndicatorType("Y"))
+	party5.NoBranchActivityInvolvedIndicator = Ptr(ValidateIndicatorNullType("Y"))
+	party5.PayLocationIndicator = Ptr(ValidateIndicatorNullType("Y"))
 	party5.PrimaryRegulatorTypeCode = Ptr(ValidateFederalRegulatorCodeType("4"))
 	party5.PartyName = []*PartyNameType{
 		{
@@ -140,11 +140,11 @@ func main() {
 	}
 	party5.Address = []*AddressType{
 		{
-			CityUnknownIndicator:          Ptr(ValidateIndicatorType("Y")),
-			CountryCodeUnknownIndicator:   Ptr(ValidateIndicatorType("Y")),
+			CityUnknownIndicator:          Ptr(ValidateIndicatorNullType("Y")),
+			CountryCodeUnknownIndicator:   Ptr(ValidateIndicatorNullType("Y")),
 			RawStreetAddress1Text:         Ptr(RestrictString100("987 Rocky Road")),
-			StreetAddressUnknownIndicator: Ptr(ValidateIndicatorType("Y")),
-			ZIPCodeUnknownIndicator:       Ptr(ValidateIndicatorType("Y")),
+			StreetAddressUnknownIndicator: Ptr(ValidateIndicatorNullType("Y")),
+			ZIPCodeUnknownIndicator:       Ptr(ValidateIndicatorNullType("Y")),
 		},
 	}
 	party5.PartyIdentification = []*PartyIdentificationType{
@@ -185,9 +185,9 @@ func main() {
 
 	party6 := &PartyType{}
 	party6.ActivityPartyTypeCode = ValidateActivityPartyCodeType("33")
-	party6.AdmissionConfessionYesIndicator = Ptr(ValidateIndicatorType("Y"))
-	party6.BothPurchaserSenderPayeeReceiveIndicator = Ptr(ValidateIndicatorType("Y"))
-	party6.FemaleGenderIndicator = Ptr(ValidateIndicatorType("Y"))
+	party6.AdmissionConfessionYesIndicator = Ptr(ValidateIndicatorNullType("Y"))
+	party6.BothPurchaserSenderPayeeReceiveIndicator = Ptr(ValidateIndicatorNullType("Y"))
+	party6.FemaleGenderIndicator = Ptr(ValidateIndicatorNullType("Y"))
 	party6.IndividualBirthDateText = Ptr(DateYYYYMMDDOrBlankTypeDOB("19801025"))
 	party6.PartyName = []*PartyNameType{
 		{
@@ -206,11 +206,11 @@ func main() {
 	}
 	party6.Address = []*AddressType{
 		{
-			CityUnknownIndicator:          Ptr(ValidateIndicatorType("Y")),
-			CountryCodeUnknownIndicator:   Ptr(ValidateIndicatorType("Y")),
-			StateCodeUnknownIndicator:     Ptr(ValidateIndicatorType("Y")),
-			StreetAddressUnknownIndicator: Ptr(ValidateIndicatorType("Y")),
-			ZIPCodeUnknownIndicator:       Ptr(ValidateIndicatorType("Y")),
+			CityUnknownIndicator:          Ptr(ValidateIndicatorNullType("Y")),
+			CountryCodeUnknownIndicator:   Ptr(ValidateIndicatorNullType("Y")),
+			StateCodeUnknownIndicator:     Ptr(ValidateIndicatorNullType("Y")),
+			StreetAddressUnknownIndicator: Ptr(ValidateIndicatorNullType("Y")),
+			ZIPCodeUnknownIndicator:       Ptr(ValidateIndicatorNullType("Y")),
 		},
 	}
 	party6.PhoneNumber = []*PhoneNumberType{
@@ -226,7 +226,7 @@ func main() {
 	}
 	party6.PartyIdentification = []*PartyIdentificationType{
 		{
-			IdentificationPresentUnknownIndicator: Ptr(ValidateIndicatorType("Y")),
+			IdentificationPresentUnknownIndicator: Ptr(ValidateIndicatorNullType("Y")),
 			OtherIssuerCountryText:                Ptr(RestrictString2("US")),
 			OtherIssuerStateText:                  Ptr(RestrictString3("CA")),
 			OtherPartyIdentificationTypeText:      Ptr(RestrictString50("Student ID")),
@@ -234,7 +234,7 @@ func main() {
 			PartyIdentificationTypeCode:           Ptr(ValidatePartyIdentificationCodeType("999")),
 		},
 		{
-			TINUnknownIndicator: Ptr(ValidateIndicatorType("Y")),
+			TINUnknownIndicator: Ptr(ValidateIndicatorNullType("Y")),
 		},
 	}
 	party6.PartyOccupationBusiness = &PartyOccupationBusinessType{
@@ -253,7 +253,7 @@ func main() {
 	}
 	party6.PartyAssociation = []*PartyAssociationType{
 		{
-			NoRelationshipToInstitutionIndicator:           Ptr(ValidateIndicatorType("Y")),
+			NoRelationshipToInstitutionIndicator:           Ptr(ValidateIndicatorNullType("Y")),
 			SubjectRelationshipFinancialInstitutionTINText: Ptr(RestrictString25("458789856")),
 		},
 	}
@@ -281,7 +281,7 @@ func main() {
 	act.EFilingPriorDocumentNumber = Ptr(EFilingPriorDocumentNumberType("00000000000001"))
 	act.FilingDateText = "19801025"
 	act.ActivityAssociation = &ActivityAssociationType{
-		CorrectsAmendsPriorReportIndicator: Ptr(ValidateIndicatorType("Y")),
+		CorrectsAmendsPriorReportIndicator: Ptr(ValidateIndicatorNullType("Y")),
 	}
 	fmt.Println("Validating activity:", act.Validate())
 
