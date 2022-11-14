@@ -248,7 +248,7 @@ func (r PartyType) fieldInclusion() error {
 		if len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3 {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
-		if !existed["4"] {
+		if !existed["2"] {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	case "8":
@@ -269,7 +269,7 @@ func (r PartyType) fieldInclusion() error {
 		if len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3 {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
-		if !existed["4"] {
+		if !existed["2"] {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	case "33":
