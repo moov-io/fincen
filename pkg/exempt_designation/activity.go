@@ -12,6 +12,15 @@ import (
 	"github.com/moov-io/fincen"
 )
 
+const (
+	PartyTransmitter          = "35"
+	PartyTransmitterContact   = "37"
+	PartyAuthorizedOfficial   = "3"
+	PartyExemptParty          = "11"
+	PartyExemptFilerBank      = "45"
+	PartyExemptAffiliatedBank = "12"
+)
+
 func NewActivity() *ActivityType {
 	return &ActivityType{}
 }
@@ -80,20 +89,20 @@ func (r ActivityType) Validate(args ...string) error {
 		}
 	}
 
-	if _, ok := existed["35"]; !ok {
-		return fincen.NewErrFieldRequired("Party(type 35)")
+	if _, ok := existed[PartyTransmitter]; !ok {
+		return fincen.NewErrFieldRequired("Party type(transmitter)")
 	}
-	if _, ok := existed["37"]; !ok {
-		return fincen.NewErrFieldRequired("Party(type 37)")
+	if _, ok := existed[PartyTransmitterContact]; !ok {
+		return fincen.NewErrFieldRequired("Party type(transmitter contact)")
 	}
-	if _, ok := existed["11"]; !ok {
-		return fincen.NewErrFieldRequired("Party(type 11)")
+	if _, ok := existed[PartyExemptParty]; !ok {
+		return fincen.NewErrFieldRequired("Party type(exempt party)")
 	}
-	if _, ok := existed["45"]; !ok {
-		return fincen.NewErrFieldRequired("Party(type 45)")
+	if _, ok := existed[PartyExemptFilerBank]; !ok {
+		return fincen.NewErrFieldRequired("Party type(exempt filer bank)")
 	}
-	if cnt, ok := existed["12"]; ok && cnt > 99 {
-		return fincen.NewErrMinMaxRange("Party(type 12)")
+	if cnt, ok := existed[PartyExemptAffiliatedBank]; ok && cnt > 99 {
+		return fincen.NewErrMinMaxRange("Party type(exempt affiliated bank)")
 	}
 
 	return fincen.Validate(&r, args...)
@@ -147,7 +156,7 @@ type PartyType struct {
 func (r PartyType) fieldInclusion() error {
 	typeCode := string(r.ActivityPartyTypeCode)
 
-	if typeCode == "35" {
+	if typeCode == PartyTransmitter {
 		if len(r.PartyName) != 1 {
 			return fincen.NewErrFieldRequired("PartyName")
 		}
@@ -162,13 +171,13 @@ func (r PartyType) fieldInclusion() error {
 		}
 	}
 
-	if typeCode == "37" {
+	if typeCode == PartyTransmitterContact {
 		if len(r.PartyName) != 1 {
 			return fincen.NewErrFieldRequired("PartyName")
 		}
 	}
 
-	if typeCode == "11" {
+	if typeCode == PartyExemptParty {
 		if len(r.PartyName) < 1 || len(r.PartyName) > 2 {
 			return fincen.NewErrMinMaxRange("PartyName")
 		}
@@ -180,7 +189,7 @@ func (r PartyType) fieldInclusion() error {
 		}
 	}
 
-	if typeCode == "45" || typeCode == "12" {
+	if typeCode == PartyExemptFilerBank || typeCode == PartyExemptAffiliatedBank {
 		if len(r.PartyName) != 1 {
 			return fincen.NewErrFieldRequired("PartyName")
 		}
@@ -220,31 +229,31 @@ type PartyNameType struct {
 
 func (r PartyNameType) fieldInclusion(typeCode string) error {
 
-	if typeCode == "35" || typeCode == "37" {
+	if fincen.CheckInvolved(typeCode, PartyTransmitter, PartyTransmitterContact) {
 		if r.PartyNameTypeCode == nil {
 			return fincen.NewErrFieldRequired("PartyNameTypeCode")
 		}
 
-		if *r.PartyNameTypeCode == "L" && r.RawPartyFullName == nil {
+		if *r.PartyNameTypeCode == fincen.IndicateLegalName && r.RawPartyFullName == nil {
 			return fincen.NewErrFieldRequired("RawPartyFullName")
 		}
 	}
 
-	if typeCode == "11" {
+	if typeCode == PartyExemptParty {
 		if r.PartyNameTypeCode == nil {
 			return fincen.NewErrFieldRequired("PartyNameTypeCode")
 		}
 
-		if *r.PartyNameTypeCode == "L" && r.RawEntityIndividualLastName == nil {
+		if *r.PartyNameTypeCode == fincen.IndicateLegalName && r.RawEntityIndividualLastName == nil {
 			return fincen.NewErrFieldRequired("RawEntityIndividualLastName")
 		}
 
-		if *r.PartyNameTypeCode == "DBA" && r.RawPartyFullName == nil {
+		if *r.PartyNameTypeCode == fincen.IndicateDoingBusiness && r.RawPartyFullName == nil {
 			return fincen.NewErrFieldRequired("RawPartyFullName")
 		}
 	}
 
-	if typeCode == "45" || typeCode == "12" {
+	if fincen.CheckInvolved(typeCode, PartyExemptFilerBank, PartyExemptAffiliatedBank) {
 		if r.RawPartyFullName == nil {
 			return fincen.NewErrFieldRequired("RawPartyFullName")
 		}
@@ -278,13 +287,13 @@ type AddressType struct {
 
 func (r AddressType) fieldInclusion(typeCode string) error {
 
-	if typeCode == "35" {
+	if typeCode == PartyTransmitter {
 		if r.RawCountryCodeText == nil {
 			return fincen.NewErrFieldRequired("RawCountryCodeText")
 		}
 	}
 
-	if !fincen.CheckInvolved(typeCode, "35", "11", "35", "12") {
+	if !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyExemptParty, PartyExemptFilerBank, PartyExemptAffiliatedBank) {
 		return fincen.NewErrFiledOmitted("Address")
 	}
 
@@ -322,7 +331,7 @@ type ElectronicAddressType struct {
 }
 
 func (r ElectronicAddressType) fieldInclusion(typeCode string) error {
-	if !fincen.CheckInvolved(typeCode, "11") {
+	if !fincen.CheckInvolved(typeCode, PartyExemptParty) {
 		return fincen.NewErrFiledOmitted("ElectronicAddress")
 	}
 
@@ -350,7 +359,7 @@ type PartyIdentificationType struct {
 }
 
 func (r PartyIdentificationType) fieldInclusion(typeCode string) error {
-	if !fincen.CheckInvolved(typeCode, "35", "45", "11", "12") {
+	if !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyExemptFilerBank, PartyExemptParty, PartyExemptAffiliatedBank) {
 		return fincen.NewErrFiledOmitted("PartyIdentification")
 	}
 
@@ -378,7 +387,7 @@ type PartyOccupationBusinessType struct {
 }
 
 func (r PartyOccupationBusinessType) fieldInclusion(typeCode string) error {
-	if !fincen.CheckInvolved(typeCode, "11") {
+	if !fincen.CheckInvolved(typeCode, PartyExemptParty) {
 		return fincen.NewErrFiledOmitted("PartyOccupationBusiness")
 	}
 
@@ -407,25 +416,25 @@ type PhoneNumberType struct {
 
 func (r PhoneNumberType) fieldInclusion(typeCode string) error {
 
-	if typeCode == "35" {
+	if typeCode == PartyTransmitter {
 		if r.PhoneNumberText == nil {
 			return fincen.NewErrFieldRequired("PhoneNumberText")
 		}
 	}
 
-	if typeCode == "11" {
+	if typeCode == PartyExemptParty {
 		if r.PhoneNumberText == nil {
 			return fincen.NewErrFieldRequired("PhoneNumberText")
 		}
 	}
 
-	if typeCode == "3" {
+	if typeCode == PartyAuthorizedOfficial {
 		if r.PhoneNumberText == nil {
 			return fincen.NewErrFieldRequired("PhoneNumberText")
 		}
 	}
 
-	if !fincen.CheckInvolved(typeCode, "35", "3", "11") {
+	if !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyAuthorizedOfficial, PartyExemptParty) {
 		return fincen.NewErrFiledOmitted("PhoneNumber")
 	}
 

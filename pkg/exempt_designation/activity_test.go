@@ -17,7 +17,7 @@ import (
 func mocParties() map[string][]byte {
 	parties := make(map[string][]byte)
 
-	parties["35"] = []byte(`<Party SeqNum="4">
+	parties[PartyTransmitter] = []byte(`<Party SeqNum="4">
 	<ActivityPartyTypeCode>35</ActivityPartyTypeCode>
 	<PartyName SeqNum="5">
 		<PartyNameTypeCode>L</PartyNameTypeCode>
@@ -39,7 +39,7 @@ func mocParties() map[string][]byte {
 	</PartyIdentification>
 </Party>`)
 
-	parties["37"] = []byte(`<Party SeqNum="10">
+	parties[PartyTransmitterContact] = []byte(`<Party SeqNum="10">
 	<ActivityPartyTypeCode>37</ActivityPartyTypeCode>
 	<PartyName SeqNum="11">
 		<PartyNameTypeCode>L</PartyNameTypeCode>
@@ -47,7 +47,7 @@ func mocParties() map[string][]byte {
 	</PartyName>
 </Party>`)
 
-	parties["11"] = []byte(`<Party SeqNum="10">
+	parties[PartyExemptParty] = []byte(`<Party SeqNum="10">
 	<ActivityPartyTypeCode>11</ActivityPartyTypeCode>
 	<PartyAsEntityOrganizationIndicator>Y</PartyAsEntityOrganizationIndicator>
 	<PartyName SeqNum="24">
@@ -81,7 +81,7 @@ func mocParties() map[string][]byte {
 	</ElectronicAddress>
 </Party>`)
 
-	parties["45"] = []byte(`<Party SeqNum="11">
+	parties[PartyExemptFilerBank] = []byte(`<Party SeqNum="11">
 	<ActivityPartyTypeCode>45</ActivityPartyTypeCode>
 	<PrimaryRegulatorTypeCode>1</PrimaryRegulatorTypeCode>
 	<PartyName SeqNum="31">
@@ -103,7 +103,7 @@ func mocParties() map[string][]byte {
 	</PartyIdentification>
 </Party>`)
 
-	parties["12"] = []byte(`<Party SeqNum="11">
+	parties[PartyExemptAffiliatedBank] = []byte(`<Party SeqNum="11">
 	<ActivityPartyTypeCode>12</ActivityPartyTypeCode>
 	<PrimaryRegulatorTypeCode>1</PrimaryRegulatorTypeCode>
 	<PartyName SeqNum="31">
@@ -125,7 +125,7 @@ func mocParties() map[string][]byte {
 	</PartyIdentification>
 </Party>`)
 
-	parties["3"] = []byte(`<Party SeqNum="88">
+	parties[PartyAuthorizedOfficial] = []byte(`<Party SeqNum="88">
 	<ActivityPartyTypeCode>3</ActivityPartyTypeCode>
 	<PartyName SeqNum="89">
 		<RawIndividualTitleText>Authorizing person title</RawIndividualTitleText>
@@ -138,14 +138,14 @@ func mocParties() map[string][]byte {
 
 func TestParty(t *testing.T) {
 	t.Run("Transmitter", func(t *testing.T) {
-		sample := mocParties()["35"]
+		sample := mocParties()[PartyTransmitter]
 		party := PartyType{}
 		err := xml.Unmarshal(sample, &party)
 
 		require.NoError(t, err)
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(4))
-		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("35"))
+		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType(PartyTransmitter))
 		require.Equal(t, len(party.PartyName), 1)
 		require.NotNil(t, party.Address)
 		require.NotNil(t, party.PhoneNumber)
@@ -153,7 +153,7 @@ func TestParty(t *testing.T) {
 
 		name := party.PartyName[0]
 		require.Equal(t, name.SeqNum, fincen.SeqNumber(5))
-		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
+		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType(fincen.IndicateLegalName))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Transmitter legal name"))
 
 		address := party.Address
@@ -182,19 +182,19 @@ func TestParty(t *testing.T) {
 	})
 
 	t.Run("Transmitter Contact", func(t *testing.T) {
-		sample := mocParties()["37"]
+		sample := mocParties()[PartyTransmitterContact]
 		party := PartyType{}
 		err := xml.Unmarshal(sample, &party)
 
 		require.NoError(t, err)
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(10))
-		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("37"))
+		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType(PartyTransmitterContact))
 		require.Equal(t, len(party.PartyName), 1)
 
 		name := party.PartyName[0]
 		require.Equal(t, name.SeqNum, fincen.SeqNumber(11))
-		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
+		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType(fincen.IndicateLegalName))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("Transmitter contact legal name"))
 
 		buf, err := xml.MarshalIndent(&party, "", "\t")
@@ -206,14 +206,14 @@ func TestParty(t *testing.T) {
 	})
 
 	t.Run("Exempt Party", func(t *testing.T) {
-		sample := mocParties()["11"]
+		sample := mocParties()[PartyExemptParty]
 		party := PartyType{}
 		err := xml.Unmarshal(sample, &party)
 
 		require.NoError(t, err)
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(10))
-		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("11"))
+		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType(PartyExemptParty))
 		require.Equal(t, len(party.PartyName), 2)
 		require.NotNil(t, party.Address)
 		require.NotNil(t, party.PhoneNumber)
@@ -223,12 +223,12 @@ func TestParty(t *testing.T) {
 
 		name := party.PartyName[0]
 		require.Equal(t, name.SeqNum, fincen.SeqNumber(24))
-		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("L"))
+		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType(fincen.IndicateLegalName))
 		require.Equal(t, *name.RawEntityIndividualLastName, fincen.RestrictString150("Johnson Wedding Company"))
 
 		name = party.PartyName[1]
 		require.Equal(t, name.SeqNum, fincen.SeqNumber(25))
-		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType("DBA"))
+		require.Equal(t, *name.PartyNameTypeCode, ValidatePartyNameCodeType(fincen.IndicateDoingBusiness))
 		require.Equal(t, *name.RawPartyFullName, fincen.RestrictString150("JWC"))
 
 		address := party.Address
@@ -266,14 +266,14 @@ func TestParty(t *testing.T) {
 	})
 
 	t.Run("Exempt Filer Bank", func(t *testing.T) {
-		sample := mocParties()["45"]
+		sample := mocParties()[PartyExemptFilerBank]
 		party := PartyType{}
 		err := xml.Unmarshal(sample, &party)
 
 		require.NoError(t, err)
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(11))
-		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("45"))
+		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType(PartyExemptFilerBank))
 		require.Equal(t, *party.PrimaryRegulatorTypeCode, ValidateFederalRegulatorCodeType("1"))
 		require.Equal(t, len(party.PartyName), 1)
 		require.NotNil(t, party.Address)
@@ -309,14 +309,14 @@ func TestParty(t *testing.T) {
 	})
 
 	t.Run("Exempt Affiliated Bank", func(t *testing.T) {
-		sample := mocParties()["12"]
+		sample := mocParties()[PartyExemptAffiliatedBank]
 		party := PartyType{}
 		err := xml.Unmarshal(sample, &party)
 
 		require.NoError(t, err)
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(11))
-		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("12"))
+		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType(PartyExemptAffiliatedBank))
 		require.Equal(t, *party.PrimaryRegulatorTypeCode, ValidateFederalRegulatorCodeType("1"))
 		require.Equal(t, len(party.PartyName), 1)
 		require.NotNil(t, party.Address)
@@ -359,7 +359,7 @@ func TestParty(t *testing.T) {
 		require.NoError(t, err)
 
 		require.Equal(t, party.SeqNum, fincen.SeqNumber(88))
-		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType("3"))
+		require.Equal(t, party.ActivityPartyTypeCode, ValidateActivityPartyCodeType(PartyAuthorizedOfficial))
 		require.Equal(t, len(party.PartyName), 1)
 
 		name := party.PartyName[0]
@@ -390,18 +390,18 @@ func TestElements(t *testing.T) {
 		activity.ActivityAssociation = &ActivityAssociationType{}
 		activity.DesignationExemptActivity = &DesignationExemptActivityType{}
 
-		require.Equal(t, "The Party(type 35) is a required field", activity.Validate().Error())
+		require.Equal(t, "The Party type(transmitter) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "35"})
-		require.Equal(t, "The Party(type 37) is a required field", activity.Validate().Error())
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: PartyTransmitter})
+		require.Equal(t, "The Party type(transmitter contact) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "37"})
-		require.Equal(t, "The Party(type 11) is a required field", activity.Validate().Error())
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: PartyTransmitterContact})
+		require.Equal(t, "The Party type(exempt party) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "11"})
-		require.Equal(t, "The Party(type 45) is a required field", activity.Validate().Error())
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: PartyExemptParty})
+		require.Equal(t, "The Party type(exempt filer bank) is a required field", activity.Validate().Error())
 
-		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: "45"})
+		activity.Party = append(activity.Party, &PartyType{ActivityPartyTypeCode: PartyExemptFilerBank})
 		require.Equal(t, "The DateYYYYMMDDType has invalid value", activity.Validate().Error())
 	})
 
@@ -423,7 +423,7 @@ func TestElements(t *testing.T) {
 
 		require.Equal(t, "The ActivityPartyCode has invalid value", sample.Validate().Error())
 
-		sample = PartyType{ActivityPartyTypeCode: "35"}
+		sample = PartyType{ActivityPartyTypeCode: PartyTransmitter}
 
 		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
 		sample.PartyName = append(sample.PartyName, &PartyNameType{})
@@ -433,11 +433,11 @@ func TestElements(t *testing.T) {
 		sample.PhoneNumber = &PhoneNumberType{}
 		require.Equal(t, "The PartyIdentification is a required field", sample.Validate().Error())
 
-		sample = PartyType{ActivityPartyTypeCode: "37"}
+		sample = PartyType{ActivityPartyTypeCode: PartyTransmitterContact}
 
 		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
 
-		sample = PartyType{ActivityPartyTypeCode: "11"}
+		sample = PartyType{ActivityPartyTypeCode: PartyExemptParty}
 
 		sample.PartyName = nil
 		require.Equal(t, "The PartyName has invalid min & max range", sample.Validate().Error())
@@ -446,7 +446,7 @@ func TestElements(t *testing.T) {
 		sample.Address = &AddressType{}
 		require.Equal(t, "The PartyIdentification is a required field", sample.Validate().Error())
 
-		sample = PartyType{ActivityPartyTypeCode: "45"}
+		sample = PartyType{ActivityPartyTypeCode: PartyExemptFilerBank}
 
 		require.Equal(t, "The PartyName is a required field", sample.Validate().Error())
 		sample.PartyName = append(sample.PartyName, &PartyNameType{})
@@ -463,29 +463,29 @@ func TestElements(t *testing.T) {
 
 		require.NoError(t, sample.Validate())
 		require.NoError(t, sample.Validate("INVALID"))
-		require.Equal(t, "The PartyNameTypeCode is a required field", sample.Validate("35").Error())
+		require.Equal(t, "The PartyNameTypeCode is a required field", sample.Validate(PartyTransmitter).Error())
 
 		nameType := ValidatePartyNameCodeType("")
 		sample.PartyNameTypeCode = &nameType
-		require.Equal(t, "The PartyNameCode has invalid value (ValidatePartyNameCodeType)", sample.Validate("35").Error())
-		nameType = "L"
-		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("35").Error())
+		require.Equal(t, "The PartyNameCode has invalid value (ValidatePartyNameCodeType)", sample.Validate(PartyTransmitter).Error())
+		nameType = fincen.IndicateLegalName
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate(PartyTransmitter).Error())
 
-		require.Equal(t, "The RawEntityIndividualLastName is a required field", sample.Validate("11").Error())
-		nameType = "DBA"
-		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("11").Error())
+		require.Equal(t, "The RawEntityIndividualLastName is a required field", sample.Validate(PartyExemptParty).Error())
+		nameType = fincen.IndicateDoingBusiness
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate(PartyExemptParty).Error())
 		sample.PartyNameTypeCode = nil
-		require.Equal(t, "The PartyNameTypeCode is a required field", sample.Validate("11").Error())
+		require.Equal(t, "The PartyNameTypeCode is a required field", sample.Validate(PartyExemptParty).Error())
 
-		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate("45").Error())
+		require.Equal(t, "The RawPartyFullName is a required field", sample.Validate(PartyExemptFilerBank).Error())
 	})
 
 	t.Run("AddressType", func(t *testing.T) {
 		var sample AddressType
 
 		require.NoError(t, sample.Validate())
-		require.NoError(t, sample.Validate("11"))
-		require.Equal(t, "The RawCountryCodeText is a required field", sample.Validate("35").Error())
+		require.NoError(t, sample.Validate(PartyExemptParty))
+		require.Equal(t, "The RawCountryCodeText is a required field", sample.Validate(PartyTransmitter).Error())
 		require.Equal(t, "The Address should be omitted", sample.Validate("INVALID").Error())
 
 	})
@@ -494,7 +494,7 @@ func TestElements(t *testing.T) {
 		var sample ElectronicAddressType
 
 		require.NoError(t, sample.Validate())
-		require.NoError(t, sample.Validate("11"))
+		require.NoError(t, sample.Validate(PartyExemptParty))
 		require.Equal(t, "The ElectronicAddress should be omitted", sample.Validate("INVALID").Error())
 
 	})
@@ -503,7 +503,7 @@ func TestElements(t *testing.T) {
 		var sample PartyIdentificationType
 
 		require.Equal(t, "The PartyIdentificationCode has invalid value", sample.Validate().Error())
-		require.Equal(t, "The PartyIdentificationCode has invalid value", sample.Validate("11").Error())
+		require.Equal(t, "The PartyIdentificationCode has invalid value", sample.Validate(PartyExemptParty).Error())
 		require.Equal(t, "The PartyIdentification should be omitted", sample.Validate("INVALID").Error())
 
 	})
@@ -512,7 +512,7 @@ func TestElements(t *testing.T) {
 		var sample PartyOccupationBusinessType
 
 		require.NoError(t, sample.Validate())
-		require.NoError(t, sample.Validate("11"))
+		require.NoError(t, sample.Validate(PartyExemptParty))
 		require.Equal(t, "The PartyOccupationBusiness should be omitted", sample.Validate("INVALID").Error())
 
 	})
@@ -522,9 +522,9 @@ func TestElements(t *testing.T) {
 
 		require.NoError(t, sample.Validate())
 		require.Equal(t, "The PhoneNumber should be omitted", sample.Validate("INVALID").Error())
-		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("35").Error())
-		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("11").Error())
-		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate("3").Error())
+		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate(PartyTransmitter).Error())
+		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate(PartyExemptParty).Error())
+		require.Equal(t, "The PhoneNumberText is a required field", sample.Validate(PartyAuthorizedOfficial).Error())
 
 	})
 

@@ -13,6 +13,21 @@ import (
 	"github.com/moov-io/fincen"
 )
 
+const (
+	PartyTransmitter             = "35"
+	PartyTransmitterContact      = "37"
+	PartyFinancialInstitution    = "30"
+	PartyContactOffice           = "8"
+	PartyTransactionLocation     = "34"
+	PartyPersonConducting        = "50"
+	PartyPersonConductingAnother = "17"
+	PartyPerson                  = "23"
+	PartyCommonCarrier           = "58"
+	PartyITCTIN                  = "4"
+	PartyITCTCC                  = "28"
+	PartyITCEIN                  = "2"
+)
+
 func NewActivity() *ActivityType {
 	return &ActivityType{}
 }
@@ -80,23 +95,23 @@ func (r ActivityType) Validate(args ...string) error {
 		}
 	}
 
-	if _, ok := existed["35"]; !ok {
-		return fincen.NewErrFieldRequired("Party(type 35)")
+	if _, ok := existed[PartyTransmitter]; !ok {
+		return fincen.NewErrFieldRequired("Party type(transmitter)")
 	}
-	if _, ok := existed["37"]; !ok {
-		return fincen.NewErrFieldRequired("Party(type 37)")
+	if _, ok := existed[PartyTransmitterContact]; !ok {
+		return fincen.NewErrFieldRequired("Party type(transmitter contact)")
 	}
-	if _, ok := existed["30"]; !ok {
-		return fincen.NewErrFieldRequired("Party(type 30)")
+	if _, ok := existed[PartyFinancialInstitution]; !ok {
+		return fincen.NewErrFieldRequired("Party type(reporting financial institution)")
 	}
-	if _, ok := existed["8"]; !ok {
-		return fincen.NewErrFieldRequired("Party(type 8)")
+	if _, ok := existed[PartyContactOffice]; !ok {
+		return fincen.NewErrFieldRequired("Party type(report contact office)")
 	}
-	if cnt, ok := existed["34"]; ok && cnt > 999 {
-		return fincen.NewErrMinMaxRange("Party(type 34)")
+	if cnt, ok := existed[PartyTransactionLocation]; ok && cnt > 999 {
+		return fincen.NewErrMinMaxRange("Party type(transaction location)")
 	}
-	if cnt, ok := existed["50"]; ok && cnt > 999 {
-		return fincen.NewErrMinMaxRange("Party(type 50)")
+	if cnt, ok := existed[PartyPersonConducting]; ok && cnt > 999 {
+		return fincen.NewErrMinMaxRange("Party type(person conducting on own behalf)")
 	}
 
 	return fincen.Validate(&r, args...)
@@ -158,51 +173,51 @@ type PartyType struct {
 func (r PartyType) fieldInclusion() error {
 	typeCode := string(r.ActivityPartyTypeCode)
 
-	if r.BirthDateUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.BirthDateUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("BirthDateUnknownIndicator")
 	}
 
-	if r.EFilingCoverageBeginningDateText != nil && !fincen.CheckInvolved(typeCode, "35", "37") {
+	if r.EFilingCoverageBeginningDateText != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyTransmitterContact) {
 		return fincen.NewErrFiledOmitted("EFilingCoverageBeginningDateText")
 	}
 
-	if r.EFilingCoverageEndDateText != nil && !fincen.CheckInvolved(typeCode, "35", "37") {
+	if r.EFilingCoverageEndDateText != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyTransmitterContact) {
 		return fincen.NewErrFiledOmitted("EFilingCoverageEndDateText")
 	}
 
-	if r.FemaleGenderIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.FemaleGenderIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("FemaleGenderIndicator")
 	}
 
-	if r.IndividualBirthDateText != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.IndividualBirthDateText != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("IndividualBirthDateText")
 	}
 
-	if r.IndividualEntityCashInAmountText != nil && !fincen.CheckInvolved(typeCode, "34", "50", "17", "23", "58") {
+	if r.IndividualEntityCashInAmountText != nil && !fincen.CheckInvolved(typeCode, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("IndividualEntityCashInAmountText")
 	}
 
-	if r.IndividualEntityCashOutAmountText != nil && !fincen.CheckInvolved(typeCode, "34", "50", "17", "23", "58") {
+	if r.IndividualEntityCashOutAmountText != nil && !fincen.CheckInvolved(typeCode, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("IndividualEntityCashOutAmountText")
 	}
 
-	if r.MaleGenderIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.MaleGenderIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("MaleGenderIndicator")
 	}
 
-	if r.MultipleTransactionsPersonsIndividualsIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.MultipleTransactionsPersonsIndividualsIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("MultipleTransactionsPersonsIndividualsIndicator")
 	}
 
-	if r.PartyAsEntityOrganizationIndicator != nil && !fincen.CheckInvolved(typeCode, "23", "58") {
+	if r.PartyAsEntityOrganizationIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("PartyAsEntityOrganizationIndicator")
 	}
 
-	if r.PrimaryRegulatorTypeCode != nil && !fincen.CheckInvolved(typeCode, "30", "34") {
+	if r.PrimaryRegulatorTypeCode != nil && !fincen.CheckInvolved(typeCode, PartyFinancialInstitution, PartyTransactionLocation) {
 		return fincen.NewErrFiledOmitted("PrimaryRegulatorTypeCode")
 	}
 
-	if r.UnknownGenderIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.UnknownGenderIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("UnknownGenderIndicator")
 	}
 
@@ -210,15 +225,15 @@ func (r PartyType) fieldInclusion() error {
 		return fincen.NewErrMinMaxRange("PartyName")
 	}
 
-	if r.Address != nil && !fincen.CheckInvolved(typeCode, "35", "30", "34", "50", "17", "23", "58") {
+	if r.Address != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("Address")
 	}
 
-	if r.PhoneNumber != nil && !fincen.CheckInvolved(typeCode, "35", "8", "50", "17", "23", "58") {
+	if r.PhoneNumber != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyContactOffice, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("PhoneNumber")
 	}
 
-	if len(r.PartyIdentification) > 0 && !fincen.CheckInvolved(typeCode, "35", "30", "34", "50", "17", "23", "58") {
+	if len(r.PartyIdentification) > 0 && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("PartyIdentification")
 	}
 
@@ -226,15 +241,15 @@ func (r PartyType) fieldInclusion() error {
 		return fincen.NewErrMinMaxRange("PartyIdentification")
 	}
 
-	if r.OrganizationClassificationTypeSubtype != nil && !fincen.CheckInvolved(typeCode, "30", "34") {
+	if r.OrganizationClassificationTypeSubtype != nil && !fincen.CheckInvolved(typeCode, PartyFinancialInstitution, PartyTransactionLocation) {
 		return fincen.NewErrFiledOmitted("OrganizationClassificationTypeSubtype")
 	}
 
-	if r.PartyOccupationBusiness != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.PartyOccupationBusiness != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("PartyOccupationBusiness")
 	}
 
-	if r.ElectronicAddress != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.ElectronicAddress != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("ElectronicAddress")
 	}
 
@@ -242,7 +257,7 @@ func (r PartyType) fieldInclusion() error {
 		return fincen.NewErrMinMaxRange("Account")
 	}
 
-	if len(r.Account) > 0 && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if len(r.Account) > 0 && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("Account")
 	}
 
@@ -271,36 +286,36 @@ type PartyNameType struct {
 }
 
 func (r PartyNameType) fieldInclusion(typeCode string) error {
-	if r.EntityLastNameUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.EntityLastNameUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("EntityLastNameUnknownIndicator")
 	}
 
-	if r.FirstNameUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.FirstNameUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("FirstNameUnknownIndicator")
 	}
 
-	if r.PartyNameTypeCode != nil && string(*r.PartyNameTypeCode) != "L" &&
-		!fincen.CheckInvolved(typeCode, "30", "34", "50", "17", "23", "58") {
+	if r.PartyNameTypeCode != nil && string(*r.PartyNameTypeCode) != fincen.IndicateLegalName &&
+		!fincen.CheckInvolved(typeCode, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrValueInvalid("PartyNameTypeCode")
 	}
 
-	if r.RawEntityIndividualLastName != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.RawEntityIndividualLastName != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawEntityIndividualLastName")
 	}
 
-	if r.RawIndividualFirstName != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.RawIndividualFirstName != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawIndividualFirstName")
 	}
 
-	if r.RawIndividualMiddleName != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.RawIndividualMiddleName != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawIndividualMiddleName")
 	}
 
-	if r.RawIndividualNameSuffixText != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.RawIndividualNameSuffixText != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawIndividualNameSuffixText")
 	}
 
-	if r.RawPartyFullName != nil && fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.RawPartyFullName != nil && fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawPartyFullName")
 	}
 
@@ -336,43 +351,43 @@ type AddressType struct {
 }
 
 func (r AddressType) fieldInclusion(typeCode string) error {
-	if r.CityUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.CityUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("CityUnknownIndicator")
 	}
 
-	if r.CountryCodeUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.CountryCodeUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("CountryCodeUnknownIndicator")
 	}
 
-	if r.RawCityText != nil && !fincen.CheckInvolved(typeCode, "35", "30", "34", "50", "17", "23", "58") {
+	if r.RawCityText != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawCityText")
 	}
 
-	if r.RawCountryCodeText != nil && !fincen.CheckInvolved(typeCode, "35", "30", "34", "50", "17", "23", "58") {
+	if r.RawCountryCodeText != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawCountryCodeText")
 	}
 
-	if r.RawStateCodeText != nil && !fincen.CheckInvolved(typeCode, "35", "30", "34", "50", "17", "23", "58") {
+	if r.RawStateCodeText != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawStateCodeText")
 	}
 
-	if r.RawStreetAddress1Text != nil && !fincen.CheckInvolved(typeCode, "35", "30", "34", "50", "17", "23", "58") {
+	if r.RawStreetAddress1Text != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawStreetAddress1Text")
 	}
 
-	if r.RawZIPCode != nil && !fincen.CheckInvolved(typeCode, "35", "30", "34", "50", "17", "23", "58") {
+	if r.RawZIPCode != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("RawZIPCode")
 	}
 
-	if r.StateCodeUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.StateCodeUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("StateCodeUnknownIndicator")
 	}
 
-	if r.StreetAddressUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.StreetAddressUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("StreetAddressUnknownIndicator")
 	}
 
-	if r.ZIPCodeUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.ZIPCodeUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("ZIPCodeUnknownIndicator")
 	}
 
@@ -400,11 +415,11 @@ type PhoneNumberType struct {
 }
 
 func (r PhoneNumberType) fieldInclusion(typeCode string) error {
-	if r.PhoneNumberExtensionText != nil && !fincen.CheckInvolved(typeCode, "8", "50", "17", "23", "58") {
+	if r.PhoneNumberExtensionText != nil && !fincen.CheckInvolved(typeCode, PartyContactOffice, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("PhoneNumberExtensionText")
 	}
 
-	if r.PhoneNumberText != nil && !fincen.CheckInvolved(typeCode, "35", "8", "50", "17", "23", "58") {
+	if r.PhoneNumberText != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyContactOffice, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("PhoneNumberText")
 	}
 
@@ -437,31 +452,31 @@ type PartyIdentificationType struct {
 }
 
 func (r PartyIdentificationType) fieldInclusion(typeCode string) error {
-	if r.IdentificationPresentUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.IdentificationPresentUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("IdentificationPresentUnknownIndicator")
 	}
 
-	if r.OtherIssuerCountryText != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.OtherIssuerCountryText != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("OtherIssuerCountryText")
 	}
 
-	if r.OtherIssuerStateText != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.OtherIssuerStateText != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("OtherIssuerStateText")
 	}
 
-	if r.OtherPartyIdentificationTypeText != nil && !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+	if r.OtherPartyIdentificationTypeText != nil && !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("OtherPartyIdentificationTypeText")
 	}
 
-	if r.PartyIdentificationNumberText != nil && !fincen.CheckInvolved(typeCode, "35", "30", "34", "50", "17", "23", "58") {
+	if r.PartyIdentificationNumberText != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("PartyIdentificationNumberText")
 	}
 
-	if r.PartyIdentificationTypeCode != nil && !fincen.CheckInvolved(typeCode, "35", "30", "34", "50", "17", "23", "58") {
+	if r.PartyIdentificationTypeCode != nil && !fincen.CheckInvolved(typeCode, PartyTransmitter, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("PartyIdentificationTypeCode")
 	}
 
-	if r.TINUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, "34", "50", "17", "23", "58") {
+	if r.TINUnknownIndicator != nil && !fincen.CheckInvolved(typeCode, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 		return fincen.NewErrFiledOmitted("TINUnknownIndicator")
 	}
 
@@ -481,20 +496,20 @@ func (r PartyIdentificationType) Validate(args ...string) error {
 	if r.PartyIdentificationTypeCode != nil {
 		code := string(*r.PartyIdentificationTypeCode)
 		switch code {
-		case "4", "28":
-			if !fincen.CheckInvolved(typeCode, "35") {
+		case PartyITCTIN, PartyITCTCC:
+			if !fincen.CheckInvolved(typeCode, PartyTransmitter) {
 				return fincen.NewErrValueInvalid("PartyIdentificationTypeCode")
 			}
-		case "2":
-			if !fincen.CheckInvolved(typeCode, "30", "34", "50", "17", "23", "58") {
+		case PartyITCEIN:
+			if !fincen.CheckInvolved(typeCode, PartyFinancialInstitution, PartyTransactionLocation, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 				return fincen.NewErrValueInvalid("PartyIdentificationTypeCode")
 			}
 		case "1", "9", "5", "6", "7", "999":
-			if !fincen.CheckInvolved(typeCode, "50", "17", "23", "58") {
+			if !fincen.CheckInvolved(typeCode, PartyPersonConducting, PartyPersonConductingAnother, PartyPerson, PartyCommonCarrier) {
 				return fincen.NewErrValueInvalid("PartyIdentificationTypeCode")
 			}
 		case "10", "11", "12", "13", "14":
-			if !fincen.CheckInvolved(typeCode, "30", "34") {
+			if !fincen.CheckInvolved(typeCode, PartyFinancialInstitution, PartyTransactionLocation) {
 				return fincen.NewErrValueInvalid("PartyIdentificationTypeCode")
 			}
 		}
