@@ -9,6 +9,12 @@ import (
 	"regexp"
 )
 
+const (
+	IndicateLegalName     = "L"
+	IndicateDoingBusiness = "DBA"
+	IndicateKnownAs       = "AKA"
+)
+
 // Must match the pattern \S+( +\S+)*|
 type RestrictString100 string
 

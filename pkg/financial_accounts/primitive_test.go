@@ -31,7 +31,7 @@ func TestPrimitives(t *testing.T) {
 		var sample ValidateActivityPartyCodeType
 		require.Equal(t, "The ActivityPartyCode has invalid value", sample.Validate().Error())
 
-		sample = "35"
+		sample = PartyTransmitter
 		require.NoError(t, sample.Validate())
 	})
 
@@ -63,7 +63,7 @@ func TestPrimitives(t *testing.T) {
 		var sample ValidatePartyNameCodeType
 		require.Equal(t, "The PartyNameCode has invalid value", sample.Validate().Error())
 
-		sample = "L"
+		sample = fincen.IndicateLegalName
 		require.NoError(t, sample.Validate())
 	})
 
