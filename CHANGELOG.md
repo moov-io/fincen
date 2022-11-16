@@ -1,3 +1,13 @@
+## v0.3.3 (Released 2022-11-16)
+
+IMPROVEMENTS
+
+- fix: set/require correct PartyIdentificationTypeCode for SAR
+
+BUILD
+
+- fix(deps): update module github.com/moov-io/base to v0.36.2
+
 ## v0.3.2 (Released 2022-11-10)
 
 IMPROVEMENTS
