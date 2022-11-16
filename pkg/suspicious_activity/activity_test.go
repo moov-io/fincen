@@ -147,7 +147,7 @@ func mocParties() map[string][]byte {
 	</Address>
 	<PartyIdentification SeqNum="33">
 		<PartyIdentificationNumberText>458789856</PartyIdentificationNumberText>
-		<PartyIdentificationTypeCode>4</PartyIdentificationTypeCode>
+		<PartyIdentificationTypeCode>2</PartyIdentificationTypeCode>
 	</PartyIdentification>
 	<PartyIdentification SeqNum="34">
 		<PartyIdentificationNumberText>5589887789</PartyIdentificationNumberText>
