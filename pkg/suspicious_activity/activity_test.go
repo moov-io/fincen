@@ -200,15 +200,15 @@ func mocParties() map[string][]byte {
 	<Account SeqNum="77">
 		<AccountNumberText>1502417873</AccountNumberText>
 		<PartyAccountAssociation SeqNum="78">
-			<AccountClosedIndicator>Y</AccountClosedIndicator>
 			<PartyAccountAssociationTypeCode>5</PartyAccountAssociationTypeCode>
+			<AccountClosedIndicator>Y</AccountClosedIndicator>
 		</PartyAccountAssociation>
 	</Account>
 	<Account SeqNum="79">
 		<AccountNumberText>5477887896</AccountNumberText>
 		<PartyAccountAssociation SeqNum="80">
-			<AccountClosedIndicator>Y</AccountClosedIndicator>
 			<PartyAccountAssociationTypeCode>5</PartyAccountAssociationTypeCode>
+			<AccountClosedIndicator>Y</AccountClosedIndicator>
 		</PartyAccountAssociation>
 	</Account>
 </Party>`)
@@ -276,10 +276,10 @@ func mocParties() map[string][]byte {
 		<SubjectRelationshipFinancialInstitutionTINText>458789856</SubjectRelationshipFinancialInstitutionTINText>
 	</PartyAssociation>
 	<PartyAccountAssociation SeqNum="74">
+		<PartyAccountAssociationTypeCode>7</PartyAccountAssociationTypeCode>
 		<Party SeqNum="75">
 			<ActivityPartyTypeCode>41</ActivityPartyTypeCode>
 		</Party>
-		<PartyAccountAssociationTypeCode>7</PartyAccountAssociationTypeCode>
 	</PartyAccountAssociation>
 </Party>`)
 
