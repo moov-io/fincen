@@ -569,9 +569,9 @@ func (r AssociationParty) Validate(args ...string) error {
 type PartyAccountAssociationType struct {
 	XMLName                         xml.Name                                `xml:"PartyAccountAssociation"`
 	SeqNum                          fincen.SeqNumber                        `xml:"SeqNum,attr"`
+	PartyAccountAssociationTypeCode ValidatePartyAccountAssociationCodeType `xml:"PartyAccountAssociationTypeCode"`
 	Party                           []*AccountAssociationParty              `xml:"Party"`
 	AccountClosedIndicator          *fincen.ValidateIndicatorNullType       `xml:"AccountClosedIndicator,omitempty" json:",omitempty"`
-	PartyAccountAssociationTypeCode ValidatePartyAccountAssociationCodeType `xml:"PartyAccountAssociationTypeCode"`
 }
 
 func (r PartyAccountAssociationType) fieldInclusion(typeCode string) error {
