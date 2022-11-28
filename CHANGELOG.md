@@ -1,3 +1,9 @@
+## v0.3.4 (Released 2022-11-28)
+
+IMPROVEMENTS
+
+- fix: fincen needs the order of party account association to have party account association type code ahead of the party
+
 ## v0.3.3 (Released 2022-11-16)
 
 IMPROVEMENTS
