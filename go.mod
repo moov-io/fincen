@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.8.0
-	github.com/moov-io/base v0.36.2
+	github.com/moov-io/base v0.36.3
 	github.com/stretchr/testify v1.8.1
 )
 
