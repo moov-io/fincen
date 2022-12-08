@@ -45,7 +45,7 @@ type ActivityType struct {
 	SuspiciousActivity            *SuspiciousActivityType             `xml:"SuspiciousActivity"`
 	ActivityIPAddress             []*ActivityIPAddressType            `xml:"ActivityIPAddress,omitempty" json:",omitempty"`
 	CyberEventIndicators          []*CyberEventIndicatorsType         `xml:"CyberEventIndicators,omitempty" json:",omitempty"`
-	Assets                        []*AssetsTableType                  `xml:"Assets,omitempty" json:",omitempty"`
+	Assets                        []*AssetsType                       `xml:"Assets,omitempty" json:",omitempty"`
 	AssetsAttribute               []*AssetsAttributeType              `xml:"AssetsAttribute,omitempty" json:",omitempty"`
 	ActivityNarrativeInformation  []*ActivityNarrativeInformationType `xml:"ActivityNarrativeInformation"`
 }
@@ -675,15 +675,15 @@ func (r AssetsAttributeType) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
 }
 
-type AssetsTableType struct {
-	XMLName               xml.Name                              `xml:"AssetsTable"`
+type AssetsType struct {
+	XMLName               xml.Name                              `xml:"Assets"`
 	SeqNum                fincen.SeqNumber                      `xml:"SeqNum,attr"`
 	AssetSubtypeID        fincen.ValidateAssetSubtypeIDTypeCode `xml:"AssetSubtypeID"`
 	AssetTypeID           fincen.ValidateAssetTypeIDTypeCode    `xml:"AssetTypeID"`
 	OtherAssetSubtypeText *fincen.RestrictString50              `xml:"OtherAssetSubtypeText,omitempty" json:",omitempty"`
 }
 
-func (r AssetsTableType) Validate(args ...string) error {
+func (r AssetsType) Validate(args ...string) error {
 	return fincen.Validate(&r, args...)
 }
 
