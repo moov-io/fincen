@@ -25,7 +25,7 @@ var (
 	_ fincen.Element         = (*AssociationParty)(nil)
 	_ fincen.Element         = (*AccountAssociationParty)(nil)
 	_ fincen.Element         = (*AssetsAttributeType)(nil)
-	_ fincen.Element         = (*AssetsTableType)(nil)
+	_ fincen.Element         = (*AssetsType)(nil)
 	_ fincen.Element         = (*CyberEventIndicatorsType)(nil)
 	_ fincen.Element         = (*ElectronicAddressType)(nil)
 	_ fincen.Element         = (*OrganizationClassificationTypeSubtypeType)(nil)
