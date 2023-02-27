@@ -44,8 +44,8 @@ The HTTP server is available in a Docker image and the Go package github.com/moo
 - [Usage](#usage)
     - As an API
         - [Docker](#docker)
-        - [Google Cloud](#google-cloud-run-button)
-        - [HTTP API](#http-api)
+        - [Google Cloud](#google-cloud-run)
+        - [HTTP API](https://moov-io.github.io/fincen/usage-docker/)
     - [As a Go module](#go-library)
       - [Build report form](#build-report-form)
     - [As a command line tool](#command-line)
@@ -89,7 +89,7 @@ We also have Docker images for [OpenShift](https://quay.io/repository/moov/fince
 Pull & start the Docker image:
 ```
 docker pull moov/fincen:latest
-docker run -p 8088:8088 -p 9098:9098 moov/fincen:latest
+docker run -p 8206:8206 -p 8207:8207 moov/fincen:latest
 ```
 
 Validate a file on the HTTP server:
@@ -132,7 +132,7 @@ docker push gcr.io/<PROJECT-ID>/fincen
 
 Deploy the container to Cloud Run:
 ```
-gcloud run deploy --image gcr.io/<PROJECT-ID>/fincen --port 8088
+gcloud run deploy --image gcr.io/<PROJECT-ID>/fincen --port 8206
 ```
 
 Select your target platform to `1`, service name to `fincen`, and region to the one closest to you (enable Google API service if a prompt appears). Upon a successful build you will be given a URL where the API has been deployed:

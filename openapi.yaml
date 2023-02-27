@@ -10,13 +10,13 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:8206
     description: Local development
 
 tags:
   - name: 'fincen report'
     description: |
-       Fincen is a financial reporting for the United States. There are many fincen BSA forms. 
+       Fincen is a financial reporting for the United States. There are many fincen BSA forms.
 
 paths:
   /ping:

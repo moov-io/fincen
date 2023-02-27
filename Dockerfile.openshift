@@ -11,6 +11,6 @@ LABEL version=$VERSION
 
 COPY --from=builder /opt/app-root/src/bin/server /bin/server
 
-EXPOSE 8080
-EXPOSE 9090
+EXPOSE 8206
+EXPOSE 8207
 ENTRYPOINT ["/bin/server"]

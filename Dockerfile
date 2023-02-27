@@ -15,6 +15,6 @@ COPY --from=builder /go/src/github.com/moov-io/fincen/configs/config.default.yml
 COPY --from=builder /etc/passwd /etc/passwd
 
 USER moov
-EXPOSE 8080
-EXPOSE 9090
+EXPOSE 8206
+EXPOSE 8207
 ENTRYPOINT ["/bin/server"]

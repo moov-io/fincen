@@ -8,7 +8,7 @@ menubar: docs-menu
 
 # Docker
 
-We publish a [public Docker image `moov/fincen`](https://hub.docker.com/r/moov/fincen/) from Docker Hub or use this repository.  
+We publish a [public Docker image `moov/fincen`](https://hub.docker.com/r/moov/fincen/) from Docker Hub or use this repository.
 <!--
 We also have Docker images for [OpenShift](https://quay.io/repository/moov/fincen?tab=tags) published as `quay.io/moov/fincen`.
 -->
@@ -16,12 +16,12 @@ We also have Docker images for [OpenShift](https://quay.io/repository/moov/fince
 Pull & start the Docker image:
 ```
 docker pull moov/fincen:latest
-docker run -p 8080:8080 -p 9090:9090 moov/fincen:latest
+docker run -p 8206:8206 -p 8207:8207 moov/fincen:latest
 ```
 
 Check http server alive:
 ```
-curl localhost:8080/ping
+curl localhost:8206/ping
 ```
 ```
 PONG
@@ -29,7 +29,7 @@ PONG
 
 Create a file on the HTTP server:
 ```
-curl -X POST --data-binary "@./data/samples/sar_batch.xml" http://localhost:8080/validator
+curl -X POST --data-binary "@./data/samples/sar_batch.xml" http://localhost:8206/validator
 ```
 ```
 {"status":"valid file"}
