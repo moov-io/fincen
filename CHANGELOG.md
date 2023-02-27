@@ -1,3 +1,16 @@
+## v0.3.5 (Released 2023-02-27)
+
+IMPROVEMENTS
+
+- fix: failing fincen integration with AssetsTable, should be Assets
+
+BUILD
+
+- build: fixup ports in docs and Dockerfiles
+- chore(deps): update golang docker tag to v1.20
+- fix(deps): update module github.com/moov-io/base to v0.39.0
+- fix(deps): update module github.com/stretchr/testify to v1.8.2
+
 ## v0.3.4 (Released 2022-11-28)
 
 IMPROVEMENTS
