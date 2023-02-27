@@ -49,7 +49,7 @@ The HTTP server is available in a Docker image and the Go package github.com/moo
     - [As a Go module](#go-library)
       - [Build report form](#build-report-form)
     - [As a command line tool](#command-line)
-    - [As an in-browser parser](##in-browser-fincen-form-parser)
+    - [As an in-browser parser](#in-browser-fincen-form-parser)
 - [Learn About Fincen](#learn-about-fincen)
 - [FAQ](#faq)
 - [Getting help](#getting-help)
@@ -196,6 +196,22 @@ err = newReport.GenerateAttrs()
 **Validating report form**
 ```
 err = newReport.Validate()
+```
+
+### Command Line
+
+The [`fincen` binary on each release](https://github.com/moov-io/fincen/releases/latest) can be used on the command line.
+
+```
+Work seamlessly with Fincen BSA form from the command line.
+
+Usage:
+  fincen <command> [flags]
+
+Available commands:
+  summary: display form summary
+  validate: validate financial report form
+  reformat: reformat financial report for
 ```
 
 ### In-browser Fincen form parser
