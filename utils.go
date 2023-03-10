@@ -268,7 +268,7 @@ func ValidateSeqNumbers(r interface{}) (map[SeqNumber]bool, error) {
 		ret := seqMap
 		for key := range sub {
 			if _, ok := ret[key]; ok {
-				return nil, fmt.Errorf("exist duplicated sequence number %d", seq)
+				return nil, fmt.Errorf("exist duplicated sequence number %d", key)
 			}
 			ret[key] = true
 		}
