@@ -12,6 +12,8 @@
 
 - label: Reports
   items:
+    - name: BSA E-Filing Information
+      link: /efile/
     - name: Cash Payments over $10k
       link: /cash-payments/
     - name: Currency Transaction Report
