@@ -36,3 +36,7 @@ FinCEN SAR XML batch acknowledgement can create using fincen go library
 # Examples
 1. [Read](https://github.com/moov-io/fincen/tree/master/examples/financial_account_read/main.go)
 2. [Write](https://github.com/moov-io/fincen/tree/master/examples/financial_account_write/main.go)
+
+# Filing
+
+Refer to the [FinCEN.gov website](https://www.fincen.gov/resources/filing-information) for more information.

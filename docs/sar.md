@@ -16,13 +16,13 @@ Suspicious activity report can create using fincen go library
 
 1. Create a [EFilingBatchXML](https://godoc.org/github.com/moov-io/fincen/pkg/batch#EFilingBatchXML) with `batch.NewReport(fincen.Report111)`.
 2. Create available [ActivityType](https://godoc.org/github.com/moov-io/pkg/suspicious_activity#ActivityType) records with `suspicious_activity.NewActivity()`.
-3. Append created activities into Batch XML report with `batch.AppendActivity(activity)`. 
+3. Append created activities into Batch XML report with `batch.AppendActivity(activity)`.
 4. Validate Batch XML report with `Validate()` and figure out report problems.
 5. Generate Batch XML report attributes with `GenerateAttrs()`
 6. Generate Batch XML report attributes with `GenerateSeqNumbers()`
 7. Getting xml contents from Batch XML report.
 
-# Create an acknowledgement 
+# Create an acknowledgement
 
 FinCEN SAR XML batch acknowledgement can create using fincen go library
 
@@ -35,3 +35,7 @@ FinCEN SAR XML batch acknowledgement can create using fincen go library
 # Examples
 1. [Read](https://github.com/moov-io/fincen/tree/master/examples/suspicious_activity_read/main.go)
 2. [Write](https://github.com/moov-io/fincen/tree/master/examples/suspicious_activity_write/main.go)
+
+# Filing
+
+Refer to the [FinCEN.gov website](https://www.fincen.gov/resources/filing-information) for more information.
