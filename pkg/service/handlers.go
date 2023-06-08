@@ -99,14 +99,15 @@ func reformat(w http.ResponseWriter, r *http.Request) {
 }
 
 func write(w http.ResponseWriter, response Response) {
-
 	w.WriteHeader(response.Code)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
 	if response.Report != nil {
 		if response.Format == XmlFormat {
 			w.Header().Set("Content-Type", "application/xml; charset=utf-8")
-			xml.NewEncoder(w).Encode(response.Report)
+			enc := xml.NewEncoder(w)
+			defer enc.Close()
+			enc.Encode(response.Report)
 		} else {
 			w.Header().Set("Content-Type", "application/json; charset=utf-8")
 			json.NewEncoder(w).Encode(response.Report)
