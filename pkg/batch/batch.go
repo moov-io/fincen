@@ -284,7 +284,7 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		// force namespace prefix
 		start.Name.Local = "fc2:EFilingBatchXML"
 	}
-	
+
 	content := []byte{'\n'}
 	for _, act := range r.Activity {
 		if converted, err := fincen.MarshalIndent(act, fincen.DefaultXMLIntent, fincen.DefaultXMLIntent); err == nil {
