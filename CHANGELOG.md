@@ -1,3 +1,14 @@
+## v0.3.6 (Released 2023-07-11)
+
+IMPROVEMENTS
+
+- fix: batch isn't attaching activites together
+
+BUILD
+
+- fix(deps): update module github.com/moov-io/base to v0.45.0
+- fix(deps): update module github.com/stretchr/testify to v1.8.4
+
 ## v0.3.5 (Released 2023-02-27)
 
 IMPROVEMENTS
