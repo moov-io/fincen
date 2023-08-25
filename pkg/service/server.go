@@ -68,7 +68,12 @@ func bootHTTPServer(name string, routes http.Handler, errs chan<- error, logger 
 }
 
 func bootAdminServer(errs chan<- error, logger log.Logger, config HTTPConfig) *admin.Server {
-	adminServer := admin.NewServer(config.Bind.Address)
+	adminServer, err := admin.New(admin.Opts{
+		Addr: config.Bind.Address,
+	})
+	if err != nil {
+		errs <- logger.Fatal().LogErrorf("problem creating admin server: %v", err).Err()
+	}
 
 	go func() {
 		logger.Info().Log(fmt.Sprintf("listening on %s", adminServer.BindAddr()))

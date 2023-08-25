@@ -48,7 +48,12 @@ func main() {
 	}()
 
 	// Start Admin server (with Prometheus metrics)
-	adminServer := admin.NewServer(*adminAddr)
+	adminServer, err := admin.New(admin.Opts{
+		Addr: *adminAddr,
+	})
+	if err != nil {
+		errs <- fmt.Errorf("problem creating admin server: %v", err)
+	}
 	adminServer.AddVersionHandler(fincen.Version) // Setup 'GET /version'
 	go func() {
 		log.Printf("listening on %s", adminServer.BindAddr())
