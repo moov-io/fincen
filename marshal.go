@@ -1052,7 +1052,7 @@ func (p *printer) marshalStruct(tinfo *typeInfo, val reflect.Value) error {
 					p.Write(b)
 				}
 			default:
-				panic("can't happen")
+				return fmt.Errorf("reached unrecoverable state flags=%v mode=%v", finfo.flags, fMode)
 			}
 			if dashDash {
 				return fmt.Errorf(`xml: comments must not contain "--"`)
