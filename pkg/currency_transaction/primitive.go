@@ -81,7 +81,8 @@ func (r ValidatePartyAccountAssociationCodeType) Validate() error {
 }
 
 // May be one of "55", "46", "23", "12", "14", "49", "18", "21", "25", "997", "53", for cash in
-//  "56", "30", "32", "13", "15", "48", "28", "31", "33", "34", "998", "54", for cash out
+//
+//	"56", "30", "32", "13", "15", "48", "28", "31", "33", "34", "998", "54", for cash out
 type ValidateCurrencyTransactionActivityDetailCodeType string
 
 func (r ValidateCurrencyTransactionActivityDetailCodeType) Validate() error {
