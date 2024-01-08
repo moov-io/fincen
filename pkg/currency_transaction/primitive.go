@@ -80,12 +80,15 @@ func (r ValidatePartyAccountAssociationCodeType) Validate() error {
 	return fincen.NewErrValueInvalid("PartyAccountAssociationCode")
 }
 
-// May be one of "55", "46", "23", "12", "14", "49", "18", "21", "25", "997", "53",
+// May be one of "55", "46", "23", "12", "14", "49", "18", "21", "25", "997", "53", for cash in
+//
+//	"56", "30", "32", "13", "15", "48", "28", "31", "33", "34", "998", "54", for cash out
 type ValidateCurrencyTransactionActivityDetailCodeType string
 
 func (r ValidateCurrencyTransactionActivityDetailCodeType) Validate() error {
 	for _, vv := range []string{
 		"55", "46", "23", "12", "14", "49", "18", "21", "25", "997", "53",
+		"56", "30", "32", "13", "15", "48", "28", "31", "33", "34", "998", "54",
 	} {
 		if reflect.DeepEqual(string(r), vv) {
 			return nil
