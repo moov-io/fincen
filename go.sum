@@ -189,6 +189,8 @@ github.com/moov-io/base v0.48.3 h1:0VH5+a1yH+6CCwnMVa8+XUbu7Rth7l0LzHMq3xnE6/I=
 github.com/moov-io/base v0.48.3/go.mod h1:5/LTQ3Sy+c39yTCs9vgsHEhjEQHmDinhwIxBkBLNL20=
 github.com/moov-io/base v0.48.4 h1:20095IhiDlmQF2aXq7kFbdYtTA4QFPxtIrt1Y6SjNHo=
 github.com/moov-io/base v0.48.4/go.mod h1:5EzXxTWyRQ8LeWLz/mQ3ViEwwlhjMN0afw5e5CxRH7k=
+github.com/moov-io/base v0.48.5 h1:QaTyTo6eFFFV35R9l/GdePQN40IJti9knD5hqdWPnnM=
+github.com/moov-io/base v0.48.5/go.mod h1:D5ZV9COV/qtCjTQuYpq7gGInCk64AhOQI6UY4kt4Rq8=
 github.com/pelletier/go-toml/v2 v2.0.8 h1:0ctb6s9mE31h0/lhu+J6OPmVeDxJn+kYnJc2jZR9tGQ=
 github.com/pelletier/go-toml/v2 v2.0.8/go.mod h1:vuYfssBdrU2XDZ9bYydBu6t+6a6PYNcZljzZR9VXg+4=
 github.com/pelletier/go-toml/v2 v2.1.0 h1:FnwAJ4oYMvbT/34k9zzHuZNrhlz48GB3/s6at6/MHO4=
@@ -585,6 +587,8 @@ google.golang.org/protobuf v1.26.0-rc.1/go.mod h1:jlhhOSvTdKEhbULTjvd4ARK9grFBp0
 google.golang.org/protobuf v1.26.0/go.mod h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc=
 google.golang.org/protobuf v1.31.0 h1:g0LDEJHgrBl9N9r17Ru3sqWhkIx2NB67okBHPwC7hs8=
 google.golang.org/protobuf v1.31.0/go.mod h1:HV8QOd/L58Z+nl8r43ehVNZIU/HEI6OcFqwMG9pJV4I=
+google.golang.org/protobuf v1.32.0 h1:pPC6BG5ex8PDFnkbrGU3EixyhKcQ2aDuBS36lqK/C7I=
+google.golang.org/protobuf v1.32.0/go.mod h1:c6P6GXX6sHbq/GpV6MGZEdwhWPcYBgnhAHhKbcUYpos=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntNwaWcugrBjAiHlqqRiVk=
