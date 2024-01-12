@@ -184,7 +184,7 @@ type EFilingBatchMarshal struct {
 	XMLName                 xml.Name              `xml:"EFilingBatchXML"`
 	SeqNum                  fincen.SeqNumber      `xml:"SeqNum,attr,omitempty" json:",omitempty"`
 	StatusCode              string                `xml:"StatusCode,attr,omitempty" json:",omitempty"`
-	TotalAmount             float64               `xml:"TotalAmount,attr,omitempty" json:",omitempty"`
+	TotalAmount             prettyFloat           `xml:"TotalAmount,attr" json:",omitempty"`
 	PartyCount              int64                 `xml:"PartyCount,attr,omitempty" json:",omitempty"`
 	ActivityCount           int64                 `xml:"ActivityCount,attr,omitempty" json:",omitempty"`
 	AccountCount            int64                 `xml:"AccountCount,attr,omitempty" json:",omitempty"`
@@ -199,13 +199,20 @@ type EFilingBatchMarshal struct {
 	EFilingSubmissionXML    *EFilingSubmissionXML `xml:"EFilingSubmissionXML,omitempty" json:",omitempty"`
 }
 
+type prettyFloat float64
+
+func (f prettyFloat) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	s := fmt.Sprintf("%.0f", f)
+	return xml.Attr{Name: name, Value: s}, nil
+}
+
 func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 	dummy := EFilingBatchMarshal{
 		XMLName:                 r.XMLName,
 		SeqNum:                  r.SeqNum,
 		StatusCode:              r.StatusCode,
-		TotalAmount:             r.TotalAmount,
+		TotalAmount:             prettyFloat(r.TotalAmount),
 		PartyCount:              r.PartyCount,
 		ActivityCount:           r.ActivityCount,
 		AccountCount:            r.AccountCount,
