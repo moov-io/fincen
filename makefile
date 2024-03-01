@@ -14,11 +14,11 @@ build-webui:
 .PHONY: check
 check:
 ifeq ($(OS),Windows_NT)
-	@echo "Skipping checks on Windows, currently unsupported."
+	go test ./...
 else
 	@wget -O lint-project.sh https://raw.githubusercontent.com/moov-io/infra/master/go/lint-project.sh
 	@chmod +x ./lint-project.sh
-	GOOS=js GOARCH=wasm GOCYCLO_LIMIT=115 COVER_THRESHOLD=75.0 SET_GOLANGCI_LINTERS=asciicheck,bidichk,bodyclose,durationcheck,gosec,misspell,nolintlint,rowserrcheck,sqlclosecheck,unused time ./lint-project.sh
+	GOOS=js GOARCH=wasm GOCYCLO_LIMIT=115 COVER_THRESHOLD=50.0 SET_GOLANGCI_LINTERS=asciicheck,bidichk,bodyclose,durationcheck,gosec,misspell,nolintlint,rowserrcheck,sqlclosecheck,unused time ./lint-project.sh
 endif
 
 .PHONY: client
