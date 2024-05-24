@@ -49,7 +49,7 @@ dist-webui: build-webui
 	git commit -m "chore: updating wasm webui" || echo "No changes to commit"
 	git push origin master
 
-docker: clean docker-hub docker-webui
+docker: clean docker-hub
 
 docker-hub:
 	docker build --pull -t moov/fincen:$(VERSION) -f Dockerfile .
@@ -58,10 +58,6 @@ docker-hub:
 docker-openshift:
 	docker build --pull -t quay.io/moov/fincen:$(VERSION) -f Dockerfile.openshift --build-arg VERSION=$(VERSION) .
 	docker tag quay.io/moov/fincen:$(VERSION) quay.io/moov/fincen:latest
-
-docker-webui:
-	docker build --pull -t moov/fincen-webui:$(VERSION) -f Dockerfile.webui .
-	docker tag moov/fincen-webui:$(VERSION) moov/fincen-webui:latest
 
 .PHONY: clean-integration test-integration
 
@@ -82,7 +78,6 @@ release: docker AUTHORS
 release-push:
 	docker push moov/fincen:$(VERSION)
 	docker push moov/fincen:latest
-	docker push moov/fincen-webui:$(VERSION)
 
 quay-push:
 	docker push quay.io/moov/fincen:$(VERSION)
