@@ -31,6 +31,9 @@ jobs:
     - name: Check
       run: make check
 
+    - name: WebUI
+      run: make build-webui
+
     - name: Upload Code Coverage
       if: runner.os == 'Linux'
       run: bash <(curl -s https://codecov.io/bash)

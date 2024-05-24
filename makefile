@@ -7,9 +7,8 @@ build:
 	CGO_ENABLED=0 go build -o ./bin/server github.com/moov-io/fincen/cmd/server
 
 build-webui:
-	cp $(shell go env GOROOT)/misc/wasm/wasm_exec.js ./cmd/webui/assets/wasm_exec.js
-	GOOS=js GOARCH=wasm go build -o ./cmd/webui/assets/fincen.wasm github.com/moov-io/fincen/cmd/webui/fincen/
-	CGO_ENABLED=0 go build -o ./bin/webui ./cmd/webui
+	cp $(shell go env GOROOT)/misc/wasm/wasm_exec.js ./docs/webui/assets/wasm_exec.js
+	GOOS=js GOARCH=wasm go build -o ./docs/webui/assets/fincen.wasm github.com/moov-io/fincen/docs/webui/
 
 .PHONY: check
 check:
@@ -42,6 +41,13 @@ ifeq ($(OS),Windows_NT)
 else
 	CGO_ENABLED=0 GOOS=$(PLATFORM) go build -o bin/fincen-$(PLATFORM)-amd64 github.com/moov-io/fincen/cmd/server
 endif
+
+dist-webui: build-webui
+	git config user.name "moov-bot"
+	git config user.email "oss@moov.io"
+	git add ./docs/webui/assets/wasm_exec.js ./docs/webui/assets/fincen.wasm
+	git commit -m "chore: updating wasm webui" || echo "No changes to commit"
+	git push origin master
 
 docker: clean docker-hub docker-webui
 

@@ -25,6 +25,9 @@ jobs:
     - name: Check
       run: make check
 
+    - name: WebUI
+      run: make dist-webui
+
   create_release:
     name: Create Release
     needs: [testing]
