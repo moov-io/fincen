@@ -3,7 +3,7 @@
 - name: Go
   link: https://pkg.go.dev/github.com/moov-io/fincen
 - name: Demo
-  link: https://oss.moov.io/fincen/
+  link: https://moov-io.github.io/fincen/webui/
 - name: Community
   dropdown:
     - name: Awesome Fintech
