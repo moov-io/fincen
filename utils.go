@@ -35,7 +35,12 @@ func NumericStringField(s string, max uint) string {
 	if ln > max {
 		return s[ln-max:]
 	}
-	s = strings.Repeat("0", int(max-ln)) + s
+	rem := max - ln
+	if rem > 1_000_000_000 {
+		return ""
+	} else {
+		s = strings.Repeat("0", int(rem)) + s
+	}
 	return s
 }
 
