@@ -286,7 +286,7 @@ if !(existed[PartyITCEIN] || existed[PartyITCTIN] || existed[PartyITCFIN]) {
 		if len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3 {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
-		if !existed[PartyITCEIN] && !existed[PartyITCTIN] && !existed[PartyITCFIN] {
+if !(existed[PartyITCEIN] || existed[PartyITCTIN] || existed[PartyITCFIN]) {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	case PartySubject:
