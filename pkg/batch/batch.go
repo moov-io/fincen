@@ -386,6 +386,15 @@ func (r EFilingBatchXML) generateAttrs() batchAttr {
 
 	}
 
+	s.ActivityCount = r.ActivityCount
+	s.TotalAmount = r.TotalAmount
+	s.PartyCount = r.PartyCount
+	s.ActivityAttachmentCount = r.ActivityAttachmentCount
+	s.AttachmentCount = r.AttachmentCount
+	s.JointlyOwnedOwnerCount = r.JointlyOwnedOwnerCount
+	s.NoFIOwnerCount = r.NoFIOwnerCount
+	s.ConsolidatedOwnerCount = r.ConsolidatedOwnerCount
+
 	return s
 }
 

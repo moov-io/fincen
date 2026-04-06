@@ -26,6 +26,7 @@ const (
 	PartyBranch                      = "46"
 	PartyITCTCC                      = "28"
 	PartyITCTIN                      = "4"
+	PartyITCEIN                      = "1"
 	PartyITCFIN                      = "2"
 )
 
@@ -264,7 +265,7 @@ func (r PartyType) fieldInclusion() error {
 		if len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3 {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
-		if !existed[PartyITCFIN] {
+if !(existed[PartyITCEIN] || existed[PartyITCTIN] || existed[PartyITCFIN]) {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	case PartyContactOffice:
@@ -285,7 +286,7 @@ func (r PartyType) fieldInclusion() error {
 		if len(r.PartyIdentification) < 1 || len(r.PartyIdentification) > 3 {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
-		if !existed[PartyITCFIN] {
+if !(existed[PartyITCEIN] || existed[PartyITCTIN] || existed[PartyITCFIN]) {
 			return fincen.NewErrValueInvalid("PartyIdentification")
 		}
 	case PartySubject:
