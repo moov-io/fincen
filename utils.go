@@ -65,10 +65,10 @@ func validateCallbackByValue(data reflect.Value, args ...string) error {
 			for _, arg := range args {
 				converted = append(converted, reflect.ValueOf(arg))
 			}
-			response = method.Call(converted)
+			response = method.Call(converted) //nolint:forbidigo // reflect.Value.Call required for dynamic Validate hooks
 		}
 
-		response = method.Call(response)
+		response = method.Call(response) //nolint:forbidigo // reflect.Value.Call required for dynamic Validate hooks
 		if len(response) > 0 {
 			err := response[0]
 			if !err.IsNil() {
