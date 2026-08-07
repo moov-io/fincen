@@ -28,7 +28,10 @@ var (
 
 	attrType = reflect.TypeOf(xml.Attr{})
 
-	marshalerType     = reflect.TypeOf((*xml.Marshaler)(nil)).Elem()
+	// Use fincen's own marshaler interfaces (which take *encoder), not
+	// encoding/xml.Marshaler. Mixing the two caused panics on type assert
+	// because method signatures differ (*encoder vs *xml.Encoder).
+	marshalerType     reflect.Type
 	marshalerAttrType = reflect.TypeOf((*xml.MarshalerAttr)(nil)).Elem()
 	textMarshalerType = reflect.TypeOf((*encoding.TextMarshaler)(nil)).Elem()
 
@@ -42,6 +45,10 @@ var (
 
 	nameType = reflect.TypeOf(xml.Name{})
 )
+
+func init() {
+	marshalerType = reflect.TypeOf((*marshaler)(nil)).Elem()
+}
 
 type fieldFlags int
 
