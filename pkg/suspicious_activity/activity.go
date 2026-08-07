@@ -61,7 +61,7 @@ func (r ActivityType) TotalAmount() float64 {
 
 	var amount float64
 
-	if r.SuspiciousActivity.TotalSuspiciousAmountText != nil {
+	if r.SuspiciousActivity != nil && r.SuspiciousActivity.TotalSuspiciousAmountText != nil {
 		valueStr := string(*r.SuspiciousActivity.TotalSuspiciousAmountText)
 		if value, err := strconv.ParseFloat(valueStr, 64); err == nil {
 			amount += value

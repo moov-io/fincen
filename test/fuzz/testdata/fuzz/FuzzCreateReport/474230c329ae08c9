@@ -1,0 +1,2 @@
+go test fuzz v1
+string("<EFilingBatchXML><Activity></Activity><FormTypeCode>CTRX</FormTypeCode></EFilingBatchXML>")
