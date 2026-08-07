@@ -49,7 +49,13 @@ func (r ActivityType) FormTypeCode() string {
 func (r ActivityType) TotalAmount() float64 {
 	// The sum of all amount values recorded for the <DetailTransactionAmountText> element
 	var amount float64
+	if r.CurrencyTransactionActivity == nil {
+		return amount
+	}
 	for _, currency := range r.CurrencyTransactionActivity.CurrencyTransactionActivityDetail {
+		if currency == nil {
+			continue
+		}
 		valueStr := string(currency.DetailTransactionAmountText)
 		if value, err := strconv.ParseFloat(valueStr, 64); err == nil {
 			amount += value

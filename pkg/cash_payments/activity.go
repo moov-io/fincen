@@ -51,8 +51,11 @@ func (r ActivityType) TotalAmount() float64 {
 	// The sum of all <DetailTransactionAmountText> element amounts
 
 	var amount float64
+	if r.CurrencyTransactionActivity == nil {
+		return amount
+	}
 	for _, currency := range r.CurrencyTransactionActivity.CurrencyTransactionActivityDetail {
-		if currency.DetailTransactionAmountText == nil {
+		if currency == nil || currency.DetailTransactionAmountText == nil {
 			continue
 		}
 
