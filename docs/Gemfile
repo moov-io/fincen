@@ -15,7 +15,7 @@ gem "bulma-clean-theme"
 # gem "github-pages", group: :jekyll_plugins
 # If you have any plugins, put them here!
 group :jekyll_plugins do
-  gem "jekyll-feed", "= 0.16.0"
+  gem "jekyll-feed", "= 0.17.0"
 end
 
 gem "github-pages", ">= 214", group: :jekyll_plugins
