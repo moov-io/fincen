@@ -20,6 +20,7 @@ jobs:
       uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
       with:
         go-version: ${{ matrix.version }}
+        cache: false
       id: go
 
     - name: Check out code into the Go module directory
@@ -69,6 +70,7 @@ jobs:
       uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
       with:
         go-version: latest
+        cache: false
       id: go
 
     - name: Check out code into the Go module directory
@@ -136,6 +138,7 @@ jobs:
       uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
       with:
         go-version: latest
+        cache: false
       id: go
 
     - name: Check out code into the Go module directory
