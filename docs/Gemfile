@@ -23,6 +23,11 @@ gem "github-pages", ">= 214", group: :jekyll_plugins
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.
 platforms :mingw, :x64_mingw, :mswin, :jruby do
-  gem "tzinfo", "~> 1.0"
+  gem "tzinfo", "~> 2.0"
   gem "tzinfo-data"
 end
+
+# Patched transitive gems for Dependabot alerts on Gemfile.lock.
+# Stay on the github-pages 7.2 Active Support line instead of 8.x.
+gem "activesupport", ">= 7.2.3.1", "< 8"
+gem "faraday", ">= 2.14.3"
