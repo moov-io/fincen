@@ -5,14 +5,25 @@
   "groupName": "all",
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
       "automerge": true
     },
     {
       "description": "github-pages (Jekyll 3.9 / activesupport 6) cannot use tzinfo 2 or bulma-clean-theme 1",
-      "matchPackageNames": ["tzinfo", "bulma-clean-theme"],
-      "matchUpdateTypes": ["major"],
+      "matchPackageNames": [
+        "tzinfo",
+        "bulma-clean-theme"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "enabled": false
     }
-  ]
+  ],
+  "platformAutomerge": true
 }
