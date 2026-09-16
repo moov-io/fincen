@@ -386,13 +386,13 @@ func (r EFilingBatchXML) generateAttrs() batchAttr {
 
 	}
 
-	s.ActivityCount = r.ActivityCount
-	s.TotalAmount = r.TotalAmount
-	s.PartyCount = r.PartyCount
+	// Keep caller-supplied attrs that are not derived from Activity contents.
+	// Do not copy ActivityCount, TotalAmount, PartyCount, JointlyOwnedOwnerCount,
+	// or NoFIOwnerCount back over the values computed above. Doing so made
+	// validateAttrs a no-op for those fields and left GenerateAttrs unable
+	// to fill them.
 	s.ActivityAttachmentCount = r.ActivityAttachmentCount
 	s.AttachmentCount = r.AttachmentCount
-	s.JointlyOwnedOwnerCount = r.JointlyOwnedOwnerCount
-	s.NoFIOwnerCount = r.NoFIOwnerCount
 	s.ConsolidatedOwnerCount = r.ConsolidatedOwnerCount
 
 	return s
