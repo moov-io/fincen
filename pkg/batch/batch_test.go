@@ -297,6 +297,44 @@ func TestBatch(t *testing.T) {
 
 }
 
+func TestValidateAttrsRejectsMismatchedTotalAmount(t *testing.T) {
+	buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", "ctr_batch.xml"))
+	require.NoError(t, err)
+
+	batch := NewReport()
+	require.NoError(t, xml.Unmarshal(buf, &batch))
+	require.NoError(t, batch.Validate())
+
+	batch.TotalAmount = 0
+	err = batch.Validate()
+	require.Error(t, err)
+	require.ErrorContains(t, err, "TotalAmount")
+}
+
+func TestGenerateAttrsFillsTotalAmountFromActivities(t *testing.T) {
+	buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", "ctr_batch.xml"))
+	require.NoError(t, err)
+
+	batch := NewReport()
+	require.NoError(t, xml.Unmarshal(buf, &batch))
+	batch.TotalAmount = 0
+	require.NoError(t, batch.GenerateAttrs())
+	require.Equal(t, 47000.0, batch.TotalAmount)
+	require.NoError(t, batch.Validate())
+}
+
+func TestValidateAttrsRejectsMismatchedPartyCount(t *testing.T) {
+	buf, err := os.ReadFile(path.Join("..", "..", "data", "samples", "ctr_batch.xml"))
+	require.NoError(t, err)
+
+	batch := NewReport()
+	require.NoError(t, xml.Unmarshal(buf, &batch))
+	batch.PartyCount = 99
+	err = batch.Validate()
+	require.Error(t, err)
+	require.ErrorContains(t, err, "PartyCount")
+}
+
 func TestElements(t *testing.T) {
 
 	t.Run("EFilingBatchXML", func(t *testing.T) {
