@@ -25,6 +25,13 @@
       "enabled": false
     },
     {
+      "description": "github-pages 232 pins jekyll-feed = 0.17.0",
+      "matchPackageNames": [
+        "jekyll-feed"
+      ],
+      "enabled": false
+    },
+    {
       "description": "Automerge GitHub Actions updates (including majors)",
       "matchManagers": [
         "github-actions"
