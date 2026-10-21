@@ -7,19 +7,20 @@ source "https://rubygems.org"
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-# gem "jekyll", "~> 4.2.2"
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "bulma-clean-theme", "~> 0.14.0"
-# If you want to use GitHub Pages, remove the "gem "jekyll"" above and
-# uncomment the line below. To upgrade, run `bundle update github-pages`.
-# gem "github-pages", group: :jekyll_plugins
+gem "jekyll", "~> 3.10"
+# github-pages 232 pins jekyll-remote-theme 0.4.3, which requires rubyzip < 3.0
+# (CVE-2026-85396, GHSA-47m2-wp7j-p9vc). Pin a remote-theme that allows rubyzip 3.4+.
+gem "jekyll-remote-theme", ">= 0.5.2"
+gem "kramdown-parser-gfm"
+gem "webrick"
+gem "rubyzip", ">= 3.4.0"
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   # github-pages 232 pins jekyll-feed = 0.17.0
   gem "jekyll-feed", "= 0.17.0"
 end
-
-gem "github-pages", ">= 214", group: :jekyll_plugins
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.
@@ -30,5 +31,5 @@ end
 
 # Patched transitive gems for Dependabot alerts on Gemfile.lock.
 # Stay on the github-pages 7.2 Active Support line instead of 8.x.
-gem "activesupport", ">= 7.2.3.1", "< 9"
+gem "activesupport", ">= 7.2.3.1", "< 8"
 gem "faraday", ">= 2.14.3"
