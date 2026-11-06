@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/mux v1.8.1
-	github.com/moov-io/base v0.67.0
+	github.com/moov-io/base v0.68.1
 	github.com/stretchr/testify v1.12.1
 )
 
