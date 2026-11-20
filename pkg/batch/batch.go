@@ -10,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/moov-io/fincen"
 	"github.com/moov-io/fincen/pkg/cash_payments"
@@ -302,6 +303,17 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		}
 	}
 
+	if r.FormTypeCode == fincen.Report111 {
+		// The SARX schema requires these attributes even when the value is 0.
+		// The omitempty tag would drop a zero value, so emit them explicitly.
+		dummy.ActivityAttachmentCount = 0
+		dummy.AttachmentCount = 0
+		dummy.Attrs = append(dummy.Attrs,
+			xml.Attr{Name: xml.Name{Local: "ActivityAttachmentCount"}, Value: strconv.FormatInt(r.ActivityAttachmentCount, 10)},
+			xml.Attr{Name: xml.Name{Local: "AttachmentCount"}, Value: strconv.FormatInt(r.AttachmentCount, 10)},
+		)
+	}
+
 	return e.EncodeElement(&dummy, start)
 }
 
@@ -457,6 +469,11 @@ func (r *EFilingBatchXML) validateAttrs() error {
 	return nil
 }
 
+// Validate checks the batch against the library's field and attribute rules.
+// It does not validate the document against the bundled FinCEN XSD files in
+// data/xsd. A successful Validate result (or an HTTP /validator response of
+// "valid file") does not mean that FinCEN would accept the file.
+//
 // Validate args:
 //
 //	1: disableValidateAttrs
