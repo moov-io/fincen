@@ -3,9 +3,7 @@
 <p align="center">
   <a href="https://moov-io.github.io/fincen/">Project Documentation</a>
   ·
-  <a href="https://moov-io.github.io/fincen/api/#get-/files">API Endpoints</a>
-  ·
-  <a href="https://moov.io/blog/education/fincen-api-guide/">API Guide</a>
+  <a href="https://moov-io.github.io/fincen/api/#get-/ping">API Endpoints</a>
   ·
   <a href="https://slack.moov.io/">Community</a>
   ·
@@ -14,13 +12,12 @@
   <br>
 </p>
 
-[![GoDoc](https://godoc.org/github.com/moov-io/fincen?status.svg)](https://godoc.org/github.com/moov-io/fincen)
+[![GoDoc](https://pkg.go.dev/badge/github.com/moov-io/fincen.svg)](https://pkg.go.dev/github.com/moov-io/fincen)
 [![Build Status](https://github.com/moov-io/fincen/workflows/Go/badge.svg)](https://github.com/moov-io/fincen/actions)
 [![Coverage Status](https://codecov.io/gh/moov-io/fincen/branch/master/graph/badge.svg)](https://codecov.io/gh/moov-io/fincen)
 [![Go Report Card](https://goreportcard.com/badge/github.com/moov-io/fincen)](https://goreportcard.com/report/github.com/moov-io/fincen)
 [![Repo Size](https://img.shields.io/github/languages/code-size/moov-io/fincen?label=project%20size)](https://github.com/moov-io/fincen)
 [![Apache 2 License](https://img.shields.io/badge/license-Apache2-blue.svg)](https://raw.githubusercontent.com/moov-io/fincen/master/LICENSE)
-[![Slack Channel](https://slack.moov.io/badge.svg?bg=e01563&fgColor=fffff)](https://slack.moov.io/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/moov/fincen)](https://hub.docker.com/r/moov/fincen)
 [![GitHub Stars](https://img.shields.io/github/stars/moov-io/fincen)](https://github.com/moov-io/fincen)
 [![Twitter](https://img.shields.io/twitter/follow/moov?style=social)](https://twitter.com/moov?lang=en)
@@ -30,7 +27,7 @@ Moov's mission is to give developers an easy way to create and integrate bank pr
 
 Moov's fincen project implements a reader, writer, and validator for Fincen BSA forms in an HTTP server and Go library.
 
-Fincen (Financial crimes enforcment network) BSA data transmission methods for the the BSA E-Filing System.
+Fincen (Financial Crimes Enforcement Network) BSA data transmission methods for the BSA E-Filing System.
 
 A go library for reading and writing Fincen BSA forms. It is capable of generating, validating, and batching submissions.
 
@@ -66,7 +63,7 @@ There are many forms that are required in this project. **Now implemented XML fo
 https://bsaefiling.fincen.treas.gov/FilingInformation.html
 
 The final phase of the project will be a service that collects fillings and then on a scheduled time will batch the fillings and submit them electronically.
-https://bsaefiling.fincen.treas.gov/docs/SDTMRequirements.pdf
+https://bsaefiling.fincen.treas.gov/SDTMInfo.html
 
 ## Supported Forms
 
@@ -92,25 +89,28 @@ docker pull moov/fincen:latest
 docker run -p 8206:8206 -p 8207:8207 moov/fincen:latest
 ```
 
+The HTTP server listens on `:8206`. The admin server (health probes and metrics) listens on `:8207`. The `/validator` and `/reformat` endpoints accept `multipart/form-data` with a file field named `input`.
+
 Validate a file on the HTTP server:
 ```
-curl -X POST --data-binary "@./data/samples/ctr_batch.txt" http://localhost:8088/validator
+curl -F "input=@./data/samples/ctr_batch.xml" http://localhost:8206/validator
 ```
 ```
 {"status":"valid file"}
 ```
 
-Reformat the file with generated attributes:
+The same command works with the `sar_batch.xml`, `doep_batch.xml`, `fbar_batch.xml`, and `8300_batch.xml` samples.
+
+Reformat the file with generated attributes. Attributes are regenerated only when you send `generate_attrs=true`. You can also send `format=json` for JSON output. `/validator` accepts `disable_attrs=true` to skip attribute checks.
+
 ```
-curl -X POST --data-binary "@./data/samples/ctr_batch.txt" http://localhost:8088/reformat
+curl -F "input=@./data/samples/ctr_batch.xml" -F "generate_attrs=true" http://localhost:8206/reformat
 ```
 ```
-<EFilingBatchXML ActivityCount="1" TotalAmount="47000" PartyCount="6" SeqNum="1"
-                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
-                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                     xmlns:fc2="www.fincen.gov/base">
-    <Activity SeqNum="1">
-...
+<fc2:EFilingBatchXML TotalAmount="47000" PartyCount="6" ActivityCount="1" xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/sites/default/files/schema/base/EFL_CTRXBatchSchema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fc2="www.fincen.gov/base">
+  <fc2:FormTypeCode>CTRX</fc2:FormTypeCode>
+  <fc2:Activity SeqNum="1">
+    ...
 ```
 
 ### Google Cloud Run
@@ -141,69 +141,102 @@ Select your target platform to `1`, service name to `fincen`, and region to the 
 https://YOUR-FINCEN-APP-URL.a.run.app
 ```
 
-Now you can list files stored in-memory:
+Now you can check that the service is running:
 ```
-curl https://YOUR-FINCEN-APP-URL.a.run.app/files
+curl https://YOUR-FINCEN-APP-URL.a.run.app/ping
 ```
 You should get this response:
 ```
-null
+PONG
 ```
+
+The HTTP API provides `/ping`, `/validator`, and `/reformat`. There is no `/files` endpoint.
 
 ### Go library
 
-This project uses [Go Modules](https://go.dev/blog/using-go-modules) and Go v1.18 or newer. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production.
+This project uses [Go Modules](https://go.dev/blog/using-go-modules) and Go 1.26 or newer. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production once a release is cut from current `master`. The GitHub release marked Latest is older than `master`, and `go get` may resolve `v0.3.6`, which is not on the current `master` branch.
 
 ```
-$ git@github.com:moov-io/fincen.git
+git clone https://github.com/moov-io/fincen.git
 
-$ go get -u github.com/moov-io/fincen
+go get github.com/moov-io/fincen
 ```
 The package [`github.com/moov-io/fincen`](https://pkg.go.dev/github.com/moov-io/fincen) offers a Go-based Fincen file reader and writer.
 
 ### Build report form
 
-**Creating XML Batch Reporting form**
+Create a batch with `batch.NewReport` and a form constant:
 
-Fincen project used general XML batch reporting form struct.
-Available types are "SUBMISSION", "CTRX", "SARX", "DOEPX", "FBARX", "8300X"
+| Constant | Form type |
+| --- | --- |
+| `fincen.Report112` | CTRX (Currency Transaction Report) |
+| `fincen.Report111` | SARX (Suspicious Activity Report) |
+| `fincen.Report110` | DOEPX (Designation of Exempt Person) |
+| `fincen.Report114` | FBARX (Foreign Bank and Financial Accounts) |
+| `fincen.Form8300` | 8300X (Cash Payments Over $10,000) |
+| `fincen.ReportSubmission` | SUBMISSION (acknowledgement) |
+
+Generate attributes, then generate sequence numbers, then validate. `Validate()` fails when counts are stale. `Validate()` checks the library's field and attribute rules only. It does not validate a document against the bundled XSD files in `data/xsd`. A successful `Validate()` result (or an HTTP `/validator` response of `valid file`) does not mean that FinCEN would accept the file.
+
+A complete CTR example is in [`examples/currency_transaction_write`](examples/currency_transaction_write). Run examples from the repository root:
 
 ```
-// create report with type
-newReport := NewReport(fincen.ReportSubmission)
+go run ./examples/currency_transaction_write
+go run ./examples/currency_transaction_read
 ```
 
-**Adding activities by each type**
+```go
+package main
 
-Activity should add into the form struct using sub package
+import (
+    "encoding/xml"
+    "fmt"
+    "log"
 
-```
-// create activity (ctr)
-var newActivity currency_transaction.ActivityType
+    "github.com/moov-io/fincen"
+    "github.com/moov-io/fincen/pkg/batch"
+    "github.com/moov-io/fincen/pkg/currency_transaction"
+)
 
-...
-setting newActivity
-...
+func main() {
+    report := batch.NewReport(fincen.Report112)
+    activity := currency_transaction.NewActivity()
+    // Fill activity fields. See examples/currency_transaction_write for a complete CTR.
 
-err := newReport.AppendActivity(&newActivity)
-```
+    if err := report.AppendActivity(activity); err != nil {
+        log.Fatal(err)
+    }
+    if err := report.GenerateAttrs(); err != nil {
+        log.Fatal(err)
+    }
+    if err := report.GenerateSeqNumbers(); err != nil {
+        log.Fatal(err)
+    }
+    if err := report.Validate(); err != nil {
+        log.Fatal(err)
+    }
 
-**Generating new xml attributes**
-```
-err = newReport.GenerateAttrs()
-```
-
-**Validating report form**
-```
-err = newReport.Validate()
+    out, err := xml.MarshalIndent(report, "", "  ")
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(string(out))
+}
 ```
 
 ### Command Line
 
-The [`fincen` binary on each release](https://github.com/moov-io/fincen/releases/latest) can be used on the command line.
+The `fincen-<os>-amd64` asset on each [release](https://github.com/moov-io/fincen/releases/latest) is the HTTP server, not the CLI. The command-line tool lives in `cmd/fincen`. Build it from this repository, or install it with Go from current `master` until a new tagged release includes the CLI:
 
 ```
-Work seamlessly with Fincen BSA form from the command line.
+go install github.com/moov-io/fincen/cmd/fincen@master
+
+# or, from a clone of this repository:
+go build -o bin/fincen ./cmd/fincen
+```
+
+```
+Work seamlessly with Fincen BSA forms from the command line.
 
 Usage:
   fincen <command> [flags]
@@ -211,22 +244,33 @@ Usage:
 Available commands:
   summary: display form summary
   validate: validate financial report form
-  reformat: reformat financial report for
+  reformat: reformat financial report form
+
+Reformat flags:
+  -generate-attrs
+        regenerate batch attributes
+  -format string
+        output format, xml or json (default "xml")
+```
+
+```
+./bin/fincen validate data/samples/ctr_batch.xml
+./bin/fincen reformat -generate-attrs data/samples/ctr_batch.xml
 ```
 
 ### In-browser Fincen form parser
-Using our [in-browser utility](http://oss.moov.io/fincen/), you can instantly verify and reformat Fincen BSA forms.
+Using our [in-browser utility](https://moov-io.github.io/fincen/webui/), you can instantly verify and reformat Fincen BSA forms.
 
 ## Learn about Fincen
 - [About the BSA E-Filing System](https://bsaefiling.fincen.treas.gov/AboutBsa.html)
 - [Secure Direct Transfer Mode](https://bsaefiling.fincen.treas.gov/SDTMInfo.html)
-- [Supervisory User Registration](https://bsaefiling1.fincen.treas.gov/AddUser)
+- [BSA E-Filing System](https://bsaefiling.fincen.treas.gov/)
 
 
 ## FAQ
 <details open="true">
 <summary ><b>Is there an in-browser tool?</b></summary>
-Yes! You can find our browser utility at http://oss.moov.io/fincen/.
+Yes! You can find our browser utility at https://moov-io.github.io/fincen/webui/.
 </details>
 
 ## Getting help
@@ -246,9 +290,9 @@ Note: 32-bit platforms have known issues and are not supported.
 
 ## Contributing
 
-Yes please! Please review our [Contributing guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) to get started!
+Yes please! Please review our [Contributing guide](CONTRIBUTING.md) to get started!
 
-This project uses [Go Modules](https://go.dev/blog/using-go-modules) and Go v1.18 or newer. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production.
+This project uses [Go Modules](https://go.dev/blog/using-go-modules) and Go 1.26 or newer. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production once a release is cut from current `master`.
 
 
 ## License

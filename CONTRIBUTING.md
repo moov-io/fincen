@@ -11,8 +11,6 @@ Stability is the hallmark of any good software. If you find an edge case that is
 
 Have a use case that we don't handle; or handle well! Start the discussion on our Google Group or open a GitHub Issue. We want to make the project meet the needs of the community and keeps you using our code.
 
-Please review our [Code of Conduct](https://github.com/moov-io/fincen/blob/master/CODE_OF_CONDUCT.md) to ensure you agree with the values of this project.
-
 We use GitHub to manage reviews of pull requests.
 
 * If you have a trivial fix or improvement, go ahead and create a pull request, addressing (with `@...`) one or more of the maintainers (see [AUTHORS.md](AUTHORS.md)) in the description of the pull request.
@@ -29,7 +27,7 @@ We use GitHub to manage reviews of pull requests.
 
 Before starting please make sure you have Go setup and can build our projects from source.
 
-This project uses [Go Modules](https://go.dev/blog/using-go-modules) and Go v1.18 or newer. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production.
+This project uses [Go Modules](https://go.dev/blog/using-go-modules) and Go 1.26 or newer. See [Golang's install instructions](https://golang.org/doc/install) for help setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production.
 
 You can pull a working repository of our code code with git:
 

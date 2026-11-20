@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  description: Moov's fincen project implements a reader, writer, and validator for Fincen BSA forms in an HTTP server and Go library. Fincen (Financial crimes enforcment network) BSA data transmission methods for the the BSA E-Filing System.
+  description: Moov's fincen project implements a reader, writer, and validator for Fincen BSA forms in an HTTP server and Go library. Fincen (Financial Crimes Enforcement Network) BSA data transmission methods for the BSA E-Filing System.
   version: v1
   title: FINCEN API
   contact:

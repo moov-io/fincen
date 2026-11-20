@@ -16,4 +16,4 @@ This system supports [individual or batch submissions](https://bsaefiling.fincen
 
 The [XML E-File Specifications](https://bsaefiling.fincen.treas.gov/FilingInformation.html) can be used to upload the selected report. The Moov FinCEN library can generate the appropriate XML for submission.
 
-Refer to the [FinCEN.gov](https://www.fincen.gov/index.php/resources/filing-information) for more information.
+Refer to the [FinCEN.gov](https://www.fincen.gov/resources/filing-information) for more information.

@@ -15,21 +15,29 @@ import (
 )
 
 func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	buf, err := os.ReadFile(path.Join("data", "samples", "fbar_batch.xml"))
 	if err != nil {
-		return
+		return err
 	}
 
 	r := batch.NewReport(fincen.Report114)
 	err = xml.Unmarshal(buf, r)
 	if err != nil {
-		return
+		return err
 	}
 
 	buf, err = xml.MarshalIndent(r, "", "  ")
 	if err != nil {
-		return
+		return err
 	}
 
 	fmt.Println(string(buf))
+	return nil
 }
