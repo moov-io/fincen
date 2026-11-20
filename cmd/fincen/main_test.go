@@ -7,6 +7,7 @@ package main
 import (
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -25,6 +26,9 @@ func TestReformatWritesBannerToStderr(t *testing.T) {
 func TestReformatCLIRedirectIsXML(t *testing.T) {
 	// Build and run the command so we cover the process stdout/stderr split.
 	bin := filepath.Join(t.TempDir(), "fincen")
+	if runtime.GOOS == "windows" {
+		bin += ".exe"
+	}
 	build := exec.Command("go", "build", "-o", bin, ".")
 	build.Dir = "."
 	out, err := build.CombinedOutput()
