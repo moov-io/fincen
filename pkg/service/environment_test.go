@@ -15,6 +15,8 @@ func TestEnvironment(t *testing.T) {
 
 	require.NoError(t, err)
 	t.Cleanup(env.Shutdown)
+	env.Config.Servers.Public.Bind.Address = "127.0.0.1:0"
+	env.Config.Servers.Admin.Bind.Address = "127.0.0.1:0"
 	require.NotNil(t, env.Logger)
 	require.NotNil(t, env.Config)
 	require.NotNil(t, env.InternalClient)

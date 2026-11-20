@@ -84,7 +84,7 @@ func main() {
 
 		err := Summary(summaryCommand.Args())
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "Error summary form files: %s\n", err)
+			fmt.Fprintf(os.Stderr, "Error summary form files: %s\n", err)
 			os.Exit(1)
 		}
 
@@ -99,7 +99,7 @@ func main() {
 
 		err := Validate(validateCommand.Args())
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "Error validating file: %s\n", err)
+			fmt.Fprintf(os.Stderr, "Error validating file: %s\n", err)
 			os.Exit(1)
 		} else {
 			fmt.Fprintf(os.Stdout, "Valid report file: %s\n", inputArgs[0])
@@ -116,14 +116,14 @@ func main() {
 
 		buf, err := Reformat(reformatCommand.Args(), *generateAttrs, *formatType)
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "Failed formatting file: %s\n", err)
+			fmt.Fprintf(os.Stderr, "Failed formatting file: %s\n", err)
 			os.Exit(1)
 		} else {
 			fmt.Fprintf(os.Stdout, "%s\n", string(buf))
 		}
 
 	default:
-		fmt.Fprintf(os.Stdout, "Uknown command: %s\n\n", command)
+		fmt.Fprintf(os.Stderr, "Unknown command: %s\n\n", command)
 		flag.Usage()
 		os.Exit(1)
 	}

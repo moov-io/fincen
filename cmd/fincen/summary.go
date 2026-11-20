@@ -15,22 +15,22 @@ import (
 )
 
 func Reformat(paths []string, generate bool, newType string) ([]byte, error) {
-	fmt.Fprintf(os.Stdout, "\nFormating report file...\n")
+	fmt.Fprintf(os.Stderr, "\nFormatting report file...\n")
 	r, err := batch.CreateReportWithFile(paths[0])
 	if err != nil {
-		fmt.Fprintf(os.Stdout, "Failed to create report from file: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Failed to create report from file: %v\n", err)
 		return nil, err
 	}
 
 	if generate {
 		err = r.GenerateAttrs()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "Failed to generate report attributes: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Failed to generate report attributes: %v\n", err)
 			return nil, err
 		}
 		err = r.GenerateSeqNumbers()
 		if err != nil {
-			fmt.Fprintf(os.Stdout, "Failed to generate sequence numbers: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Failed to generate sequence numbers: %v\n", err)
 			return nil, err
 		}
 	}
@@ -43,10 +43,10 @@ func Reformat(paths []string, generate bool, newType string) ([]byte, error) {
 }
 
 func Validate(paths []string) error {
-	fmt.Fprintf(os.Stdout, "\nValidating report file...\n")
+	fmt.Fprintf(os.Stderr, "\nValidating report file...\n")
 	r, err := batch.CreateReportWithFile(paths[0])
 	if err != nil {
-		fmt.Fprintf(os.Stdout, "Failed to create report from file: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Failed to create report from file: %v\n", err)
 		return err
 	}
 
@@ -68,8 +68,8 @@ func summaryForm(path string) error {
 
 	r, err := batch.CreateReportWithFile(path)
 	if err != nil {
-		fmt.Fprintf(os.Stdout, "Failed to create report from file: %v\n", err)
-		fmt.Fprintf(os.Stdout, "Trying to summary file anyway...\n")
+		fmt.Fprintf(os.Stderr, "Failed to create report from file: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Trying to summary file anyway...\n")
 		return err
 	}
 

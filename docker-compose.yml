@@ -1,0 +1,6 @@
+services:
+  fincen:
+    image: moov/fincen:latest
+    ports:
+      - "8206:8206"
+      - "8207:8207"

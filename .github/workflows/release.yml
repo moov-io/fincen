@@ -92,13 +92,16 @@ jobs:
       run: |
         set -euo pipefail
         if [ "$RUNNER_OS" = "Linux" ]; then
-          asset=./bin/fincen-linux-amd64
+          server=./bin/fincen-linux-amd64
+          cli=./bin/fincen-cli-linux-amd64
         elif [ "$RUNNER_OS" = "macOS" ]; then
-          asset=./bin/fincen-darwin-amd64
+          server=./bin/fincen-darwin-amd64
+          cli=./bin/fincen-cli-darwin-amd64
         else
-          asset=./bin/fincen.exe
+          server=./bin/fincen.exe
+          cli=./bin/fincen-cli.exe
         fi
-        gh release upload "$TAG" "$asset" --repo "$REPO" --clobber
+        gh release upload "$TAG" "$server" "$cli" --repo "$REPO" --clobber
 
   docker:
     name: Docker
