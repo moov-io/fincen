@@ -59,7 +59,9 @@ func bootHTTPServer(name string, routes http.Handler, errs chan<- error, logger 
 	}()
 
 	shutdownServer := func() {
-		if err := serve.Shutdown(context.Background()); err != nil {
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		if err := serve.Shutdown(ctx); err != nil {
 			logger.Fatal().LogErrorf("shutting down: %v", err)
 		}
 	}

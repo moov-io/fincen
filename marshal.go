@@ -400,7 +400,7 @@ type fieldInfo struct {
 }
 
 type marshaler interface {
-	MarshalXML(e *encoder, start xml.StartElement) error
+	marshalXML(e *encoder, start xml.StartElement) error
 }
 
 // Marshal will return an error if asked to marshal a channel, function, or map.
@@ -817,7 +817,7 @@ func (p *printer) marshalInterface(val marshaler, start xml.StartElement) error 
 	p.tags = append(p.tags, xml.Name{})
 	n := len(p.tags)
 
-	err := val.MarshalXML(p.encoder, start)
+	err := val.marshalXML(p.encoder, start)
 	if err != nil {
 		return err
 	}

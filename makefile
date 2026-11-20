@@ -44,11 +44,17 @@ client:
 clean:
 	@rm -rf ./bin/ ./tmp/ coverage.txt misspell* staticcheck lint-project.sh
 
-dist: clean build
+.PHONY: build-cli
+build-cli:
+	CGO_ENABLED=0 go build -o ./bin/fincen github.com/moov-io/fincen/cmd/fincen
+
+dist: clean build build-cli
 ifeq ($(OS),Windows_NT)
 	CGO_ENABLED=1 GOOS=windows go build -o bin/fincen.exe github.com/moov-io/fincen/cmd/server
+	CGO_ENABLED=1 GOOS=windows go build -o bin/fincen-cli.exe github.com/moov-io/fincen/cmd/fincen
 else
 	CGO_ENABLED=0 GOOS=$(PLATFORM) go build -o bin/fincen-$(PLATFORM)-amd64 github.com/moov-io/fincen/cmd/server
+	CGO_ENABLED=0 GOOS=$(PLATFORM) go build -o bin/fincen-cli-$(PLATFORM)-amd64 github.com/moov-io/fincen/cmd/fincen
 endif
 
 dist-webui: build-webui
@@ -71,13 +77,13 @@ docker-openshift:
 .PHONY: clean-integration test-integration
 
 clean-integration:
-	docker-compose kill
-	docker-compose rm -v -f
+	docker compose kill || true
+	docker compose rm -v -f || true
 
 test-integration: clean-integration
-	docker-compose up -d
+	docker compose up -d
 	sleep 5
-	curl -v http://localhost:8088/files
+	curl -sf http://localhost:8206/ping
 
 release: docker AUTHORS
 	go vet ./...
