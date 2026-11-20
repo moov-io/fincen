@@ -27,23 +27,26 @@ curl localhost:8206/ping
 PONG
 ```
 
-Create a file on the HTTP server:
+The `/validator` and `/reformat` endpoints accept `multipart/form-data` with a file field named `input`.
+
+Validate a file on the HTTP server:
 ```
-curl -X POST --data-binary "@./data/samples/sar_batch.xml" http://localhost:8206/validator
+curl -F "input=@./data/samples/sar_batch.xml" http://localhost:8206/validator
 ```
 ```
 {"status":"valid file"}
 ```
 
-Reformat the file with generated attributes:
+The same command works with the `ctr_batch.xml`, `doep_batch.xml`, `fbar_batch.xml`, and `8300_batch.xml` samples.
+
+Reformat the file with generated attributes. Attributes are regenerated only when you send `generate_attrs=true`. You can also send `format=json` for JSON output. `/validator` accepts `disable_attrs=true` to skip attribute checks.
+
 ```
-curl -X POST --data-binary "@./data/samples/ctr_batch.txt" http://localhost:8088/reformat
+curl -F "input=@./data/samples/ctr_batch.xml" -F "generate_attrs=true" http://localhost:8206/reformat
 ```
 ```
-<EFilingBatchXML ActivityCount="1" TotalAmount="47000" PartyCount="6" SeqNum="1"
-                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
-                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                     xmlns:fc2="www.fincen.gov/base">
-    <Activity SeqNum="1">
-...
+<fc2:EFilingBatchXML TotalAmount="47000" PartyCount="6" ActivityCount="1" xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/sites/default/files/schema/base/EFL_CTRXBatchSchema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fc2="www.fincen.gov/base">
+  <fc2:FormTypeCode>CTRX</fc2:FormTypeCode>
+  <fc2:Activity SeqNum="1">
+    ...
 ```

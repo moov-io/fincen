@@ -13,4 +13,4 @@ menubar: docs-menu
 Moov's mission is to give developers an easy way to create and integrate bank processing into their own software products. Our open source projects are each focused on solving a single responsibility in financial services and designed around performance, scalability, and ease of use.
 
 Moov's fincen project implements a reader, writer, and validator for Fincen BSA forms in an HTTP server and Go library. 
-The HTTP server is available in a [Docker image](/usage-docker.md) and the Go package `github.com/moov-io/fincen` is available.
+The HTTP server is available in a [Docker image](/usage-docker/) and the Go package `github.com/moov-io/fincen` is available.

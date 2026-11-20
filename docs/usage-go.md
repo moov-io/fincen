@@ -8,14 +8,14 @@ menubar: docs-menu
 
 # Go Library
 
-See [Golang's install instructions](https://golang.org/doc/install) for help in setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production.
+This project requires Go 1.26 or newer. See [Golang's install instructions](https://golang.org/doc/install) for help in setting up Go. You can download the source code and we offer [tagged and released versions](https://github.com/moov-io/fincen/releases/latest) as well. We highly recommend you use a tagged release for production once a release is cut from current `master`.
 
 ```
-$ git@github.com:moov-io/fincen.git
+git clone https://github.com/moov-io/fincen.git
 
-$ go get -u github.com/moov-io/fincen
+go get github.com/moov-io/fincen
 
-$ go doc github.com/moov-io/fincen BatchHeader
+go doc github.com/moov-io/fincen/pkg/batch EFilingBatchXML
 ```
 
 The package [`github.com/moov-io/fincen`](https://pkg.go.dev/github.com/moov-io/fincen) offers a Go-based reader, writer, and validator for Fincen BSA forms.
