@@ -1,6 +1,6 @@
 <EFilingBatchXML ActivityCount="1" PartyCount="0" AccountCount="0" JointlyOwnedOwnerCount="0"
                      NoFIOwnerCount="0" ConsolidatedOwnerCount="0"
-                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
+                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/system/files/schema/base/EFL_FBARXBatchSchema.xsd"
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                      xmlns:fc2="www.fincen.gov/base">
     <Activity SeqNum="1">

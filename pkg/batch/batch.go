@@ -207,6 +207,31 @@ func (f prettyFloat) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	return xml.Attr{Name: name, Value: s}, nil
 }
 
+// SchemaNamespace is the target namespace of the FinCEN BSA XML 2.0 batch schemas.
+const SchemaNamespace = "www.fincen.gov/base"
+
+// SchemaBaseURL is the location where FinCEN publishes the BSA XML 2.0 batch schemas.
+const SchemaBaseURL = "https://www.fincen.gov/system/files/schema/base/"
+
+var schemaFiles = map[string]string{
+	fincen.Form8300:  "EFL_8300XBatchSchema.xsd",
+	fincen.Report110: "EFL_DOEPXBatchSchema.xsd",
+	fincen.Report111: "EFL_SARXBatchSchema.xsd",
+	fincen.Report112: "EFL_CTRXBatchSchema.xsd",
+	fincen.Report114: "EFL_FBARXBatchSchema.xsd",
+}
+
+// SchemaLocation returns the xsi:schemaLocation value for a batch form type code.
+// The value is the namespace URI followed by the URL of the official batch schema.
+// SchemaLocation returns an empty string for an unknown form type code.
+func SchemaLocation(formType string) string {
+	file, ok := schemaFiles[formType]
+	if !ok {
+		return ""
+	}
+	return SchemaNamespace + " " + SchemaBaseURL + file
+}
+
 func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 	dummy := EFilingBatchMarshal{
@@ -235,41 +260,12 @@ func (r EFilingBatchXML) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		}
 	}
 
-	switch dummy.FormTypeCode {
-	case fincen.Form8300:
+	if location := SchemaLocation(dummy.FormTypeCode); location != "" {
 		dummy.Attrs = append(dummy.Attrs, xml.Attr{
 			Name: xml.Name{
 				Local: "xsi:schemaLocation",
 			},
-			Value: "www.server.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd",
-		})
-	case fincen.Report110:
-		dummy.Attrs = append(dummy.Attrs, xml.Attr{
-			Name: xml.Name{
-				Local: "xsi:schemaLocation",
-			},
-			Value: "www.fincen.gov/base https://www.fincen.gov/base/EFL_DOEPXBatchSchema.xsd",
-		})
-	case fincen.Report112:
-		dummy.Attrs = append(dummy.Attrs, xml.Attr{
-			Name: xml.Name{
-				Local: "xsi:schemaLocation",
-			},
-			Value: "www.fincen.gov/base https://www.fincen.gov/sites/default/files/schema/base/EFL_CTRXBatchSchema.xsd",
-		})
-	case fincen.Report111:
-		dummy.Attrs = append(dummy.Attrs, xml.Attr{
-			Name: xml.Name{
-				Local: "xsi:schemaLocation",
-			},
-			Value: "www.fincen.gov/base https://www.fincen.gov/base/EFL_FinCENSARXBatchSchema.xsd",
-		})
-	case fincen.Report114:
-		dummy.Attrs = append(dummy.Attrs, xml.Attr{
-			Name: xml.Name{
-				Local: "xsi:schemaLocation",
-			},
-			Value: "www.fincen.gov/base/EFL_FBARXBatchSchema.xsd",
+			Value: location,
 		})
 	}
 

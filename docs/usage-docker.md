@@ -45,7 +45,7 @@ Reformat the file with generated attributes. Attributes are regenerated only whe
 curl -F "input=@./data/samples/ctr_batch.xml" -F "generate_attrs=true" http://localhost:8206/reformat
 ```
 ```
-<fc2:EFilingBatchXML TotalAmount="47000" PartyCount="6" ActivityCount="1" xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/sites/default/files/schema/base/EFL_CTRXBatchSchema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fc2="www.fincen.gov/base">
+<fc2:EFilingBatchXML TotalAmount="47000" PartyCount="6" ActivityCount="1" xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/system/files/schema/base/EFL_CTRXBatchSchema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fc2="www.fincen.gov/base">
   <fc2:FormTypeCode>CTRX</fc2:FormTypeCode>
   <fc2:Activity SeqNum="1">
     ...
