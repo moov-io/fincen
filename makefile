@@ -58,11 +58,15 @@ else
 endif
 
 dist-webui: build-webui
+ifeq ($(CI),true)
+	@echo "skipping wasm git commit/push in CI"
+else
 	git config user.name "moov-bot"
 	git config user.email "oss@moov.io"
 	git add ./docs/webui/assets/wasm_exec.js ./docs/webui/assets/fincen.wasm
 	git commit -m "chore: updating wasm webui" || echo "No changes to commit"
 	git push origin master
+endif
 
 docker: clean docker-hub
 

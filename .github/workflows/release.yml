@@ -33,7 +33,7 @@ jobs:
       run: make check
 
     - name: WebUI
-      run: make dist-webui
+      run: make build-webui
 
   create_release:
     permissions:
