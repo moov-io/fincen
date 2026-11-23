@@ -1,5 +1,5 @@
 <EFilingBatchXML ActivityCount="1" TotalAmount="47000" PartyCount="6" SeqNum="1"
-                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/base https://www.fincen.gov/base/EFL_8300XBatchSchema.xsd"
+                     xsi:schemaLocation="www.fincen.gov/base https://www.fincen.gov/system/files/schema/base/EFL_CTRXBatchSchema.xsd"
                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                      xmlns:fc2="www.fincen.gov/base">
     <Activity SeqNum="1">
