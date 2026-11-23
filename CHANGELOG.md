@@ -1,3 +1,33 @@
+## v0.4.0 (Released 2026-11-23)
+
+This is the first release from master since v0.3.5. Do not use or pin v0.3.6. The v0.3.6 tag is not on master, and it panics when an `Activity` has no `TotalAmount`. Pin v0.4.0 or later.
+
+IMPROVEMENTS
+
+- fix: `TotalAmount` does not panic when an `Activity` element is empty (CTR, 8300, and SAR) (#111)
+- fix: `Marshal` does not panic on types that implement `xml.Marshaler`; add fuzz tests (#110)
+- fix: batch attaches activities together correctly (#73)
+- fix(batch): keep computed totals when attributes are validated, so a wrong `TotalAmount` or `PartyCount` is rejected (#130)
+- fix(batch): write `float64` amounts without scientific notation (#90)
+- fix(batch): write the required SARX `ActivityAttachmentCount` and `AttachmentCount` attributes, also when the value is zero (#153)
+- fix(batch): emit official `xsi:schemaLocation` values for all five form types (#158)
+- fix: return an error instead of a panic from the marshaler
+- feat(currency_transaction): accept the cash-out codes for activity detail type codes (#87)
+- feat(suspicious_activity): accept EIN, TIN, and FIN `PartyIdentificationTypeCode` values for parties 30 and 34 (#108)
+- fix(cmd/fincen): write progress messages to stderr, so stdout has only the report output (#154)
+- fix(service): set the correct `Content-Type` on `/reformat` responses (#154)
+- docs: fix the HTTP examples, links, and Go library snippets; the example programs report errors (#155)
+
+BUILD
+
+- build: Go 1.26 or later is required
+- build: release assets include the CLI binaries (`fincen-cli-linux-amd64`, `fincen-cli-darwin-amd64`, `fincen-cli.exe`) next to the server binaries (`fincen-<os>-amd64`, `fincen.exe`) (#154)
+- build: add `docker-compose.yml` for `make test-integration`; fix `go vet` and service tests that did not stop (#154)
+- build: push Docker images only from official moov-io releases (#121)
+- build: the web UI moved from the Docker image to the docs site
+- ci: add scheduled fuzz tests, CodeQL, and zizmor checks
+- Update dependencies, including github.com/moov-io/base to v0.68.2
+
 ## v0.3.6 (Released 2023-07-11)
 
 IMPROVEMENTS
