@@ -1,3 +1,9 @@
+## v0.5.0 (Unreleased)
+
+IMPROVEMENTS
+
+- data: replace the bundled XSD files with the official FinCEN BSA XML 2.0 files. Add `BSA_XML_2.0.xsd`, `FinCENReferenceCodes.xsd`, the IC-ISM schemas, an XML catalog for offline validation, and checksums (#PR)
+
 ## v0.4.0 (Released 2026-11-23)
 
 This is the first release from master since v0.3.5. Do not use or pin v0.3.6. The v0.3.6 tag is not on master, and it panics when an `Activity` has no `TotalAmount`. Pin v0.4.0 or later.

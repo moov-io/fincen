@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  OASIS XML catalog for offline validation with the bundled FinCEN schemas.
+  The official schema files refer to remote locations. Some of these
+  locations no longer resolve (HTTP 404). This catalog maps them to the
+  local copies in this directory. The schema files are not changed.
+-->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="https://www.fincen.gov/sites/default/files/schema/base/BSA_XML_2.0.xsd" uri="BSA_XML_2.0.xsd"/>
+  <uri name="https://www.fincen.gov/system/files/schema/base/BSA_XML_2.0.xsd" uri="BSA_XML_2.0.xsd"/>
+  <uri name="https://www.fincen.gov/codes" uri="FinCENReferenceCodes.xsd"/>
+  <rewriteURI uriStartString="https://www.fincen.gov/system/files/schema/base/" rewritePrefix="./"/>
+  <rewriteURI uriStartString="https://www.fincen.gov/sites/default/files/schema/base/" rewritePrefix="./"/>
+</catalog>
