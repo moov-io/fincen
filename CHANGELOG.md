@@ -2,7 +2,7 @@
 
 IMPROVEMENTS
 
-- data: replace the bundled XSD files with the official FinCEN BSA XML 2.0 files. Add `BSA_XML_2.0.xsd`, `FinCENReferenceCodes.xsd`, the IC-ISM schemas, an XML catalog for offline validation, and checksums (#PR)
+- data: replace the bundled XSD files with the official FinCEN BSA XML 2.0 files. Add `BSA_XML_2.0.xsd`, `FinCENReferenceCodes.xsd`, the IC-ISM schemas, an XML catalog for offline validation, and checksums (#160)
 
 ## v0.4.0 (Released 2026-11-23)
 
