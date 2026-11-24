@@ -176,7 +176,7 @@ Create a batch with `batch.NewReport` and a form constant:
 | `fincen.Form8300` | 8300X (Cash Payments Over $10,000) |
 | `fincen.ReportSubmission` | SUBMISSION (acknowledgement) |
 
-Generate attributes, then generate sequence numbers, then validate. `Validate()` fails when counts are stale. `Validate()` checks the library's field and attribute rules only. It does not validate a document against the bundled XSD files in `data/xsd`. A successful `Validate()` result (or an HTTP `/validator` response of `valid file`) does not mean that FinCEN would accept the file.
+Generate attributes, then generate sequence numbers, then validate. `Validate()` fails when counts are stale. `Validate()` checks the library's field and attribute rules only. It does not validate a document against the bundled official FinCEN XSD files in [`data/xsd`](data/xsd/README.md). A successful `Validate()` result (or an HTTP `/validator` response of `valid file`) does not mean that FinCEN would accept the file.
 
 A complete CTR example is in [`examples/currency_transaction_write`](examples/currency_transaction_write). Run examples from the repository root:
 

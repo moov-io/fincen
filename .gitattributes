@@ -1,0 +1,2 @@
+# Keep the official FinCEN schema files byte-for-byte (some use CRLF line endings).
+data/xsd/** -text
