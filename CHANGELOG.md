@@ -1,3 +1,13 @@
+## v0.5.0 (Unreleased)
+
+BREAKING CHANGES
+
+- fix(service): `/validator` and `/reformat` return `400 Bad Request` when the file is not an XML or JSON batch report, and `422 Unprocessable Entity` when the file does not pass validation. Version v0.4.0 and earlier returned `501 Not Implemented` for these errors.
+
+UPGRADE NOTES
+
+- If your HTTP client checks for status `501`, change it to check for `400` and `422`. The JSON error body (`{"error":"..."}`) does not change.
+
 ## v0.4.0 (Released 2026-11-23)
 
 This is the first release from master since v0.3.5. Do not use or pin v0.3.6. The v0.3.6 tag is not on master, and it panics when an `Activity` has no `TotalAmount`. Pin v0.4.0 or later.

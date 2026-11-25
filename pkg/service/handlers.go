@@ -50,7 +50,8 @@ func validator(w http.ResponseWriter, r *http.Request) {
 
 	reportXml, err := batch.CreateReportWithBuffer(buf)
 	if err != nil {
-		write(w, Response{Code: http.StatusNotImplemented, Message: err.Error()})
+		// The input is not an XML or JSON batch report.
+		write(w, Response{Code: http.StatusBadRequest, Message: err.Error()})
 		return
 	}
 
@@ -61,7 +62,8 @@ func validator(w http.ResponseWriter, r *http.Request) {
 
 	err = reportXml.Validate(args...)
 	if err != nil {
-		write(w, Response{Code: http.StatusNotImplemented, Message: err.Error()})
+		// The report was read, but it does not pass validation.
+		write(w, Response{Code: http.StatusUnprocessableEntity, Message: err.Error()})
 		return
 	}
 
@@ -77,7 +79,8 @@ func reformat(w http.ResponseWriter, r *http.Request) {
 
 	reportXml, err := batch.CreateReportWithBuffer(buf)
 	if err != nil {
-		write(w, Response{Code: http.StatusNotImplemented, Message: err.Error()})
+		// The input is not an XML or JSON batch report.
+		write(w, Response{Code: http.StatusBadRequest, Message: err.Error()})
 		return
 	}
 
@@ -86,7 +89,7 @@ func reformat(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
-		write(w, Response{Code: http.StatusNotImplemented, Message: err.Error()})
+		write(w, Response{Code: http.StatusUnprocessableEntity, Message: err.Error()})
 		return
 	}
 

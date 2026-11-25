@@ -89,13 +89,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Success'
         '400':
-          description: bad request
+          description: The request is not valid multipart/form-data, the input field is missing, or the input is not an XML or JSON batch report.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        '501':
-          description: failed operation
+        '422':
+          description: The input was read, but the report does not pass validation.
           content:
             application/json:
               schema:
@@ -208,13 +208,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/BatchReport'
         '400':
-          description: bad request
+          description: The request is not valid multipart/form-data, the input field is missing, or the input is not an XML or JSON batch report.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        '501':
-          description: failed operation
+        '422':
+          description: The input was read, but the service cannot process the report.
           content:
             application/json:
               schema:
