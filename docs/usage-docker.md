@@ -50,3 +50,13 @@ curl -F "input=@./data/samples/ctr_batch.xml" -F "generate_attrs=true" http://lo
   <fc2:Activity SeqNum="1">
     ...
 ```
+
+The `/validator` and `/reformat` endpoints return these HTTP status codes:
+
+| Status | Meaning |
+|--------|---------|
+| `200` | The file is valid (`/validator`), or the reformatted report is in the response body (`/reformat`). |
+| `400` | The request is not `multipart/form-data`, the `input` field is missing, or the file is not an XML or JSON batch report. |
+| `422` | The file was read, but it does not pass validation. The `error` field shows the problem, for example `{"error":"The TotalAmount has invalid value"}`. |
+
+Version v0.4.0 and earlier returned `501` for files that could not be read and for files that did not pass validation.
