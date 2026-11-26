@@ -60,10 +60,10 @@ The project is Fincen which is a financial reporting for the United States.
 
 There are many forms that are required in this project. **Now implemented XML forms only in following link**.
 (Non XML form will implement in another sub project)
-https://bsaefiling.fincen.treas.gov/FilingInformation.html
+https://bsaefiling.fincen.gov/filing-information
 
 The final phase of the project will be a service that collects fillings and then on a scheduled time will batch the fillings and submit them electronically.
-https://bsaefiling.fincen.treas.gov/SDTMInfo.html
+https://bsaefiling.fincen.gov/SDTM
 
 ## Supported Forms
 
@@ -262,9 +262,27 @@ Reformat flags:
 Using our [in-browser utility](https://moov-io.github.io/fincen/webui/), you can instantly verify and reformat Fincen BSA forms.
 
 ## Learn about Fincen
-- [About the BSA E-Filing System](https://bsaefiling.fincen.treas.gov/AboutBsa.html)
-- [Secure Direct Transfer Mode](https://bsaefiling.fincen.treas.gov/SDTMInfo.html)
-- [BSA E-Filing System](https://bsaefiling.fincen.treas.gov/)
+- [About the BSA E-Filing System](https://bsaefiling.fincen.gov/about)
+- [Secure Direct Transfer Mode](https://bsaefiling.fincen.gov/SDTM)
+- [BSA E-Filing System](https://bsaefiling.fincen.gov/)
+
+### FinCEN XML Schema 2.0 documents
+
+The library follows the FinCEN XML Schema 2.0 user guides (August 2021):
+
+- [FinCEN CTR XML Schema User Guide](https://bsaefiling.fincen.gov/docs/XMLUserGuide_FinCENCTR.pdf) (FinCEN Report 112)
+- [FinCEN DOEP XML Schema User Guide](https://bsaefiling.fincen.gov/docs/XMLUserGuide_FinCENDOEP.pdf) (FinCEN Report 110)
+- [FinCEN SAR XML Schema User Guide](https://bsaefiling.fincen.gov/docs/XMLUserGuide_FinCENSAR.pdf) (FinCEN Report 111)
+- [FinCEN FBAR XML Schema User Guide](https://bsaefiling.fincen.gov/docs/XMLUserGuide_FinCENFBAR.pdf) (FinCEN Report 114)
+- [FinCEN Form 8300 XML Schema User Guide](https://bsaefiling.fincen.gov/docs/XMLUserGuide_FinCEN8300.pdf) (FinCEN Form 8300)
+
+Other FinCEN documents for batch filers:
+
+- [XML Schema Guidance: Schema Validation](https://bsaefiling.fincen.gov/docs/XMLSchemaGuidance_SchemaValidation.pdf)
+- [XML Batch Testing Procedures](https://bsaefiling.fincen.gov/docs/XML_Batch_Testing_Procedures.pdf)
+- [Secure Direct Transfer Mode (SDTM) Requirements](https://bsaefiling.fincen.gov/docs/SDTMRequirements_2019.pdf)
+
+The official batch schemas are at `https://www.fincen.gov/system/files/schema/base/`: [CTR](https://www.fincen.gov/system/files/schema/base/EFL_CTRXBatchSchema.xsd), [DOEP](https://www.fincen.gov/system/files/schema/base/EFL_DOEPXBatchSchema.xsd), [SAR](https://www.fincen.gov/system/files/schema/base/EFL_SARXBatchSchema.xsd), [FBAR](https://www.fincen.gov/system/files/schema/base/EFL_FBARXBatchSchema.xsd), and [8300](https://www.fincen.gov/system/files/schema/base/EFL_8300XBatchSchema.xsd).
 
 
 ## FAQ
