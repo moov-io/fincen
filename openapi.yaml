@@ -232,7 +232,7 @@ components:
           type: object
         EFilingSubmissionXML:
           type: object
-      description: "https://bsaefiling.fincen.treas.gov/FilingInformation.html"
+      description: "https://bsaefiling.fincen.gov/filing-information"
     Error:
       properties:
         error:
